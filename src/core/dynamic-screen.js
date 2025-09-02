@@ -1,3 +1,5 @@
+// TODO: Include screen slipperiness (sliding), mobile support, dynamic CSS stuff (Header's shadow is affected by movement)
+
 // The reason isBeingDragged is used, is for tracking whether what's being tracked is solely the htmlDOM,
 // rather than another html tag like <div>, <span>, <button>, etc.
 let isBeingDragged = false;

@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "break_infinity.js": "^2.2.0",
     "vue": "^3.5.18"
   },
   "devDependencies": {

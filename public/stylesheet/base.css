@@ -1,4 +1,6 @@
 * {
+  text-align: center;
+
   padding: 0;
   border: 0;
   margin: 0;
@@ -27,20 +29,17 @@ body {
   inset: 50vh auto auto 50vw;
 }
 
-p,
-div,
+div {
+  cursor: default;
+}
+
 span {
+  cursor: text;
   user-select: none;
-  color: white;
 
   font-family: Bitter, Times, Serif;
 }
 
-p,
-span {
-  cursor: text;
-}
-
-div {
-  cursor: default;
+button {
+  cursor: pointer;
 }
