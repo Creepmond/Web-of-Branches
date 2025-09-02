@@ -1,0 +1,36 @@
+:root {
+  --color-bg: #0d0d0d;
+  --color-bg-stripes: #101010;
+}
+
+body {
+  background:
+    repeating-linear-gradient(transparent 0 95px, var(--color-bg-stripes) 95px 100px),
+    repeating-linear-gradient(90deg, var(--color-bg) 0 95px, var(--color-bg-stripes) 95px 100px);
+}
+
+:root {
+  --color-study-bg: #5b1415;
+  --color-study-border: #f7310e;
+  --color-study-border-acc: #a1160a;
+  --color-study-text: #e4e4e4;
+}
+
+/*# Studies */
+
+.o-prim-study {
+  background-color: var(--color-study-bg);
+
+  text-shadow: 0 0 5px #000;
+  box-shadow: inset 0px 0px 20px #000a;
+}
+
+.o-prim-study::before {
+  background-color: var(--color-study-border-acc);
+
+  background-image: radial-gradient(transparent 0 90%, #0006 99% 100%);
+
+  outline: 2px solid var(--color-study-border);
+}
+
+/*# END - Studies */

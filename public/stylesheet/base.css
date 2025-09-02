@@ -5,22 +5,19 @@
   outline: 0;
 }
 
-:root {
-  --color-bg: #0d0d0d;
-  --color-bg-stripes: #101010;
-}
-
 html {
   cursor: move;
 
   height: 100vh;
+
+  overflow: hidden;
 }
 
-body {
-  background:
-    repeating-linear-gradient(transparent 0 95px, var(--color-bg-stripes) 95px 100px),
-    repeating-linear-gradient(90deg, var(--color-bg) 0 95px, var(--color-bg-stripes) 95px 100px);
+/* html:active {
+  cursor: all-scroll;
+} */
 
+body {
   font-size: 20px;
 }
 
@@ -42,4 +39,8 @@ span {
 p,
 span {
   cursor: text;
+}
+
+div {
+  cursor: default;
 }

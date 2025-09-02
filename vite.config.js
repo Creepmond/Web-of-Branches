@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/web-of-branches/',
+  base: '/Web-of-Branches/',
   plugins: [
     vue(),
     vueDevTools(),

@@ -1,7 +1,18 @@
-<script setup></script>
+<script>
+  import GenericStudyButton from './GenericStudyButton.vue'
+
+  export default {
+    name: "GameUI",
+    components: {
+      GenericStudyButton,
+    }
+  }
+</script>
 
 <template>
-  <p>lezgo</p>
+  <GenericStudyButton />
 </template>
 
-<style scoped></style>
+<style>
+
+</style>
