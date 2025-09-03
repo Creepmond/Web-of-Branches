@@ -1,12 +1,18 @@
 <script>
 export default {
   name: "GenericStudyButton",
-}
+  props: {
+    availability: String,
+  },
+};
 </script>
 
 <template>
+  <!-- Note: l-prim-study-gridding is not permanent. It should
+  be deleted once src/core/coordinate.js takes care of Study
+  placements -->
   <div class="l-invisible l-prim-study-gridding">
-    <div class="o-prim-study">
+    <div class="o-prim-study" :class="availability">
       <div class="l-prim-study l-prim-study-header">
         <span class="c-prim-study-name">
           The Root
@@ -35,6 +41,8 @@ export default {
 }
 
 .o-prim-study {
+  cursor: default;
+
   height: 160px;
   width: 280px;
 
@@ -47,6 +55,9 @@ export default {
   
   position: relative;
 }
+.o-prim-study span {
+  transition: color 0.15s;
+}
 
 .o-prim-study::before {
   content: '';
@@ -57,6 +68,26 @@ export default {
   inset: -4px;
 
   z-index: -1;
+  transition: all 0.15s;
+}
+
+.o-prim-study--available {
+  transition: all 0.15s;
+}
+.o-prim-study--available span {
+  transition: all 0.15s;
+}
+
+.o-prim-study--available::before {
+  content: none;
+}
+
+.o-prim-study--available:hover {
+
+}
+
+.o-prim-study--bought {
+
 }
 
 .l-prim-study {

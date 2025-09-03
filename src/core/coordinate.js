@@ -14,6 +14,7 @@ export function findWindowCoord(direction) {
  * See src/core/database/regular.js for the standard formatting.
  */
 
+/*
 const studyDimensionsWidth = 360;
 const studyDimensionsHeight = 250;
 
@@ -22,3 +23,4 @@ Object.values(GameDB.regularStudy).forEach(study => {
    studyCoordinate.push(study.coordinate);
 })
 console.log(studyCoordinate)
+*/

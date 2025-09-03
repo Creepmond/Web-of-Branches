@@ -2,8 +2,20 @@
   --color-bg: #0d0d0d;
   --color-bg-stripes: #101010;
   --color-bg-contrast: #d0d0d0;
+  --opaque-color-bg-contrast: #d0d0d044;
 
   --color-text: #e4e4e4;
+  --color-text-weak: #a4a4a4;
+
+  --color-good: #5ac467;
+  --color-text-good: #accaaf;
+  --opaque-color-good: #5ac46788;
+  --color-bad: #a34254;
+  --color-text-bad: #b0999d;
+  --opaque-color-bad: #a3425488;
+
+  --color-grey: #3b3b3b;
+  --color-grey-acc: #2d2d2d;
 
   --show-invisible-layout: 0;
 }
@@ -21,6 +33,8 @@ body {
 span {
   color: var(--color-text);
 }
+
+
 
 
 
@@ -49,10 +63,14 @@ span {
 
 
 
+
+
 :root {
   --color-study-bg: #5b1415;
-  --color-study-border: #f7310e;
-  --color-study-border-acc: #a1160a;
+  --color-study: #f7310e;
+  --color-study-acc: #a1160a;
+
+  --color-study-bg-available: #140c0d;
 }
 
 
@@ -64,18 +82,69 @@ span {
 }
 
 .o-prim-study {
-  background-color: var(--color-study-bg);
-
-  text-shadow: 0 0 5px #000;
-  box-shadow: inset 0px 0px 20px #000a;
+  text-shadow: 0 0 3px #000;
+  box-shadow: inset 0px 0px 25px -3px #000a;
 }
 
 .o-prim-study::before {
-  background-color: var(--color-study-border-acc);
-
   background-image: radial-gradient(transparent 0 90%, #0006 99% 100%);
+}
 
-  outline: 2px solid var(--color-study-border);
+.o-prim-study--unavailable {
+  background-color: var(--color-grey);
+}
+.o-prim-study--unavailable span {
+  color: var(--color-text-weak);
+}
+
+.o-prim-study--unavailable::before {
+  background-color: var(--color-grey-acc);
+}
+
+.o-prim-study--unavailable:hover {
+  background-image:
+    linear-gradient(transparent, var(--opaque-color-bad));
+}
+.o-prim-study--unavailable:hover span {
+  color: var(--color-text-bad);
+}
+
+.o-prim-study--unavailable:hover::before {
+  background-color: var(--color-bad);
+}
+
+.o-prim-study--available {
+  background-color: var(--color-study-bg-available);
+  background-image:
+    linear-gradient(var(--opaque-color-bg-contrast) -50%, transparent);
+
+  outline: 2px solid var(--color-study);
+
+  box-shadow: inset 0px 0px 25px -3px var(--color-study);
+}
+.o-prim-study--available span {
+  color: var(--color-study);
+}
+
+.o-prim-study--available:hover {
+  background-image:
+    linear-gradient(var(--opaque-color-bg-contrast) -50%, transparent),
+    linear-gradient(transparent 10%, var(--color-study-acc) 120%);
+
+  box-shadow: inset 0px 0px 25px -3px var(--color-bg-contrast);
+}
+.o-prim-study--available:hover span {
+  color: var(--color-text);
+}
+
+.o-prim-study--bought {
+  background-color: var(--color-study-bg);
+}
+
+.o-prim-study--bought::before {
+  background-color: var(--color-study-acc);
+
+  outline: 2px solid var(--color-study);
 }
 
 /*# END - Studies */
