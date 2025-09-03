@@ -1,4 +1,5 @@
 * {
+  user-select: none;
   text-align: center;
 
   padding: 0;
@@ -29,13 +30,8 @@ body {
   inset: 50vh auto auto 50vw;
 }
 
-div {
-  cursor: default;
-}
-
 span {
   cursor: text;
-  user-select: none;
 
   font-family: Bitter, Times, Serif;
 }

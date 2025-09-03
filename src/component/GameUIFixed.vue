@@ -18,12 +18,18 @@ export default {
 
   position: fixed;
   inset: 10px auto auto 10px;
+
+  z-index: 2;
 }
 
+.c-header-currency::after,
 .c-header-currency::before {
   content: '';
   
   position: absolute;
+}
+
+.c-header-currency::after {
   inset: 0;
 }
 </style>
