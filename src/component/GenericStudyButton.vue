@@ -26,8 +26,8 @@ export default {
 
 <style>
 .l-prim-study-gridding {
-  height: 300px;
-  width: 400px;
+  height: 250px;
+  width: 360px;
 
   display: flex;
   justify-content: center;

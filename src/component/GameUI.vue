@@ -1,44 +1,45 @@
 <script>
-  import GenericStudyButton from './GenericStudyButton.vue'
+import Tree from './Tree.vue'
 
-  export default {
-    name: "GameUI",
-    components: {
-      GenericStudyButton,
-    },
-    computed: {
+export default {
+  name: "GameUI",
+  components: {
+    Tree,
+  },
+  computed: {
 
-    },
-  }
+  },
+}
 </script>
 
 <template>
-  <div class="layout">
+  <Tree />
+  
+  <!--
+  <div
+    v-for="(row, index) in 1"
+    :key="row"
+    class="row"
+    :class="{ 'offset': index % 2 === 0 }"
+  >
     <div
-      v-for="(row, index) in 3"
-      :key="row"
-      class="row"
-      :class="{ 'offset': index % 2 !== 0 }"
+      v-for="column in 1"
+      :key="column"
+      class="column"
     >
-      <div
-        v-for="column in 5"
-        :key="column"
-        class="column"
-      >
-        <GenericStudyButton />
-      </div>
+      <GenericStudyButton />
     </div>
-  </div>
+  </div>-->
 </template>
 
 <style>
-.offset {
-  transform: translateX(-200px);
-}
-
 .row {
   display: flex;
   flex-wrap: nowrap;
+}
+
+.offset {
+  transform: translateX(160px);
 }
 
 .column {

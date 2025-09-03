@@ -1,8 +1,7 @@
-import './core/dynamic-screen.js'
-import './core/player.js'
+import './shim.js'
+import './merge-global.js'
 
-import Decimal from 'break_infinity.js'
-window.Decimal = Decimal;
+import './core'
 
 import { createApp } from 'vue'
 import GameUIFixed from './component/GameUIFixed.vue'
