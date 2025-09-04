@@ -2,7 +2,10 @@
 export default {
   name: "GenericStudyButton",
   props: {
-    availability: String,
+    availability: {
+      type: String,
+      default: 'o-prim-study--bought',
+    },
   },
 };
 </script>
@@ -80,14 +83,6 @@ export default {
 
 .o-prim-study--available::before {
   content: none;
-}
-
-.o-prim-study--available:hover {
-
-}
-
-.o-prim-study--bought {
-
 }
 
 .l-prim-study {

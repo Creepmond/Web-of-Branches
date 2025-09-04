@@ -1,6 +1,8 @@
 import './shim.js'
-import './merge-global.js'
 
+import './utility'
+
+import './core/database'
 import './core'
 
 import { createApp } from 'vue'

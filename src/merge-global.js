@@ -15,5 +15,10 @@ function mergeIntoGlobal(object) {
   };
 };
 
-import * as GameDB from './core/database'
-mergeIntoGlobal(GameDB);
+/*
+import * as Data from './core/database'
+mergeIntoGlobal(Data);
+
+import * as State from './core/state'
+mergeIntoGlobal(State)
+*/

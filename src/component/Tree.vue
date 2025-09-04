@@ -13,9 +13,9 @@ export default {
   <div class="row">
     <GenericStudyButton :availability="'o-prim-study--unavailable'"/>
     <GenericStudyButton :availability="'o-prim-study--available'" />
-    <GenericStudyButton :availability="'o-prim-study--bought'" />
+    <GenericStudyButton />
   </div>
-  
+
   <!--
   <div
     v-for="(row, index) in 1"

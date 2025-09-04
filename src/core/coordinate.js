@@ -1,26 +1,20 @@
-export const userInterface = document.getElementById('ui-dynamic');
-
-export function findWindowCoord(direction) {
-   return Number(getComputedStyle(userInterface)[direction].replace(/[a-z]+/, ''))
-}
+import Study from './state/study.js'
 
 /**
- * Coordinates Legend:
- * [a, b]
- * @param {Number: Integer} a - is the y-level of the tree, descending.
- * @param {Number: Rational} b - is the x-offset of the tree. Integers
+ * Study Coordinates Legend:
+ * [level, offset]
+ * @param {Number: Integer} level - is the y-level of the tree, descending.
+ * @param {Number: Rational} offset - is the x-offset of the tree. Integers
  * are to the width of a Study.
  * the s
- * See src/core/database/regular.js for the standard formatting.
+ * See src/core/database/regular-study.js for the standard formatting.
  */
-
-/*
 const studyDimensionsWidth = 360;
 const studyDimensionsHeight = 250;
 
-let studyCoordinate = [];
-Object.values(GameDB.regularStudy).forEach(study => {
-   studyCoordinate.push(study.coordinate);
-})
-console.log(studyCoordinate)
-*/
+const studyLevel = Array.range(Study.coordinatesLevel, 1)
+
+console.log(studyLevel);
+
+const userInterface = document.getElementById('ui-dynamic');
+userInterface.style.height = `${studyDimensionsHeight * studyLevel}px`;

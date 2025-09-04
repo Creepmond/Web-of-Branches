@@ -1,8 +1,8 @@
-import { findWindowCoord, userInterface } from './coordinate.js'
 // TODO: Include screen slipperiness (sliding), mobile support, dynamic CSS stuff (Header's shadow is affected by movement)
 
 const htmlDOM = document.querySelector('html');
 const bodyDOM = document.querySelector('body');
+const userInterface = document.getElementById('ui-dynamic');
 
 let initMouseCoord = { X: 0, Y: 0 };
 let initBodyCoord = { X: 0, Y: 0 };
@@ -32,3 +32,12 @@ function handleCoordinates(event) {
 htmlDOM.addEventListener('mouseup', () => {
   window.removeEventListener('mousemove', handleCoordinates);
 });
+
+/**
+ * Finds the HTML inset value of the parameter.
+ * @param {String} direction 
+ * @returns {Number}
+ */
+export function findWindowCoord(direction) {
+   return Number(getComputedStyle(userInterface)[direction].replace(/[a-z]+/, ''))
+}
