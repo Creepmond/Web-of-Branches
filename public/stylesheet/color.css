@@ -1,6 +1,6 @@
 :root {
   --color-bg: #0d0d0d;
-  --color-bg-stripes: #101010;
+  --color-bg-stripes: #0f1315;
   --color-bg-contrast: #d0d0d0;
   --opaque-color-bg-contrast: #d0d0d044;
 
@@ -34,8 +34,8 @@ span {
 
 #background {
   background:
-    repeating-linear-gradient(transparent 0 190px, var(--color-bg-stripes) 198px 200px),
-    repeating-linear-gradient(90deg, var(--color-bg) 0 190px, var(--color-bg-stripes) 198px 200px);
+    repeating-linear-gradient(transparent 0 190px, var(--color-bg-stripes) 195px, transparent 200px),
+    repeating-linear-gradient(90deg, var(--color-bg) 0 190px, var(--color-bg-stripes) 195px, var(--color-bg) 200px);
 }
 
 /*# END - Background */

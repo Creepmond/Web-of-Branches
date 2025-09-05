@@ -50,6 +50,9 @@ button {
 #background {
   cursor: move;
 
+  /* Annoying visual problem with grid being stretched or squished because of background:
+  repeating-linear-gradient with responsive design biting my... I tried aspect-ratio property
+  paired with some height: max(100vw, 100vh), but seems like I'll need better approach */
   height: 100%;
   width: 100%;
 
