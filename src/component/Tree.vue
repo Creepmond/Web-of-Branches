@@ -1,19 +1,28 @@
 <script>
-import GenericStudyButton from './GenericStudyButton.vue';
+import StudyButton from './StudyButton.vue';
 
 export default {
   name: "Tree",
   components: {
-    GenericStudyButton,
+    StudyButton,
+  },
+  data() { return {
+    
+  }},
+  computed: {
+
   },
 }
 </script>
 
 <template>
-  <div class="row">
-    <GenericStudyButton :availability="'o-prim-study--unavailable'"/>
-    <GenericStudyButton :availability="'o-prim-study--available'" />
-    <GenericStudyButton />
+  <div class="l-tree">
+    <div class="row">
+      <StudyButton :availability="'o-prim-study--unavailable'"/>
+      <StudyButton
+        :availability="'o-prim-study--available'"
+      />
+    </div>
   </div>
 
   <!--
@@ -34,6 +43,9 @@ export default {
 </template>
 
 <style>
+.l-tree {
+  display: relative;
+}
 .row {
   display: flex;
   flex-wrap: nowrap;

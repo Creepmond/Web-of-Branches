@@ -16,8 +16,8 @@ function mergeIntoGlobal(object) {
 };
 
 /*
-import * as Data from './core/database'
-mergeIntoGlobal(Data);
+import * as GameData from './core/database'
+mergeIntoGlobal(GameData);
 
 import * as State from './core/state'
 mergeIntoGlobal(State)
