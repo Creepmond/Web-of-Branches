@@ -1,4 +1,5 @@
-import './coordinate.js'
-import './dynamic-screen.js'
-
 import './player.js'
+
+import './coordinate.js'
+import './ui.js'
+import './dynamic-screen.js'

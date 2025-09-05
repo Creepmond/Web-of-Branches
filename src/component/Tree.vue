@@ -16,13 +16,16 @@ export default {
 </script>
 
 <template>
+  <!--
+    Seems like I'll need to artificially modify the dimensions of l-tree, StudyButtons will be
+    positioned absolutely, as to modify the coordinates with more finesse.
+  -->
   <div class="l-tree">
-    <div class="row">
-      <StudyButton :availability="'o-prim-study--unavailable'"/>
-      <StudyButton
-        :availability="'o-prim-study--available'"
-      />
-    </div>
+    <StudyButton :availability="'o-prim-study--unavailable'"/>
+    <StudyButton
+      :availability="'o-prim-study--available'"
+      style="left: 0"
+    />
   </div>
 
   <!--
@@ -44,8 +47,10 @@ export default {
 
 <style>
 .l-tree {
-  display: relative;
+  position: relative;
 }
+
+/*
 .row {
   display: flex;
   flex-wrap: nowrap;
@@ -57,5 +62,5 @@ export default {
 
 .column {
   display: inline-block;
-}
+}*/
 </style>

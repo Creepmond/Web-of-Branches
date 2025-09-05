@@ -11,24 +11,30 @@ export default {
 </script>
 
 <template>
-  <div class="o-prim-study" :class="availability">
-    <div class="l-prim-study l-prim-study-header">
-      <span class="c-prim-study-name">
-        The Root
-      </span>
-    </div>
-    <div class="l-prim-study">
-      <span class="c-prim-study-info c-prim-study-info--desc">
-        Unlock the first Branch
-      </span>
-      <button class="c-prim-study-info c-prim-study-info--buy">
-        Cost: 1 Seed
-      </button>
+  <div class="l-prim-study__positioning">
+    <div class="o-prim-study" :class="availability">
+      <div class="l-prim-study l-prim-study-header">
+        <span class="c-prim-study-name">
+          The Root
+        </span>
+      </div>
+      <div class="l-prim-study">
+        <span class="c-prim-study-info c-prim-study-info--desc">
+          Unlock the first Branch
+        </span>
+        <button class="c-prim-study-info c-prim-study-info--buy">
+          Cost: 1 Seed
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style>
+.l-prim-study__positioning {
+  position: absolute;
+}
+
 .o-prim-study {
   cursor: default;
 
