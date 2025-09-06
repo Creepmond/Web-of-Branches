@@ -1,4 +1,4 @@
-import { DC } from '../../utility/constants.js'
+import { DC } from "../../utility/constants.js";
 
 export const regularStudy = [
    {
@@ -27,6 +27,14 @@ export const regularStudy = [
    {
       name: "Second Branch",
       id: [2, 0.5],
+      prerequisite: [1, 0],
+      description: "Let the Seeds fall",
+      cost: DC.E1,
+   },
+
+   {
+      name: "Second Branch",
+      id: [-10, 1],
       prerequisite: [1, 0],
       description: "Let the Seeds fall",
       cost: DC.E1,

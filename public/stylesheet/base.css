@@ -39,9 +39,6 @@ button {
 #ui-dynamic {
   cursor: move;
   
-  /* 360px - 280px = 80px. This is based on Study (Horizontal) Spacing and Study Width*/
-  padding: 80px 90px;
-
   /* Funny, how, to make it dynamic, I have to make it fixed (to modify its position) */
   position: absolute;
   inset: 50vh auto auto 50vw;

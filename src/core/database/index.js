@@ -1,4 +1,4 @@
-import { regularStudy } from './regular-study.js'
+import { regularStudy } from "./regular-study.js";
 
 window.GameData = {
    regularStudy,

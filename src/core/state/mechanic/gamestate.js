@@ -3,10 +3,6 @@ export default class GameMechanicState {
       this.data = data;
    }
 
-   get id() {
-      return this.data.id;
-   }
-
    static createAccessor(gamedata) {
       const instance = new Map();
       

@@ -1,5 +1,5 @@
 <script>
-import Tree from './Tree.vue'
+import Tree from "./Tree.vue";
 
 export default {
   name: "GameUI",
@@ -9,7 +9,7 @@ export default {
   computed: {
 
   },
-}
+};
 </script>
 
 <template>

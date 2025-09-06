@@ -1,4 +1,3 @@
-import './player.js'
+import "./player.js";
 
-import './ui.js'
-import './dynamic-screen.js'
+import "./dynamic-screen.js";

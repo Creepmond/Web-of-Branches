@@ -2,22 +2,25 @@
 export default {
   name: "StudyButton",
   props: {
-    availability: {
-      type: String,
-      default: 'o-prim-study--bought',
+    id: {
+      type: Array,
+      required: true,
     },
   },
   computed: {
     position() {
-      return `inset: 0px auto auto 0px`
-    }
-  }
+      return `inset: ${this.id[0] * 250}px auto auto ${this.id[1] * 360}px`
+    },
+    cost() {
+      return Study(this.id).data.cost;
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-prim-study__positioning" :style="position">
-    <div class="o-prim-study" :class="availability">
+    <div class="o-prim-study">
       <div class="l-prim-study l-prim-study-header">
         <span class="c-prim-study-name">
           The Root
@@ -28,7 +31,7 @@ export default {
           Unlock the first Branch
         </span>
         <button class="c-prim-study-info c-prim-study-info--buy">
-          Cost: 1 Seed
+          Cost: {{ cost }} Seed
         </button>
       </div>
     </div>
