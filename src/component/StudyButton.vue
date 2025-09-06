@@ -77,9 +77,6 @@ export default {
   
   position: relative;
 }
-.o-prim-study span {
-  transition: color 0.15s;
-}
 
 .o-prim-study::before {
   content: '';
@@ -87,21 +84,8 @@ export default {
   border-radius: 2px;
 
   position: absolute;
-  inset: -4px;
 
   z-index: -1;
-  transition: all 0.15s;
-}
-
-.o-prim-study--available {
-  transition: all 0.15s;
-}
-.o-prim-study--available span {
-  transition: all 0.15s;
-}
-
-.o-prim-study--available::before {
-  content: none;
 }
 
 .l-prim-study {
