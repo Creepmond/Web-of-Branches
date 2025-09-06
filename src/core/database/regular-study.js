@@ -21,22 +21,14 @@ export const regularStudy = [
       name: "First Branch",
       id: [2, -0.5],
       prerequisite: [1, 0],
-      description: "Let the Seeds fall",
+      description: "Seeds multiplied by a million",
       cost: DC.E1,
    },
    {
       name: "Second Branch",
       id: [2, 0.5],
       prerequisite: [1, 0],
-      description: "Let the Seeds fall",
-      cost: DC.E1,
-   },
-
-   {
-      name: "Second Branch",
-      id: [-10, 1],
-      prerequisite: [1, 0],
-      description: "Let the Seeds fall",
+      description: "More Seeds",
       cost: DC.E1,
    },
 ];

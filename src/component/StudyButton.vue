@@ -8,33 +8,45 @@ export default {
     },
   },
   computed: {
-    position() {
-      return `inset: ${this.id[0] * 250}px auto auto ${this.id[1] * 360}px`
+    study() {
+      return Study(this.id);
     },
-    cost() {
-      return Study(this.id).data.cost;
+    position() {
+      return `inset: ${this.study.data.id[0] * 250}px auto auto ${this.study.data.id[1] * 360}px`
+    },
+    availabilityStatus() {
+      const isBought = player.studyBoughtBits.has(JSON.stringify(this.id));
+      return isBought ? 'bought' : 'available';
+    },
+    availabilityClass() {
+      return `o-prim-study--${this.availabilityStatus}`;
     },
   },
+  methods: {
+    purchase() {
+      player.studyBoughtBits.add(JSON.stringify(this.id));
+    }
+  }
 };
 </script>
 
 <template>
   <div class="l-prim-study__positioning" :style="position">
-    <div class="o-prim-study">
+    <button class="o-prim-study" :class="availabilityClass" @click="purchase">
       <div class="l-prim-study l-prim-study-header">
         <span class="c-prim-study-name">
-          The Root
+          {{ study.data.name }}
         </span>
       </div>
       <div class="l-prim-study">
-        <span class="c-prim-study-info c-prim-study-info--desc">
-          Unlock the first Branch
+        <span class="c-prim-study-info">
+          {{ study.data.description }}
         </span>
-        <button class="c-prim-study-info c-prim-study-info--buy">
-          Cost: {{ cost }} Seed
-        </button>
+        <span class="c-prim-study-info">
+          Cost: {{ study.data.cost }} Seed
+        </span>
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -44,8 +56,6 @@ export default {
 }
 
 .o-prim-study {
-  cursor: default;
-
   height: 160px;
   width: 280px;
 
@@ -86,7 +96,15 @@ export default {
 }
 
 .l-prim-study {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
+}
+
+.c-prim-study-name {
+  
+}
+
+.c-prim-study-info {
+  display: block;
 }
 </style>

@@ -1,4 +1,5 @@
-// TODO: Include screen slipperiness (sliding) (optional for users), mobile support, zoom support, dynamic CSS stuff (Header's shadow is affected by movement) (optional for users)
+// TODO: Include screen slipperiness (sliding) (optional for users), mobile support, zoom support, dynamic CSS stuff (Header's shadow is affected by movement) (optional for users). Motion Parallax (Background)
+//* Wow, this guy likes to trouble himself
 
 const htmlDOM = document.querySelector('html');
 const background = document.getElementById('background');

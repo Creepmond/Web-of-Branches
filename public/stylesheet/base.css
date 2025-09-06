@@ -26,6 +26,8 @@ span {
 
 button {
   cursor: pointer;
+
+  font-family: Bitter, Times, Serif;
 }
 
 /*# END - General */
