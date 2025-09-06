@@ -6,9 +6,6 @@ export default {
   components: {
     StudyButton,
   },
-  data() { return {
-    
-  }},
   computed: {
     visibleStudies() {
       return GameData.regularStudy

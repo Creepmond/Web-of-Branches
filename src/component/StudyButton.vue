@@ -7,6 +7,15 @@ export default {
       required: true,
     },
   },
+  data() { return {
+    isAvailable: false,
+    isBought: false,
+  }},
+  watch: {
+    isBought() {
+      player.studyBoughtBits.add(JSON.stringify(this.id));
+    }
+  },
   computed: {
     study() {
       return Study(this.id);
@@ -15,8 +24,8 @@ export default {
       return `inset: ${this.study.data.id[0] * 250}px auto auto ${this.study.data.id[1] * 360}px`
     },
     availabilityStatus() {
-      const isBought = player.studyBoughtBits.has(JSON.stringify(this.id));
-      return isBought ? 'bought' : 'available';
+      this.isBought = player.studyBoughtBits.has(JSON.stringify(this.id));
+      return this.isBought ? 'bought' : 'available';
     },
     availabilityClass() {
       return `o-prim-study--${this.availabilityStatus}`;
@@ -24,9 +33,9 @@ export default {
   },
   methods: {
     purchase() {
-      player.studyBoughtBits.add(JSON.stringify(this.id));
-    }
-  }
+      this.isBought = true;
+    },
+  },
 };
 </script>
 
