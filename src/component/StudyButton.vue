@@ -7,11 +7,16 @@ export default {
       default: 'o-prim-study--bought',
     },
   },
+  computed: {
+    position() {
+      return `inset: 0px auto auto 0px`
+    }
+  }
 };
 </script>
 
 <template>
-  <div class="l-prim-study__positioning">
+  <div class="l-prim-study__positioning" :style="position">
     <div class="o-prim-study" :class="availability">
       <div class="l-prim-study l-prim-study-header">
         <span class="c-prim-study-name">
