@@ -1,6 +1,11 @@
 <script>
+import Modal from "./Modal.vue";
+
 export default {
   name: "GameUIFixed",
+  components: {
+    Modal,
+  },
   data() { return {
     seed: 0,
     frameId: null,
@@ -23,6 +28,7 @@ export default {
 </script>
 
 <template>
+  <Modal />
   <div class="c-header-currency">
     <span class="o-currency--seeds">
       Seeds: {{ seedAmount }}
