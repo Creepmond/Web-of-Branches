@@ -13,6 +13,7 @@ export default {
     StudyButtonFace,
   },
   data() { return {
+    imperativeIsBought: false,
     isAvailable: false,
     isBought: false,
 
@@ -31,22 +32,29 @@ export default {
     availabilityClass() {
       const state = 'o-prim-study--';
 
-      return this.isBought
-        ? state + 'bought'
-        : this.isAvailable
-
-        ? state + 'available'
-        : state + 'unavailable';
+      if (this.isBought) {
+        return state + 'bought';
+      } else if (this.imperativeIsBought && this.isAvailable) {
+        return state + 'available';
+      } else {
+        return state + 'unavailable';
+      }
     },
   },
   methods: {
     update() {
+      if (this.isBought) return;
+
+      rmRef(this.id) === rmRef([0,0])
+      ? this.imperativeIsBought = true
+      : this.imperativeIsBought = player.studyBoughtBits.hasArray(this.Study.data.imperative);
+
       this.isAvailable = player.seed.gte(this.Study.data.cost);
 
       this.frameId = requestAnimationFrame(this.update);
     },
     purchase() {
-      if (this.isBought || !this.isAvailable) return;
+      if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;
 
       this.isBought = true;
       player.seed = player.seed.sub(this.Study.data.cost);
@@ -76,8 +84,6 @@ export default {
 }
 
 .o-prim-study {
-  cursor: default;
-
   height: 160px;
   width: 280px;
 
@@ -101,7 +107,7 @@ export default {
   z-index: -1;
 }
 
-.o-prim-study--available {
-  cursor: pointer;
+.o-prim-study--unavailable {
+  cursor: default;
 }
 </style>
