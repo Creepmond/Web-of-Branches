@@ -1,5 +1,5 @@
 <script>
-import StudyButton from "./StudyButton.vue";
+import StudyButton from "@/component/base/StudyButton.vue";
 
 export default {
   name: "Tree",

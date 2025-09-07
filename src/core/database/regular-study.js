@@ -14,7 +14,7 @@ export const regularStudy = [
       id: [1, 0],
       prerequisite: [0, 0],
       description: "Let the Seeds fall",
-      cost: DC.E10,
+      cost: DC.D50,
    },
 
    {
@@ -22,14 +22,14 @@ export const regularStudy = [
       id: [2, -0.5],
       prerequisite: [1, 0],
       description: "Seeds multiplied by a million",
-      cost: DC.E1,
+      cost: DC.E3,
    },
    {
       name: "Second Branch",
       id: [2, 0.5],
       prerequisite: [1, 0],
       description: "More Seeds",
-      cost: DC.E1,
+      cost: DC.E2,
    },
 
    {

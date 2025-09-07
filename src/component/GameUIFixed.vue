@@ -1,5 +1,5 @@
 <script>
-import Modal from "./Modal.vue";
+import Modal from "./modal/Modal.vue";
 
 export default {
   name: "GameUIFixed",

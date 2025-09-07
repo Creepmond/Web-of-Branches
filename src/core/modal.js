@@ -1,6 +1,4 @@
-
-
-setTimeout(() => {
-   const modalDOM = document.querySelector('dialog');
-   modalDOM.showModal()
-}, 2000);
+/*
+const modalDOM = document.querySelector('dialog');
+modalDOM.showModal()
+*/

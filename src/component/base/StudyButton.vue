@@ -76,6 +76,8 @@ export default {
 }
 
 .o-prim-study {
+  cursor: default;
+
   height: 160px;
   width: 280px;
 
@@ -99,7 +101,7 @@ export default {
   z-index: -1;
 }
 
-.o-prim-study--unavailable {
-  cursor: default;
+.o-prim-study--available {
+  cursor: pointer;
 }
 </style>

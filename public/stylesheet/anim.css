@@ -13,6 +13,10 @@
   transition: color 0.15s;
 }
 
+.o-prim-study::before {
+  transition: background-color 0.15s;
+}
+
 .o-prim-study--bought::before {
   transition: inset 0.3s var(--anim-over-in-and-out);
 }
