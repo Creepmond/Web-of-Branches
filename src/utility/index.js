@@ -2,3 +2,4 @@
 // for Prototypes, not window[key] type global)
 
 import "./extension.js";
+import "./format.js";

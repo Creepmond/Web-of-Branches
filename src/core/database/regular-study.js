@@ -31,4 +31,12 @@ export const regularStudy = [
       description: "More Seeds",
       cost: DC.E1,
    },
+
+   {
+      name: "I love trees",
+      id: [3, -0.5],
+      prerequisite: [2, -0.5],
+      description: "Mr. Beast gives YOU a million",
+      cost: DC.E100,
+   },
 ];

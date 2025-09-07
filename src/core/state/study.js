@@ -4,11 +4,6 @@ class StudyState extends GameMechanicState {
    constructor(data) {
       super(data)
    }
-   
-   get availability() {
-      const isBought = player.studyBoughtBits.has(this.id);
-      return isBought ? 'bought' : 'available';
-   }
 }
 
 /**
