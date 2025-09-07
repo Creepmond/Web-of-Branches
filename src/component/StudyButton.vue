@@ -36,6 +36,7 @@ export default {
   methods: {
     purchase() {
       this.isBought = true;
+      player.seed = player.seed.sub(this.study.data.cost);
     },
   },
 };
