@@ -1,0 +1,65 @@
+/*# General */
+
+* {
+  user-select: none;
+  text-align: center;
+
+  padding: 0;
+  border: 0;
+  margin: 0;
+  outline: 0;
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  font-size: 20px;
+}
+
+span {
+  cursor: text;
+
+  font-family: Bitter, Times, Serif;
+}
+
+button {
+  cursor: pointer;
+
+  font-family: Bitter, Times, Serif;
+}
+button span {
+  font-size: 20px;
+}
+
+/*# END - General */
+
+
+
+
+
+/*# Semantic */
+
+#ui-dynamic {
+  cursor: move;
+  
+  /* Funny, how, to make it dynamic, I have to make it fixed (to modify its position) */
+  position: absolute;
+  inset: 50vh auto auto 50vw;
+}
+
+#background {
+  cursor: move;
+
+  /* Annoying visual problem with grid being stretched or squished because of background:
+  repeating-linear-gradient with responsive design biting my... I tried aspect-ratio property
+  paired with some height: max(100vw, 100vh), but seems like I'll need better approach */
+  height: 100%;
+  width: 100%;
+
+  position: fixed;
+  z-index: -2;
+}
+
+/*# END - Semantic */

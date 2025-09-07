@@ -1,0 +1,40 @@
+:root {
+  --anim-over-in-and-out: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+
+
+/*# Studies */
+
+.o-prim-study {
+  transition: box-shadow 0.15s;
+}
+.o-prim-study span {
+  transition: color 0.15s;
+}
+
+.o-prim-study::before {
+  transition: background-color 0.15s;
+}
+
+.o-prim-study--bought::before {
+  transition: inset 0.3s var(--anim-over-in-and-out);
+}
+
+
+
+.o-prim-study--unavailable::before {
+  outline: 0;
+  
+  inset: -4px;
+}
+
+.o-prim-study--available::before {
+  inset: 0;
+}
+
+.o-prim-study--bought::before {
+  inset: -4px;
+}
+
+/*# END - Studies */
