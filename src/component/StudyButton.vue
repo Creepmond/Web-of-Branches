@@ -90,13 +90,17 @@ export default {
   z-index: -1;
 }
 
+.o-prim-study--unavailable {
+  cursor: default;
+}
+
 .l-prim-study {
-  width: 100%;
+  width: fit-content;
   margin: 0 auto;
 }
 
 .c-prim-study-name {
-  
+  font-size: 30px;
 }
 
 .c-prim-study-info {

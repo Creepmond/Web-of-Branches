@@ -95,6 +95,10 @@ span {
   color: var(--color-text-weak);
 }
 
+.o-prim-study--unavailable .l-prim-study-header span {
+  text-shadow: 0 0 15px var(--color-grey-acc);
+}
+
 .o-prim-study--unavailable::before {
   background-color: var(--color-grey-acc);
 }
@@ -122,6 +126,10 @@ span {
   color: var(--color-study);
 }
 
+.o-prim-study--available .l-prim-study-header span {
+  text-shadow: 0 0 15px var(--color-study);
+}
+
 .o-prim-study--available:hover {
   background-image:
     linear-gradient(var(--opaque-color-bg-contrast) -50%, transparent),
@@ -138,6 +146,10 @@ span {
 }
 .o-prim-study--bought span {
   color: var(--color-text);
+}
+
+.o-prim-study--bought .l-prim-study-header span {
+  text-shadow: 0 0 18px var(--color-black);
 }
 
 .o-prim-study--bought::before {

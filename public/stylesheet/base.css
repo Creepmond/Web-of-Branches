@@ -29,6 +29,9 @@ button {
 
   font-family: Bitter, Times, Serif;
 }
+button span {
+  font-size: 20px;
+}
 
 /*# END - General */
 
