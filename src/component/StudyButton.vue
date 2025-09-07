@@ -1,4 +1,6 @@
 <script>
+import StudyButtonFace from "./StudyButtonFace.vue";
+
 export default {
   name: "StudyButton",
   props: {
@@ -7,9 +9,14 @@ export default {
       required: true,
     },
   },
+  components: {
+    StudyButtonFace,
+  },
   data() { return {
     isAvailable: false,
     isBought: false,
+
+    frameId: null,
   }},
   watch: {
     isBought() {
@@ -17,27 +24,36 @@ export default {
     }
   },
   computed: {
-    study() {
-      return Study(this.id);
-    },
+    Study() { return Study(this.id); },
     position() {
-      return `inset: ${this.study.data.id[0] * 250}px auto auto ${this.study.data.id[1] * 360}px`
+      return `inset: ${this.Study.data.id[0] * 250}px auto auto ${this.Study.data.id[1] * 360}px`
     },
     availabilityClass() {
       const state = 'o-prim-study--';
 
       return this.isBought
         ? state + 'bought'
-        : state + 'available';
-    },
+        : this.isAvailable
 
-    studyCost() { return format(this.study.data.cost); }
+        ? state + 'available'
+        : state + 'unavailable';
+    },
   },
   methods: {
-    purchase() {
-      this.isBought = true;
-      player.seed = player.seed.sub(this.study.data.cost);
+    update() {
+      this.isAvailable = player.seed.gte(this.Study.data.cost);
+
+      this.frameId = requestAnimationFrame(this.update);
     },
+    purchase() {
+      if (this.isBought || !this.isAvailable) return;
+
+      this.isBought = true;
+      player.seed = player.seed.sub(this.Study.data.cost);
+    },
+  },
+  mounted() {
+    this.update();
   },
 };
 </script>
@@ -45,19 +61,11 @@ export default {
 <template>
   <div class="l-prim-study__positioning" :style="position">
     <button class="o-prim-study" :class="availabilityClass" @click="purchase">
-      <div class="l-prim-study l-prim-study-header">
-        <span class="c-prim-study-name">
-          {{ study.data.name }}
-        </span>
-      </div>
-      <div class="l-prim-study">
-        <span class="c-prim-study-info">
-          {{ study.data.description }}
-        </span>
-        <span class="c-prim-study-info">
-          Cost: {{ studyCost }} Seed
-        </span>
-      </div>
+      <StudyButtonFace
+        :name="Study.data.name"
+        :desc="Study.data.description"
+        :cost="Study.data.cost"
+      />
     </button>
   </div>
 </template>
@@ -93,18 +101,5 @@ export default {
 
 .o-prim-study--unavailable {
   cursor: default;
-}
-
-.l-prim-study {
-  width: fit-content;
-  margin: 0 auto;
-}
-
-.c-prim-study-name {
-  font-size: 30px;
-}
-
-.c-prim-study-info {
-  display: block;
 }
 </style>

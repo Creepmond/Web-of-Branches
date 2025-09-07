@@ -14,7 +14,7 @@ export const regularStudy = [
       id: [1, 0],
       prerequisite: [0, 0],
       description: "Let the Seeds fall",
-      cost: DC.E1,
+      cost: DC.E10,
    },
 
    {
