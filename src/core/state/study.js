@@ -1,8 +1,19 @@
 import GameMechanicState from "./mechanic/gamestate.js";
+import { DC } from "@/utility/constants.js";
 
 class StudyState extends GameMechanicState {
    constructor(data) {
       super(data)
+   }
+
+   get isPurchased() {
+      return player.studyBoughtBits.hasArray(this.data.id)
+   }
+
+   get effect() {
+      return this.isPurchased
+      ? this.data.effect
+      : DC.D0;
    }
 }
 

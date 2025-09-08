@@ -15,7 +15,7 @@ export const regularStudy = [
       imperative: [0, 0],
       description: "Slowly produce Seeds",
       get detail() { return `Increase Seeds rate by ${formatPassRate(1)}` },
-      effect: 1,
+      effect: DC.D1,
       cost: DC.D1,
    },
 
