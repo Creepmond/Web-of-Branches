@@ -12,7 +12,6 @@
 
 html {
   overflow: hidden;
-  touch-action: pan-x pan-y;
 }
 
 body {

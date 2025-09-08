@@ -1,4 +1,4 @@
-// TODO: Include screen slipperiness (sliding) (optional for users), mobile support, zoom support, dynamic CSS stuff (Header's shadow is affected by movement) (optional for users). Motion Parallax (Background)
+// TODO: Include screen slipperiness (sliding) (optional for users), zoom support, dynamic CSS stuff (Header's shadow is affected by movement) (optional for users). Motion Parallax (Background)
 //* Wow, this guy likes to trouble himself
 
 const htmlDOM = document.querySelector('html');
@@ -8,19 +8,36 @@ const userInterface = document.getElementById('ui-dynamic');
 let initMouseCoord = { X: 0, Y: 0 };
 let initBodyCoord = { X: 0, Y: 0 };
 
-htmlDOM.addEventListener('touchstart', (event) => {
-   initMouseCoord = { X: event.touches[0].pageX, Y: event.touches[0].pageY };
+htmlDOM.addEventListener('touchstart', () => { player.hidden.isTouchscreen = true; })
+htmlDOM.addEventListener('mousedown', () => { player.hidden.isTouchscreen = false; })
+
+htmlDOM.addEventListener('touchstart', handleStart);
+htmlDOM.addEventListener('touchend', handleEnd);
+
+htmlDOM.addEventListener('mousedown', handleStart);
+htmlDOM.addEventListener('mouseup', handleEnd);
+
+function handleStart(event) {
+   const figure = player.hidden.isTouchscreen
+      ? event.touches[0]
+      : event;
+
+   initMouseCoord = { X: figure.pageX, Y: figure.pageY };
    initBodyCoord = { X: findWindowCoord('left'), Y: findWindowCoord('top') };
 
-   window.addEventListener('touchmove', handleCoordinates);
-});
+   player.hidden.isTouchscreen
+   ? window.addEventListener('touchmove', handleCoordinates)
+   : window.addEventListener('mousemove', handleCoordinates);
+}
 
 function handleCoordinates(event) {
-   const touch = event.touches[0];
+   const figure = player.hidden.isTouchscreen
+      ? event.touches[0]
+      : event;
 
    const deltaCoord = {
-      X: touch.pageX - initMouseCoord.X,
-      Y: touch.pageY - initMouseCoord.Y
+      X: figure.pageX - initMouseCoord.X,
+      Y: figure.pageY - initMouseCoord.Y
    }
 
    const bodyCoord = {
@@ -32,9 +49,11 @@ function handleCoordinates(event) {
    userInterface.style.inset = `${bodyCoord.Y}px auto auto ${bodyCoord.X}px`;
 }
 
-htmlDOM.addEventListener('touchend', () => {
-  window.removeEventListener('touchmove', handleCoordinates);
-});
+function handleEnd() {
+   player.hidden.isTouchscreen
+   ? window.removeEventListener('touchmove', handleCoordinates)
+   : window.removeEventListener('mousemove', handleCoordinates);
+}
 
 /**
  * Finds the HTML inset value of the parameter.
