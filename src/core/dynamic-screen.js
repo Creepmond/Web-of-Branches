@@ -8,17 +8,19 @@ const userInterface = document.getElementById('ui-dynamic');
 let initMouseCoord = { X: 0, Y: 0 };
 let initBodyCoord = { X: 0, Y: 0 };
 
-htmlDOM.addEventListener('mousedown', (event) => {
-   initMouseCoord = { X: event.pageX, Y: event.pageY };
+htmlDOM.addEventListener('touchstart', (event) => {
+   initMouseCoord = { X: event.touches[0].pageX, Y: event.touches[0].pageY };
    initBodyCoord = { X: findWindowCoord('left'), Y: findWindowCoord('top') };
 
-   window.addEventListener('mousemove', handleCoordinates);
+   window.addEventListener('touchmove', handleCoordinates);
 });
 
 function handleCoordinates(event) {
+   const touch = event.touches[0];
+
    const deltaCoord = {
-      X: event.pageX - initMouseCoord.X,
-      Y: event.pageY - initMouseCoord.Y
+      X: touch.pageX - initMouseCoord.X,
+      Y: touch.pageY - initMouseCoord.Y
    }
 
    const bodyCoord = {
@@ -30,8 +32,8 @@ function handleCoordinates(event) {
    userInterface.style.inset = `${bodyCoord.Y}px auto auto ${bodyCoord.X}px`;
 }
 
-htmlDOM.addEventListener('mouseup', () => {
-  window.removeEventListener('mousemove', handleCoordinates);
+htmlDOM.addEventListener('touchend', () => {
+  window.removeEventListener('touchmove', handleCoordinates);
 });
 
 /**
