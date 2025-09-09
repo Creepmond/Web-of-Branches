@@ -1,5 +1,6 @@
 <script>
 import StudyButtonFace from "./StudyButtonFace.vue";
+import StudyTooltip from "./StudyTooltip.vue";
 
 export default {
   name: "StudyButton",
@@ -11,6 +12,7 @@ export default {
   },
   components: {
     StudyButtonFace,
+    StudyTooltip,
   },
   data() { return {
     imperativeIsBought: false,
@@ -27,7 +29,7 @@ export default {
   computed: {
     Study() { return Study(this.id); },
     position() {
-      return `inset: ${this.Study.data.id[0] * 250}px auto auto ${this.Study.data.id[1] * 360}px`
+      return `inset: ${this.Study.id[0] * 250}px auto auto ${this.Study.id[1] * 360}px`
     },
     availabilityClass() {
       const state = 'o-prim-study--';
@@ -47,9 +49,9 @@ export default {
 
       rmRef(this.id) === rmRef([0,0])
       ? this.imperativeIsBought = true
-      : this.imperativeIsBought = player.studyBoughtBits.hasArray(this.Study.data.imperative);
+      : this.imperativeIsBought = player.studyBoughtBits.hasArray(this.Study.imperative);
 
-      this.isAvailable = player.seed.gte(this.Study.data.cost);
+      this.isAvailable = player.seed.gte(this.Study.cost);
 
       this.frameId = requestAnimationFrame(this.update);
     },
@@ -57,7 +59,7 @@ export default {
       if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;
 
       this.isBought = true;
-      player.seed = player.seed.sub(this.Study.data.cost);
+      player.seed = player.seed.sub(this.Study.cost);
     },
   },
   mounted() {
@@ -68,11 +70,16 @@ export default {
 
 <template>
   <div class="l-prim-study__positioning" :style="position">
-    <button class="o-prim-study" :class="availabilityClass" @click="purchase">
+    <button
+      class="o-prim-study"
+      :class="availabilityClass"
+      @click="purchase"
+    >
       <StudyButtonFace
-        :name="Study.data.name"
-        :desc="Study.data.description"
-        :cost="Study.data.cost"
+        :name="Study.name"
+        :desc="Study.description"
+        :spec="Study.specify"
+        :cost="Study.cost"
       />
     </button>
   </div>

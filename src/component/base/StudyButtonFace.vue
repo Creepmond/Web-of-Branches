@@ -18,16 +18,14 @@ export default {
   computed: {
     studyCost() {
       return format(this.cost);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-prim-study l-prim-study-header">
-    <span class="c-prim-study-name">
-      {{ name }}
-    </span>
+    <span class="c-prim-study-name" v-html="name" />
   </div>
   <div class="l-prim-study">
     <span class="c-prim-study-info">

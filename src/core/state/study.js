@@ -6,14 +6,19 @@ class StudyState extends GameMechanicState {
       super(data)
    }
 
+   get name() { return this.data.name }
+   get allDerivative() { return this.data.derivative }
+   get imperative() { return this.data.imperative }
+   get description() { return this.data.description }
+   get specify() { return this.data.specify || ""; }
+   get cost() { return this.data.cost }
+
    get isPurchased() {
       return player.studyBoughtBits.hasArray(this.data.id)
    }
 
    get effect() {
-      return this.isPurchased
-      ? this.data.effect
-      : DC.D0;
+      return this.isPurchased ? this.data.effect : DC.D0;
    }
 }
 
