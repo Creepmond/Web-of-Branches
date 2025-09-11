@@ -15,3 +15,7 @@ window.formatX = function(value) {
 window.formatPassRate = function(value) {
    return `+${format(value)} /s`;
 };
+
+window.formatCoord = function(value, value2) {
+   return `[${value}, ${value2}]`;
+}

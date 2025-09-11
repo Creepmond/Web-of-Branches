@@ -4,21 +4,44 @@ import { DC } from "@/utility/constants.js";
 class StudyState extends GameMechanicState {
    constructor(data) {
       super(data)
+      
+      this.imperativeIsBought = false;
    }
 
-   get name() { return this.data.name }
-   get allDerivative() { return this.data.derivative }
-   get imperative() { return this.data.imperative }
-   get description() { return this.data.description }
-   get specify() { return this.data.specify || ""; }
-   get cost() { return this.data.cost }
+   get name() {
+      return this.data.name;
+   }
 
-   get isPurchased() {
-      return player.studyBoughtBits.hasArray(this.data.id)
+   get allDerivative() {
+      return this.data.derivative;
+   }
+
+   get imperative() {
+      return this.data.imperative;
+   }
+
+   get description() {
+      return this.data.description;
+   }
+
+   get specify() {
+      return this.data.specify || "";
+   }
+
+   get cost() {
+      return this.data.cost;
    }
 
    get effect() {
-      return this.isPurchased ? this.data.effect : DC.D0;
+      return this.isBought ? this.data.effect : DC.D0;
+   }
+
+   purchase() {
+      player.studyBoughtBits.addArray(this.id);
+   }
+
+   get isBought() {
+      return player.studyBoughtBits.hasArray(this.id);
    }
 }
 
@@ -27,7 +50,7 @@ class StudyState extends GameMechanicState {
  * Study Coordinates (ID) Legend:
  * @param level - integer, is the y-level of the tree, descending.
  * @param offset - rational, is the x-offset of the tree. Integers are to the width of a Study.
- * @return {Object} - the study state.
+ * @returns the study state.
  */
 const Study = StudyState.createAccessor(GameData.regularStudy);
 export default Study;

@@ -24,7 +24,7 @@ export const regularStudy = [
    {
       name: "1<sup>st</sup> Branch",
       id: [2, -0.5],
-      derivative: [ [3, -0.5] ],
+      derivative: [ [3, -1] ],
       imperative: [1, 0],
       description: "Seeds multiplied by a million",
       cost: DC.E3,
@@ -32,10 +32,10 @@ export const regularStudy = [
    {
       name: "2<sup>nd</sup> Branch",
       id: [2, 0.5],
-      derivative: [],
+      derivative: [ [3, 1] ],
       imperative: [1, 0],
-      description: "Unlock Branch Respeccing",
-      detail: "Is permanent",
+      description: "Boost seed production",
+      get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(2)}` },
       cost: DC.D7,
    },
 
@@ -50,7 +50,7 @@ export const regularStudy = [
    {
       name: "Sprout 2",
       id: [3, 1],
-      derivative: [],
+      derivative: [ [4, 1] ],
       imperative: [2, 0.5],
       description: "Sprout 2",
       cost: DC.E1E15,
@@ -60,7 +60,7 @@ export const regularStudy = [
       name: "Sprout 3",
       id: [4, 1],
       derivative: [],
-      imperative: [2, 0.5],
+      imperative: [3, 1],
       description: "Sprout 2",
       cost: DC.E1E15,
    },

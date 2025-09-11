@@ -19,7 +19,7 @@ htmlDOM.addEventListener('mouseup', handleEnd);
 
 function handleStart(event) {
    const figure = player.hidden.isTouchscreen
-      ? event.touches[0]
+      ? event.touches.first()
       : event;
 
    initMouseCoord = { X: figure.pageX, Y: figure.pageY };
@@ -32,7 +32,7 @@ function handleStart(event) {
 
 function handleCoordinates(event) {
    const figure = player.hidden.isTouchscreen
-      ? event.touches[0]
+      ? event.touches.first()
       : event;
 
    const deltaCoord = {

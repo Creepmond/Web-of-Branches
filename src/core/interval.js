@@ -11,7 +11,5 @@ gameloop(() => {
    const tickrate = player.option.tickrate;
 
    player.seed = player.seed
-      .times(
-         Decimal.max(Study([1,0]).effect,1).dividedBy(tickrate).add(1)
-      );
+      .add( Study([1,0]).effect.dividedBy(tickrate) );
 });

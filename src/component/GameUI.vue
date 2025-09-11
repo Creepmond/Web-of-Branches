@@ -3,9 +3,7 @@ import Tree from "./Tree.vue";
 
 export default {
   name: "GameUI",
-  components: {
-    Tree,
-  },
+  components: { Tree, },
   computed: {
 
   },

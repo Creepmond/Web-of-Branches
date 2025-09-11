@@ -87,6 +87,10 @@ span {
   box-shadow: inset 0px 0px 25px -3px #000a;
 }
 
+.c-prim-study-id {
+  text-shadow: 0 0 5px var(--color-text);
+}
+
 .o-prim-study::before {
   background-image: radial-gradient(transparent 0 90%, #0006 99% 100%);
 

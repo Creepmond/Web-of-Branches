@@ -3,9 +3,7 @@ import Modal from "./modal/Modal.vue";
 
 export default {
   name: "GameUIFixed",
-  components: {
-    Modal,
-  },
+  components: { Modal, },
   data() { return {
     seed: 0,
     frameId: null,
