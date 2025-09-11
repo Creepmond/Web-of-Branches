@@ -44,7 +44,6 @@ export default {
 
 <template>
   <div class="l-tree">
-    {{ studyImperativeObject }}
     <StudyButton
       v-for="study of visibleStudies"
       :position="position(study.id)"

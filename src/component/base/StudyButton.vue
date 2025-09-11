@@ -31,6 +31,11 @@ export default {
       }
     },
   },
+  watch: {
+    imperativeIsBought() {
+      this.update();
+    },
+  },
   methods: {
     update() {
       if (this.isBought || !this.imperativeIsBought) return;
@@ -51,9 +56,6 @@ export default {
       this.isBought = true;
     },
   },
-  mounted() {
-    this.update();
-  },
 };
 </script>
 
@@ -61,7 +63,7 @@ export default {
   <div class="l-prim-study__positioning" :style="position">
     <div class="l-prim-study-id">
       <span class="c-prim-study-id">
-        {{ StudyInstance.id }} {{ imperativeIsBought }} {{ isAvailable }} {{ isBought }}
+        {{ StudyInstance.id }}
       </span>
     </div>
     <button
