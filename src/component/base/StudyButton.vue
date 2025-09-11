@@ -35,6 +35,7 @@ export default {
     update() {
       if (this.isBought || !this.imperativeIsBought) return;
 
+      console.log('hi')
       this.isAvailable = player.seed.gte(this.StudyInstance.cost);
 
       this.frameId = requestAnimationFrame(this.update);
@@ -44,9 +45,9 @@ export default {
 
       this.$emit('purchase', this.id);
 
-      player.seed = player.seed.sub(this.Study.cost);
+      player.seed = player.seed.sub(this.StudyInstance.cost);
 
-      this.Study.purchase();
+      this.StudyInstance.purchase();
       this.isBought = true;
     },
   },
@@ -60,7 +61,7 @@ export default {
   <div class="l-prim-study__positioning" :style="position">
     <div class="l-prim-study-id">
       <span class="c-prim-study-id">
-        {{ StudyInstance.id }} {{ imperativeIsBought }}
+        {{ StudyInstance.id }} {{ imperativeIsBought }} {{ isAvailable }} {{ isBought }}
       </span>
     </div>
     <button

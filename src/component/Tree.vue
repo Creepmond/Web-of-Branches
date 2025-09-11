@@ -14,21 +14,21 @@ export default {
     },
   },
   methods: {
-    checkImperativeState(id) {
-      const derivatives = Study(id).allDerivative;
-      derivatives.forEach(study => {
-        this.studyImperativeObject[ study.id ] = true;
-      })
-    },
-    studyImperativeIsBought(id) {
-      if (rmRef(id) !== rmRef([0,0])) {
-        return this.studyImperativeObject[ rmRef(id) ]
-      } else {
-        return true;
-      }
-    },
     position(coord) {
       return `inset: ${coord[0] * 250}px auto auto ${coord[1] * 360}px`
+    },
+    checkImperativeState(id) {
+      if (id) {
+        const derivative_ids = Study(id).allDerivative;
+        derivative_ids.forEach(study => {
+          this.studyImperativeObject[ rmRef(study) ] = true;
+        });
+      } else {
+        this.studyImperativeObject[ rmRef([0,0]) ] = true;
+      }
+    },
+    studyImperativeIsBought(id) {
+      return this.studyImperativeObject[ rmRef(id) ];
     },
   },
   created() {

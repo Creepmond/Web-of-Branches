@@ -2,4 +2,5 @@
 // for Prototypes, not window[key] type global)
 
 import "./extension.js";
+import "./expression.js";
 import "./format.js";
