@@ -6,7 +6,7 @@ Array.prototype.first = function() {
    return this[0];
 }
 
-Array.prototype.last = function(array) {
+Array.prototype.last = function() {
    return this.toReversed().first();
 }
 

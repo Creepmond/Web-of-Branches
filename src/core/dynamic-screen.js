@@ -1,4 +1,4 @@
-// TODO: Include screen slipperiness (sliding) (optional for users), zoom support, dynamic CSS stuff (Header's shadow is affected by movement) (optional for users). Motion Parallax (Background)
+// TODO: Include screen slipperiness (sliding) (optional for users), zoom support (mobile: two-finger, laptop: pad, pc: mouse wheel), dynamic CSS stuff (Header's shadow is affected by movement) (optional for users). Motion Parallax (Background)
 //* Wow, this guy likes to trouble himself
 
 const htmlDOM = document.querySelector('html');
@@ -19,7 +19,7 @@ htmlDOM.addEventListener('mouseup', handleEnd);
 
 function handleStart(event) {
    const figure = player.hidden.isTouchscreen
-      ? event.touches.first()
+      ? event.touches[0]
       : event;
 
    initMouseCoord = { X: figure.pageX, Y: figure.pageY };
@@ -32,7 +32,7 @@ function handleStart(event) {
 
 function handleCoordinates(event) {
    const figure = player.hidden.isTouchscreen
-      ? event.touches.first()
+      ? event.touches[0]
       : event;
 
    const deltaCoord = {

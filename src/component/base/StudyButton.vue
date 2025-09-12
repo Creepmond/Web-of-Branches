@@ -22,11 +22,11 @@ export default {
       const state = 'o-prim-study--';
 
       if (this.isBought) {
-        return state + 'available';
+        return state + 'bought';
       } else if (this.imperativeIsBought && this.isAvailable) {
-        return state + 'unavailable';
+        return state + 'available';
       } else {
-        return state + 'obfuscated';
+        return state + 'unavailable';
       }
     },
     position() {
