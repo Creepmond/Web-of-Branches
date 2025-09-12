@@ -53,4 +53,13 @@ class StudyState extends GameMechanicState {
  * @returns the study state.
  */
 const Study = StudyState.createAccessor(GameData.regularStudy);
+
+Study.allId = function() {
+   const all_id = [];
+   GameData.regularStudy.forEach(study => {
+      all_id.push(study.id);
+   });
+   return all_id;
+};
+
 export default Study;

@@ -26,8 +26,8 @@ function handleStart(event) {
    initBodyCoord = { X: findWindowCoord('left'), Y: findWindowCoord('top') };
 
    player.hidden.isTouchscreen
-   ? window.addEventListener('touchmove', handleCoordinates)
-   : window.addEventListener('mousemove', handleCoordinates);
+   ? htmlDOM.addEventListener('touchmove', handleCoordinates)
+   : htmlDOM.addEventListener('mousemove', handleCoordinates);
 }
 
 function handleCoordinates(event) {
@@ -51,8 +51,8 @@ function handleCoordinates(event) {
 
 function handleEnd() {
    player.hidden.isTouchscreen
-   ? window.removeEventListener('touchmove', handleCoordinates)
-   : window.removeEventListener('mousemove', handleCoordinates);
+   ? htmlDOM.removeEventListener('touchmove', handleCoordinates)
+   : htmlDOM.removeEventListener('mousemove', handleCoordinates);
 }
 
 /**

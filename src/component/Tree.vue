@@ -10,13 +10,10 @@ export default {
   }},
   computed: {
     visibleStudies() {
-      return GameData.regularStudy;
+      return Study.allId();
     },
   },
   methods: {
-    position(coord) {
-      return `inset: ${coord[0] * 250}px auto auto ${coord[1] * 360}px`
-    },
     checkImperativeState(id) {
       if (id) {
         const derivative_ids = Study(id).allDerivative;
@@ -30,9 +27,12 @@ export default {
     studyImperativeIsBought(id) {
       return this.studyImperativeObject[ rmRef(id) ];
     },
+    visibleStudiesAAAAAAAAAAAAAAAA() {
+
+    },
   },
   created() {
-    GameData.regularStudy.forEach(study => {
+    Study.allId().forEach(study => {
       this.studyImperativeObject[ rmRef(study.id) ] = false;
     });
   },
@@ -46,10 +46,9 @@ export default {
   <div class="l-tree">
     <StudyButton
       v-for="study of visibleStudies"
-      :position="position(study.id)"
-      :id="study.id"
-      @purchase="checkImperativeState(study.id)"
-      :imperative-is-bought="studyImperativeIsBought(study.id)"
+      :id="study"
+      @purchase="checkImperativeState(study)"
+      :imperative-is-bought="studyImperativeIsBought(study)"
     />
   </div>
 </template>

@@ -5,7 +5,6 @@ export default {
   name: "StudyButton",
   props: {
     id: Array,
-    position: String,
     imperativeIsBought: Boolean,
   },
   components: { StudyButtonFace, },
@@ -23,16 +22,20 @@ export default {
       const state = 'o-prim-study--';
 
       if (this.isBought) {
-        return state + 'bought';
-      } else if (this.imperativeIsBought && this.isAvailable) {
         return state + 'available';
-      } else {
+      } else if (this.imperativeIsBought && this.isAvailable) {
         return state + 'unavailable';
+      } else {
+        return state + 'obfuscated';
       }
+    },
+    position() {
+      return `inset: ${this.id[0] * 250}px auto auto ${this.id[1] * 360}px`
     },
   },
   watch: {
     imperativeIsBought() {
+      this.StudyInstance.imperativeIsBought = true;
       this.update();
     },
   },
@@ -40,7 +43,6 @@ export default {
     update() {
       if (this.isBought || !this.imperativeIsBought) return;
 
-      console.log('hi')
       this.isAvailable = player.seed.gte(this.StudyInstance.cost);
 
       this.frameId = requestAnimationFrame(this.update);
@@ -121,6 +123,11 @@ export default {
   position: absolute;
 
   z-index: -1;
+}
+
+.o-prim-study--obfuscated,
+.o-prim-study--obfuscated span {
+  cursor: move
 }
 
 .o-prim-study--available {
