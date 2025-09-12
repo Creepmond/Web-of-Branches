@@ -32,12 +32,17 @@ class StudyState extends GameMechanicState {
       return this.data.cost;
    }
 
-   get effect() {
-      return this.isBought ? this.data.effect.value : DC.D0;
-   }
-
    get effectInfo() {
       return this.data.effect;
+   }
+
+   get effect() {
+      const effectType = this.data.effect.type;
+
+      switch (effectType) {
+         case 'passiveRate': return this.isBought ? this.data.effect.value : DC.D0;
+         case 'multiplier': return this.isBought ? this.data.effect.value : DC.D1; 
+      }
    }
 
    purchase() {

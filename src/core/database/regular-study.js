@@ -9,7 +9,7 @@ export const regularStudy = [
       description: "Plant the first Seed",
       specify: "Reap the Seed after 4s",
       effect() { setTimeout() },
-      cost: DC.D1,
+      cost: DC.D0,
    },
 
    {
