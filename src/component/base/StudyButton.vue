@@ -12,7 +12,7 @@ export default {
     isAvailable: false,
     isBought: false,
 
-    frameId: null,
+    frameId: 0,
   }},
   computed: {
     StudyInstance() {
@@ -57,6 +57,11 @@ export default {
       this.StudyInstance.purchase();
       this.isBought = true;
     },
+    changeLastHoveredStudy() {
+      if ( rmRef(player.lastHoveredStudy) === rmRef(this.id) ) return;
+
+      player.lastHoveredStudy = this.id;
+    },
   },
 };
 </script>
@@ -72,7 +77,9 @@ export default {
       class="o-prim-study"
       :class="availabilityClass"
       @click="purchase"
-    >
+      @mouseenter="changeLastHoveredStudy"
+    > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
+    anyway so idk -->
       <StudyButtonFace
         :name="StudyInstance.name"
         :desc="StudyInstance.description"

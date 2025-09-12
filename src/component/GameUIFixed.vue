@@ -29,11 +29,4 @@ export default {
 
   z-index: 2;
 }
-
-.o-fixed-ui::after {
-  content: '';
-  
-  position: absolute;
-  inset: 0;
-}
 </style>

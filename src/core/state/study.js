@@ -33,7 +33,11 @@ class StudyState extends GameMechanicState {
    }
 
    get effect() {
-      return this.isBought ? this.data.effect : DC.D0;
+      return this.isBought ? this.data.effect.value : DC.D0;
+   }
+
+   get effectInfo() {
+      return this.data.effect;
    }
 
    purchase() {

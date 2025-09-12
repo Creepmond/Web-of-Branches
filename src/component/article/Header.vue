@@ -3,7 +3,8 @@ export default {
   name: "Header",
   data() { return {
     seed: 0,
-    frameId: null,
+
+    frameId: 0,
   }},
   computed: {
     seedAmount() {
@@ -33,5 +34,12 @@ export default {
 <style>
 .o-header {
   inset: 10px auto auto 10px;
+}
+
+.o-header::after {
+  content: '';
+  
+  position: absolute;
+  inset: 0;
 }
 </style>

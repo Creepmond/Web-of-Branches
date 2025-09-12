@@ -19,7 +19,11 @@ export const regularStudy = [
       imperative: [0, 0],
       description: "Slowly produce Seeds",
       get specify() { return `Increase Seeds rate by ${formatPassRate(1)}` },
-      effect: DC.D1,
+      effect: {
+         value: DC.D1,
+         type: 'passiveRate',
+         target: 'seed',
+      },
       cost: DC.D1,
    },
 
@@ -38,6 +42,11 @@ export const regularStudy = [
       imperative: [1, 0],
       description: "Boost seed production",
       get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(2)}` },
+      effect: {
+         value: DC.D2,
+         type: 'multiplier',
+         target: 'seed',
+      },
       cost: DC.D7,
    },
 
