@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "SideInfographicStudy",
+  name: "SideMetapanelStudy",
   data() { return {
     Study: undefined,
 
@@ -22,13 +22,13 @@ export default {
 
 <template>
   <div v-if="Study">
-    <div class="l-infographic-study-header">
+    <div class="l-metapanel-study-header">
       <span class="c-study-header">
         <span class="c-study-name" v-html="Study.name" />
         <span class="c-study-id">{{ Study.id }}</span>
       </span>
     </div>
-    <div class="l-infographic-study-data">
+    <div class="l-metapanel-study-data">
       <span class="c-study-data">
         <span class="c-study-data-semantic">Description:</span>
         {{ Study.description }}
@@ -51,7 +51,7 @@ export default {
 </template>
 
 <style>
-.l-infographic-study-header {
+.l-metapanel-study-header {
   font-size: 1.4em;
 }
 
@@ -61,7 +61,7 @@ export default {
   vertical-align: super;
 }
 
-.l-infographic-study-data > * {
+.l-metapanel-study-data > * {
   text-align: start;
 
   display: block;

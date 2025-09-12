@@ -1,12 +1,12 @@
 <script>
 import Header from "@/component/article/Header.vue";
-import SideInfographic from "@/component/article/SideInfographic.vue";
+import SideMetapanel from "@/component/article/SideMetapanel.vue";
 
 export default {
   name: "GameUIFixed",
   components: {
     Header,
-    SideInfographic,
+    SideMetapanel,
   },
 };
 </script>
@@ -16,9 +16,9 @@ export default {
 
   <!-- Fixed UI (Anything that covers a lot of the screen in general, really) is something Mobile
   is crying about. There should be a particular handler when dealing with the rest of Fixed
-  UI (e.g., Infographics, and such if any more are alike). It can be dealt with for a Settings
+  UI (e.g., Metapanel, and such if any more are alike). It can be dealt with for a Settings
   Modal, or something. -->
-  <SideInfographic />
+  <SideMetapanel />
 </template>
 
 <style>

@@ -71,17 +71,17 @@ span {
 
 
 
-/*# Sidebar Infographic */
+/*# Sidebar Metapanel */
 
-.o-sidebar-infographic {
+.o-sidebar-metapanel {
   background-color: var(--color-grey);
 }
 
-.c-infographic-content > div {
+.c-metapanel-content > div {
   background-color: var(--color-grey-acc);
 }
 
-/*# END - Sidebar Infographic*/
+/*# END - Sidebar Metapanel*/
 
 
 
