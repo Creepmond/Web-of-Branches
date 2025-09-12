@@ -7,7 +7,9 @@ export const regularStudy = [
       derivative: [ [1, 0] ],
       imperative: [],
       description: "Plant the first Seed",
-      cost: DC.D0,
+      specify: "Reap the Seed after 4s",
+      effect() { setTimeout() },
+      cost: DC.D1,
    },
 
    {

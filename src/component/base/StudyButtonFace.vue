@@ -2,18 +2,9 @@
 export default {
   name: "StudyButtonFace",
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    desc: {
-      type: String,
-      required: true,
-    },
-    cost: {
-      type: Decimal,
-      required: true,
-    },
+    name: String,
+    desc: String,
+    cost: Decimal,
   },
   computed: {
     studyCost() {
