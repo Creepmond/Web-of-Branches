@@ -37,9 +37,8 @@ export default {
     },
   },
   watch: {
-    isAvailable(value) {
-      console.log(`${this.id} is Available: ${value}`)
-      this.StudyInstance.isAvailable = value;
+    isAvailable() {
+      this.StudyInstance.isAvailable = true;
       this.$emit('available', this.id);
     },
     imperativeIsBought() {
@@ -56,7 +55,7 @@ export default {
       this.frameId = requestAnimationFrame(this.update);
     },
     purchase() {
-      // if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;
+      if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;
 
       this.$emit('purchase', this.id);
 
@@ -90,7 +89,7 @@ export default {
     > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
     anyway so idk -->
       <StudyButtonFace
-        :isObfuscated="imperativeIsAvailable"
+        :isObfuscated="false"
         :rawName="StudyInstance.name"
         :rawDesc="StudyInstance.description"
         :cost="StudyInstance.cost"
