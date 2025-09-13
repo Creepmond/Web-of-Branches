@@ -11,6 +11,7 @@ let initBodyCoord = { X: 0, Y: 0 };
 htmlDOM.addEventListener('touchstart', () => { player.hidden.isTouchscreen = true; })
 htmlDOM.addEventListener('mousedown', () => { player.hidden.isTouchscreen = false; })
 
+/* check pointerstart, pointerdown if it can refactor this mess */
 htmlDOM.addEventListener('touchstart', handleStart);
 htmlDOM.addEventListener('touchend', handleEnd);
 

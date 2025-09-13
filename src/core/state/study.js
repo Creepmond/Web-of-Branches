@@ -5,6 +5,7 @@ class StudyState extends GameMechanicState {
    constructor(data) {
       super(data)
       
+      this.isAvailable = false;
       this.imperativeIsBought = false;
    }
 

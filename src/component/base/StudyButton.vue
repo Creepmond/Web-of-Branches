@@ -6,6 +6,7 @@ export default {
   props: {
     id: Array,
     imperativeIsBought: Boolean,
+    imperativeIsAvailable: Boolean,
   },
   components: { StudyButtonFace, },
   data() { return {
@@ -25,15 +26,22 @@ export default {
         return state + 'bought';
       } else if (this.imperativeIsBought && this.isAvailable) {
         return state + 'available';
-      } else {
+      } else if (this.imperativeIsAvailable) {
         return state + 'unavailable';
-      }
+      } else {
+        return state + 'obfuscated';
+      };
     },
     position() {
       return `inset: ${this.id[0] * 250}px auto auto ${this.id[1] * 360}px`
     },
   },
   watch: {
+    isAvailable(value) {
+      console.log(`${this.id} is Available: ${value}`)
+      this.StudyInstance.isAvailable = value;
+      this.$emit('available', this.id);
+    },
     imperativeIsBought() {
       this.StudyInstance.imperativeIsBought = true;
       this.update();
@@ -48,7 +56,7 @@ export default {
       this.frameId = requestAnimationFrame(this.update);
     },
     purchase() {
-      if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;
+      // if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;
 
       this.$emit('purchase', this.id);
 
@@ -58,6 +66,7 @@ export default {
       this.isBought = true;
     },
     changeLastHoveredStudy() {
+      if ( !this.imperativeIsAvailable ) return;
       if ( rmRef(player.lastHoveredStudy) === rmRef(this.id) ) return;
 
       player.lastHoveredStudy = this.id;
@@ -70,7 +79,7 @@ export default {
   <div class="l-prim-study__positioning" :style="position">
     <div class="l-prim-study-id">
       <span class="c-prim-study-id">
-        {{ StudyInstance.id }}
+        {{ id }}
       </span>
     </div>
     <button
@@ -81,8 +90,9 @@ export default {
     > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
     anyway so idk -->
       <StudyButtonFace
-        :name="StudyInstance.name"
-        :desc="StudyInstance.description"
+        :isObfuscated="imperativeIsAvailable"
+        :rawName="StudyInstance.name"
+        :rawDesc="StudyInstance.description"
         :cost="StudyInstance.cost"
       />
     </button>

@@ -11,6 +11,9 @@
 }
 
 html {
+  /*! This is probably the cause why Mobile expands, while other devices don't: Computers, in fact, still */
+  /*! do expand, it's just overflow might only stop it happening to Computers, while it doesn't affect */
+  /*! Mobile. */
   overflow: hidden;
 }
 

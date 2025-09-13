@@ -6,7 +6,8 @@ export default {
   name: "Tree",
   components: { StudyButton, },
   data() { return {
-    studyImperativeObject: {},
+    imperativeBoughtObject: {},
+    imperativeAvailableObject: {},
   }},
   computed: {
     visibleStudies() {
@@ -14,30 +15,41 @@ export default {
     },
   },
   methods: {
-    checkImperativeState(id) {
+    checkStudyBoughtState(id) {
       if (id) {
         const derivative_ids = Study(id).allDerivative;
+
         derivative_ids.forEach(study => {
-          this.studyImperativeObject[ rmRef(study) ] = true;
+          this.imperativeBoughtObject[ rmRef(study) ] = true;
         });
       } else {
-        this.studyImperativeObject[ rmRef([0,0]) ] = true;
+        // Should have a special handler for when Storage is implemented
+        this.imperativeBoughtObject[ rmRef([0,0]) ] = true;
+        this.imperativeAvailableObject[ rmRef([0,0]) ] = true;
       }
     },
-    studyImperativeIsBought(id) {
-      return this.studyImperativeObject[ rmRef(id) ];
-    },
-    visibleStudiesAAAAAAAAAAAAAAAA() {
+    checkStudyAvailableState(id) {
+      const derivative_ids = Study(id).allDerivative;
 
+      derivative_ids.forEach(study => {
+        this.imperativeAvailableObject[ rmRef(study) ] = Study(id).isAvailable;
+      })
+    },
+    imperativeIsBought(id) {
+      return this.imperativeBoughtObject[ rmRef(id) ];
+    },
+    imperativeIsAvailable(id) {
+      return this.imperativeAvailableObject[ rmRef(id) ];
     },
   },
-  created() {
+  beforeMount() {
     Study.allId().forEach(study => {
-      this.studyImperativeObject[ rmRef(study.id) ] = false;
+      this.imperativeBoughtObject[ rmRef(study) ] = false;
+      this.imperativeAvailableObject[ rmRef(study) ] = false;
     });
   },
   mounted() {
-    this.checkImperativeState();
+    this.checkStudyBoughtState();
   },
 };
 </script>
@@ -47,8 +59,10 @@ export default {
     <StudyButton
       v-for="study of visibleStudies"
       :id="study"
-      @purchase="checkImperativeState(study)"
-      :imperative-is-bought="studyImperativeIsBought(study)"
+      @purchase="checkStudyBoughtState(study)"
+      @available="checkStudyAvailableState(study)"
+      :imperativeIsBought="imperativeIsBought(study)"
+      :imperativeIsAvailable="imperativeIsAvailable(study)"
     />
   </div>
 </template>

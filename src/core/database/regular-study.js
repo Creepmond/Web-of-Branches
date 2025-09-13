@@ -41,9 +41,9 @@ export const regularStudy = [
       derivative: [ [3, 1] ],
       imperative: [1, 0],
       description: "Boost seed production",
-      get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(2)}` },
+      get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(3)}` },
       effect: {
-         value: DC.D2,
+         value: DC.D3,
          type: 'multiplier',
          target: 'seed',
       },
