@@ -8,6 +8,7 @@ export default {
     imperativeIsBought: Boolean,
     imperativeIsAvailable: Boolean,
   },
+  emits: ['purchase', 'available'],
   components: { StudyButtonFace, },
   data() { return {
     isAvailable: false,
@@ -26,7 +27,7 @@ export default {
         return state + 'bought';
       } else if (this.imperativeIsBought && this.isAvailable) {
         return state + 'available';
-      } else if (this.imperativeIsAvailable) {
+      } else if (this.imperativeIsAvailable || this.imperativeIsBought) {
         return state + 'unavailable';
       } else {
         return state + 'obfuscated';
@@ -37,8 +38,8 @@ export default {
     },
   },
   watch: {
-    isAvailable() {
-      this.StudyInstance.isAvailable = true;
+    isAvailable(value) {
+      this.StudyInstance.isAvailable = value;
       this.$emit('available', this.id);
     },
     imperativeIsBought() {
@@ -63,6 +64,7 @@ export default {
 
       this.StudyInstance.purchase();
       this.isBought = true;
+      this.isAvailable = false;
     },
     changeLastHoveredStudy() {
       if ( !this.imperativeIsAvailable ) return;
@@ -89,7 +91,7 @@ export default {
     > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
     anyway so idk -->
       <StudyButtonFace
-        :isObfuscated="false"
+        :isObfuscated="!imperativeIsAvailable"
         :rawName="StudyInstance.name"
         :rawDesc="StudyInstance.description"
         :cost="StudyInstance.cost"

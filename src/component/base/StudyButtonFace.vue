@@ -1,4 +1,14 @@
 <script>
+// Reads for <sup>, </sup>, <sub>, and </sub>, if a Study ever uses it.
+const rawTextRegex = /<\/?su[pb]>/g;
+
+// Transition time (ms) for unobfuscating
+const unobfuscationSpan = 1000;
+
+// Non-reactive variables
+let rawaName = '';
+let rawaDesc = '';
+
 export default {
   name: "StudyButtonFace",
   props: {
@@ -10,44 +20,63 @@ export default {
   data() { return {
     name: '',
   }},
+  /*
   watch: {
     isObfuscated(value) {
-      if (value) {
-        this.name = this.obfuscateText(this.name);
-      } else {
-        this.stirText()
-        this.name = this.rawName;
-      };
+      if (value) return;
+
+      this.stirName();
     },
   },
+  */
   computed: {
     studyCost() {
       return format(this.cost);
     },
   },
   methods: {
-    obfuscateText(text) {
-      return text
-        .replaceAll(/<\/?sup>/g, '')
-        .split('')
-        .map( char => char.caesar() )
-        .join('');
-    },
-    stirText(text) {
-      set
+    stirName() {
+      /*
+      const tickrate = unobfuscationSpan / this.name.length;
+
+      const charsNotReturned = rawName.split('');
+      const charsToReturn = this.name.split('');
+
+      const mappedChar = new Map();
+      charsToReturn.forEach(char => {
+        mappedChar.set(charsNotReturned[char], charsToReturn[char]);
+      });
+      */
+
+      /*
+      const handleTick = () => {
+        const char = charsNotReturned.random();
+        this.name = 0;
+
+        this.name === rawName
+          ? this.name = this.rawName
+          : setTimeout(handleTick, tickrate);
+      }
+
+      setTimeout(handleTick, tickrate);
+      */
     }
   },
   mounted() {
     if (!this.isObfuscated) return;
 
-    this.obfuscateText();
-  }
+    // rawName = this.rawName.replaceAll(rawTextRegex, '');
+    // this.name = this.name.obfuscateAll();
+  },
 };
 </script>
 
 <template>
   <div class="l-prim-study l-prim-study-header">
-    <span class="c-prim-study-name" v-html="rawName" />
+    <span
+      class="c-prim-study-name"
+      v-html="rawName"
+    />
   </div>
   <div class="l-prim-study">
     <span class="c-prim-study-info">

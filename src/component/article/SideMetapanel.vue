@@ -17,6 +17,8 @@ export default {
 
 <style>
 .o-fixed-ui.o-sidebar-metapanel {
+  max-width: 50vw;
+  
   padding: 0;
   border-radius: 10px 0 10px 10px;
 

@@ -15,25 +15,18 @@ export default {
     },
   },
   methods: {
-    checkStudyBoughtState(id) {
+    checkStudyState(id) {
       if (id) {
         const derivative_ids = Study(id).allDerivative;
 
         derivative_ids.forEach(study => {
-          this.imperativeBoughtObject[ rmRef(study) ] = true;
+          this.imperativeAvailableObject[ rmRef(study) ] = Study(id).isAvailable;
+          this.imperativeBoughtObject[ rmRef(study) ] = Study(id).isBought;
         });
       } else {
         // Should have a special handler for when Storage is implemented
         this.imperativeBoughtObject[ rmRef([0,0]) ] = true;
-        this.imperativeAvailableObject[ rmRef([0,0]) ] = true;
       }
-    },
-    checkStudyAvailableState(id) {
-      const derivative_ids = Study(id).allDerivative;
-
-      derivative_ids.forEach(study => {
-        this.imperativeAvailableObject[ rmRef(study) ] = Study(id).isAvailable;
-      })
     },
     imperativeIsBought(id) {
       return this.imperativeBoughtObject[ rmRef(id) ];
@@ -49,7 +42,7 @@ export default {
     });
   },
   mounted() {
-    this.checkStudyBoughtState();
+    this.checkStudyState();
   },
 };
 </script>
@@ -59,8 +52,8 @@ export default {
     <StudyButton
       v-for="study of visibleStudies"
       :id="study"
-      @purchase="checkStudyBoughtState(study)"
-      @available="checkStudyAvailableState(study)"
+      @purchase="checkStudyState(study)"
+      @available="checkStudyState(study)"
       :imperativeIsBought="imperativeIsBought(study)"
       :imperativeIsAvailable="imperativeIsAvailable(study)"
     />
