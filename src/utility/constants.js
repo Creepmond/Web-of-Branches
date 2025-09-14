@@ -1,3 +1,5 @@
+export const origin = rmRef([0, 0]);
+
 export const DC = {
 	DM1:                  new Decimal("-1"),
 	D0:                   new Decimal("0"),

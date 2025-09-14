@@ -3,11 +3,7 @@
 const rawTextRegex = /<\/?su[pb]>/g;
 
 // Transition time (ms) for unobfuscating
-const unobfuscationSpan = 1000;
-
-// Non-reactive variables
-let rawaName = '';
-let rawaDesc = '';
+const unobfuscationSpan = 300;
 
 export default {
   name: "StudyButtonFace",
@@ -18,55 +14,67 @@ export default {
     cost: Decimal,
   },
   data() { return {
+    cleanName: '',
+    cleanDesc: '',
     name: '',
+    desc: '',
   }},
-  /*
   watch: {
-    isObfuscated(value) {
-      if (value) return;
+    isObfuscated: {
+      handler(value) {
+        if (value) return;
 
-      this.stirName();
+        this.stirStudyText('name', this.cleanName, this.rawName);
+        this.stirStudyText('desc', this.cleanDesc, this.rawDesc);
+      },
     },
   },
-  */
   computed: {
     studyCost() {
       return format(this.cost);
     },
   },
   methods: {
-    stirName() {
-      /*
-      const tickrate = unobfuscationSpan / this.name.length;
+    stirStudyText(targetKey, cleanText, rawText) {
+      const tickrate = unobfuscationSpan / this[targetKey].length;
 
-      const charsNotReturned = rawName.split('');
-      const charsToReturn = this.name.split('');
+      const charToReturn = cleanText.split('');
+      const charNotReturned = this[targetKey].split('');
 
-      const mappedChar = new Map();
-      charsToReturn.forEach(char => {
-        mappedChar.set(charsNotReturned[char], charsToReturn[char]);
+      const mappedChar = [];
+      charToReturn.forEach((_, index) => {
+        mappedChar.push({
+          toReturn: charToReturn[index],
+          notReturned: charNotReturned[index], 
+        });
       });
-      */
 
-      /*
       const handleTick = () => {
-        const char = charsNotReturned.random();
-        this.name = 0;
+        const char = mappedChar.random();
+        const mappedText = this[targetKey].split('');
+        mappedText[mappedChar.indexOf(char)] = char.toReturn;
 
-        this.name === rawName
-          ? this.name = this.rawName
+        this[targetKey] = mappedText.join('');
+
+        this[targetKey] === cleanText
+          ? this[targetKey] = rawText
           : setTimeout(handleTick, tickrate);
       }
 
       setTimeout(handleTick, tickrate);
-      */
     }
   },
   mounted() {
-    if (!this.isObfuscated) return;
+    this.cleanName = this.rawName.replaceAll(rawTextRegex, '');
+    this.cleanDesc = this.rawDesc.replaceAll(rawTextRegex, '');
 
-    // rawName = this.rawName.replaceAll(rawTextRegex, '');
-    // this.name = this.name.obfuscateAll();
+    if (this.isObfuscated) {
+      this.name = this.cleanName.obfuscateAll();
+      this.desc = this.cleanDesc.obfuscateAll();
+    } else {
+      this.name = this.cleanName;
+      this.desc = this.cleanDesc;
+    }
   },
 };
 </script>
@@ -75,14 +83,18 @@ export default {
   <div class="l-prim-study l-prim-study-header">
     <span
       class="c-prim-study-name"
-      v-html="rawName"
+      v-html="name"
     />
   </div>
   <div class="l-prim-study">
-    <span class="c-prim-study-info">
-      {{ rawDesc }}
-    </span>
-    <span class="c-prim-study-info">
+    <span
+      class="c-prim-study-info"
+      v-html="desc"
+    />
+    <span
+      v-if="!isObfuscated"
+      class="c-prim-study-info"
+    >
       Cost: {{ studyCost }} Seed
     </span>
   </div>

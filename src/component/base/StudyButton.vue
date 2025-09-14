@@ -42,9 +42,12 @@ export default {
       this.StudyInstance.isAvailable = value;
       this.$emit('available', this.id);
     },
-    imperativeIsBought() {
-      this.StudyInstance.imperativeIsBought = true;
-      this.update();
+    imperativeIsBought: {
+      handler() {
+        this.StudyInstance.imperativeIsBought = true;
+        this.update();
+      },
+      immediate: true,
     },
   },
   methods: {

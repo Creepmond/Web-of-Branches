@@ -3,5 +3,4 @@
 
 import "./math.js";
 import "./extension.js";
-import "./expression.js";
 import "./format.js";

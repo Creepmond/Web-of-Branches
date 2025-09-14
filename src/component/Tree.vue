@@ -2,6 +2,8 @@
 import StudyButton from "@/component/base/StudyButton.vue";
 import Study from "@/core/state/study";
 
+import { origin } from "@/utility/constants.js";
+
 export default {
   name: "Tree",
   components: { StudyButton, },
@@ -20,12 +22,20 @@ export default {
         const derivative_ids = Study(id).allDerivative;
 
         derivative_ids.forEach(study => {
-          this.imperativeAvailableObject[ rmRef(study) ] = Study(id).isAvailable;
+          this.imperativeAvailableObject[ rmRef(study) ] = true;
           this.imperativeBoughtObject[ rmRef(study) ] = Study(id).isBought;
         });
       } else {
         // Should have a special handler for when Storage is implemented
-        this.imperativeBoughtObject[ rmRef([0,0]) ] = true;
+        this.imperativeBoughtObject[origin] = true;
+        this.imperativeAvailableObject[origin] = true;
+        
+        // This is terrible, what else is new
+        const originDerivative_ids = Study([0,0]).allDerivative;
+
+        originDerivative_ids.forEach(study => {
+          this.imperativeAvailableObject[ rmRef(study) ] = true;
+        });
       }
     },
     imperativeIsBought(id) {
@@ -35,13 +45,13 @@ export default {
       return this.imperativeAvailableObject[ rmRef(id) ];
     },
   },
-  beforeMount() {
+  created() {
     Study.allId().forEach(study => {
       this.imperativeBoughtObject[ rmRef(study) ] = false;
       this.imperativeAvailableObject[ rmRef(study) ] = false;
     });
   },
-  mounted() {
+  beforeMount() {
     this.checkStudyState();
   },
 };
