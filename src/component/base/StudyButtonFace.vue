@@ -3,7 +3,7 @@
 const rawTextRegex = /<\/?su[pb]>/g;
 
 // Transition time (ms) for unobfuscating
-const unobfuscationSpan = 300;
+const unobfuscationSpan = 1000;
 
 export default {
   name: "StudyButtonFace",

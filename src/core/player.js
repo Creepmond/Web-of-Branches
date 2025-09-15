@@ -6,6 +6,7 @@ window.player = {
    lastHoveredStudy: [],
    option: {
       tickrate: 33,
+      zoomLevel: 1,
    },
    hidden: {
       isTouchscreen: false,

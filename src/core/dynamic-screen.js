@@ -2,14 +2,22 @@
 //* Wow, this guy likes to trouble himself
 
 const htmlDOM = document.querySelector('html');
+const root = document.documentElement;
+// Set: .style.setProperty(name, value)
+// Get: getComputedStyle(root).getPropertyValue(name)
 
 htmlDOM.addEventListener('pointerdown', (e) => {
-   console.log({
-      layer: [e.layerX, e.layerY],
-      page: [e.pageX, e.pageY],
-      client: [e.clientX, e.clientY],
-      offset: [e.offsetX, e.offsetY],
-      screen: [e.screenX, e.screenY],
-      ifYouReallyWantIt: e,
-   });
+   console.log(e.pointerType, e.type);
+
+   htmlDOM.addEventListener('pointermove', logEvent)
 });
+
+htmlDOM.addEventListener('pointerup', (e) => {
+   console.log(e.pointerType, e.type)
+
+   htmlDOM.removeEventListener('pointermove', logEvent)
+}) 
+
+function logEvent(e) {
+   console.log(e.pointerType, e.type)
+}

@@ -13,9 +13,6 @@
   margin: 0;
   outline: 0;
 }
-html {
-  /* overflow: clip; */
-}
 
 body {
   font-size: 20px;
@@ -44,6 +41,8 @@ button span {
 /*# Semantic */
 
 #dynamic-content {
+  cursor: move;
+
   width: 100vw;
   height: 100vh;
 
@@ -56,8 +55,6 @@ button span {
 }
 
 #user-interface {
-  cursor: move;
-
   /* The pixel difference on translate is based on a standard study's half-size */
   transform:
     translate( calc(-140px * var(--zoom-strength)), calc(-80px * var(--zoom-strength)))
@@ -65,8 +62,6 @@ button span {
 }
 
 #background {
-  cursor: move;
-  
   transform: scale( var(--zoom-strength) );
   width: calc(100vw / var(--zoom-strength));
   height: calc(100vh / var(--zoom-strength));
