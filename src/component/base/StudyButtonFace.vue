@@ -101,10 +101,6 @@ export default {
 </template>
 
 <style>
-.l-prim-study__face {
-
-}
-
 .l-prim-study {
   width: fit-content;
   margin: 0 auto;

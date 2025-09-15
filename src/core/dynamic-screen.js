@@ -2,66 +2,14 @@
 //* Wow, this guy likes to trouble himself
 
 const htmlDOM = document.querySelector('html');
-const background = document.getElementById('background');
-const userInterface = document.getElementById('ui-dynamic');
 
-let initMouseCoord = { X: 0, Y: 0 };
-let initBodyCoord = { X: 0, Y: 0 };
-
-htmlDOM.addEventListener('touchstart', () => { player.hidden.isTouchscreen = true; })
-htmlDOM.addEventListener('mousedown', () => { player.hidden.isTouchscreen = false; })
-
-/* check pointerstart, pointerdown if it can refactor this mess */
-htmlDOM.addEventListener('touchstart', handleStart);
-htmlDOM.addEventListener('touchend', handleEnd);
-
-htmlDOM.addEventListener('mousedown', handleStart);
-htmlDOM.addEventListener('mouseup', handleEnd);
-
-function handleStart(event) {
-   const figure = player.hidden.isTouchscreen
-      ? event.touches[0]
-      : event;
-
-   initMouseCoord = { X: figure.pageX, Y: figure.pageY };
-   initBodyCoord = { X: findWindowCoord('left'), Y: findWindowCoord('top') };
-
-   player.hidden.isTouchscreen
-   ? htmlDOM.addEventListener('touchmove', handleCoordinates)
-   : htmlDOM.addEventListener('mousemove', handleCoordinates);
-}
-
-function handleCoordinates(event) {
-   const figure = player.hidden.isTouchscreen
-      ? event.touches[0]
-      : event;
-
-   const deltaCoord = {
-      X: figure.pageX - initMouseCoord.X,
-      Y: figure.pageY - initMouseCoord.Y
-   }
-
-   const bodyCoord = {
-      X: initBodyCoord.X + deltaCoord.X,
-      Y: initBodyCoord.Y + deltaCoord.Y
-   };
-
-   background.style.backgroundPosition = `${bodyCoord.X}px ${bodyCoord.Y}px`;
-   userInterface.style.inset = `${bodyCoord.Y}px auto auto ${bodyCoord.X}px`;
-}
-
-function handleEnd() {
-   player.hidden.isTouchscreen
-   ? htmlDOM.removeEventListener('touchmove', handleCoordinates)
-   : htmlDOM.removeEventListener('mousemove', handleCoordinates);
-}
-
-/**
- * Finds the HTML inset value of the parameter.
- * @param {String} direction 
- * @returns {Number}
- */
-
-export function findWindowCoord(direction) {
-   return Number(getComputedStyle(userInterface)[direction].replace(/[a-z]+/, ''))
-}
+htmlDOM.addEventListener('pointerdown', (e) => {
+   console.log({
+      layer: [e.layerX, e.layerY],
+      page: [e.pageX, e.pageY],
+      client: [e.clientX, e.clientY],
+      offset: [e.offsetX, e.offsetY],
+      screen: [e.screenX, e.screenY],
+      ifYouReallyWantIt: e,
+   });
+});
