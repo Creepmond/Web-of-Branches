@@ -9,40 +9,56 @@ const root = document.documentElement;
 // Set: .style.setProperty(name, value)
 // Get: getComputedStyle(root).getPropertyValue(name)
 
-let mouseCoord = { X: 0, Y: 0, T: 0 };
+let physics = { velocity: 0, angle: 0 };
+let mouseCoordHistory = [];
+
+const coordHistory = [];
 
 htmlDOM.addEventListener('pointerdown', handleStart);
 htmlDOM.addEventListener('pointerup', handleEnd);
 htmlDOM.addEventListener('pointercancel', handleEnd);
 
-let arrayOfVelocities = [];
-
 function handleStart(e) {
-   arrayOfVelocities = [];
+   mouseCoordHistory.push(
+      { X: e.clientX, Y: e.clientY, T: Date.now() }
+   );
 
-   mouseCoord = { X: e.clientX, Y: e.clientY, T: Date.now() };
    htmlDOM.addEventListener('pointermove', handleMove)
 
    player.hidden.isTouchScreen = e.pointerType === 'touch' ? true : false;
 }
 
 function handleMove(e) {
-   const diffMouseCoord = { X: e.clientX, Y: e.clientY, T: Date.now() }
+   mouseCoordHistory.push(
+      { X: e.clientX, Y: e.clientY, T: Date.now() }
+   );
+
+   if (mouseCoordHistory.length > 10) mouseCoordHistory.shift();
+   if (mouseCoordHistory.length < 2) return;
+
+   let initMouseCoord = mouseCoordHistory[0];
+   let diffMouseCoord = mouseCoordHistory[mouseCoordHistory.length - 1];
+
    const delta = {
-      X: diffMouseCoord.X - mouseCoord.X,
-      Y: diffMouseCoord.X - mouseCoord.Y,
-      Interval: diffMouseCoord.T - mouseCoord.T,
+      X: diffMouseCoord.X - initMouseCoord.X,
+      Y: diffMouseCoord.X - initMouseCoord.Y,
+      Interval: diffMouseCoord.T - initMouseCoord.T,
    };
-   const velocity =
+
+   physics.angle = Math.atan2(delta.Y, delta.X) * 180 / Math.PI;
+
+   //! Bit of warning here as we use the fifth and first coord here, though Interval is applied
+   //  so I'm not as sure if it still remains accurate
+   physics.velocity =
       ( Math.sqrt(delta.X ** 2 + delta.Y ** 2) ) / delta.Interval;
 
-   arrayOfVelocities.push(velocity)
+   console.log(physics, mouseCoordHistory);
 }
 
 function handleEnd(e) {
    htmlDOM.removeEventListener('pointermove', handleMove)
-
-   console.log(arrayOfVelocities)
+   
+   mouseCoordHistory = [];
 }
 
 
