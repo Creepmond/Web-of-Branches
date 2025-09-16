@@ -7,6 +7,7 @@ window.player = {
    option: {
       tickrate: 33,
       zoomLevel: 1,
+      screenSlipperiness: 0,
    },
    hidden: {
       isTouchscreen: false,

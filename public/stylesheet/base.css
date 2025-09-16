@@ -14,6 +14,10 @@
   outline: 0;
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
   font-size: 20px;
 }
@@ -49,20 +53,20 @@ button span {
   display: flex;
   justify-content: center;
   align-items: center;
+}
 
-  /* Funny, how, to make it dynamic, I have to make it fixed (to modify its position) */
-  position: absolute;
+#dynamic-content > * {
+  scale: var(--zoom-strength);
 }
 
 #user-interface {
   /* The pixel difference on translate is based on a standard study's half-size */
-  transform:
-    translate( calc(-140px * var(--zoom-strength)), calc(-80px * var(--zoom-strength)))
-    scale( var(--zoom-strength) );
+  translate:
+    calc(-140px * var(--zoom-strength))
+    calc(-80px * var(--zoom-strength));
 }
 
 #background {
-  transform: scale( var(--zoom-strength) );
   width: calc(100vw / var(--zoom-strength));
   height: calc(100vh / var(--zoom-strength));
 
