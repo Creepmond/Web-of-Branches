@@ -4,65 +4,134 @@
 // TODO: (Might be difficult with the HTML structure) Motion Parallax (Background)
 //* Wow, this guy likes to trouble himself
 
-const htmlDOM = document.querySelector('html');
-const root = document.documentElement;
+const       htmlDOM = document.querySelector('html');
+const    background = document.getElementById('background');
+const userInterface = document.getElementById('user-interface');
 // Set: .style.setProperty(name, value)
 // Get: getComputedStyle(root).getPropertyValue(name)
 
-let physics = { velocity: 0, angle: 0 };
+let physics = { velocity: 0, angleAvg: 0, direction: [] };
 let mouseCoordHistory = [];
 
-const coordHistory = [];
+// Based on the initial translate of the #user-interface, you can see details on @/public/stylesheet/
+// base.css at around line 64. I'm too lazy to just base it off from that, so it's better to just deal
+// with this
+const screenCoord = { X: -140, Y: -80 };
+
+const MAX_HISTORY_LENGTH = 5;
 
 htmlDOM.addEventListener('pointerdown', handleStart);
 htmlDOM.addEventListener('pointerup', handleEnd);
-htmlDOM.addEventListener('pointercancel', handleEnd);
+htmlDOM.addEventListener('touchend', handleEnd);
 
 function handleStart(e) {
-   mouseCoordHistory.push(
-      { X: e.clientX, Y: e.clientY, T: Date.now() }
-   );
+   if (e.pointerType === 'mouse') {
+      player.hidden.isTouchscreen = false;
+      
+      htmlDOM.addEventListener('pointerup', handleEnd);
+      htmlDOM.addEventListener('pointermove', handleMove);
+   } else {
+      player.hidden.isTouchscreen = true;
 
-   htmlDOM.addEventListener('pointermove', handleMove)
-
-   player.hidden.isTouchScreen = e.pointerType === 'touch' ? true : false;
+      htmlDOM.removeEventListener('pointerup', handleEnd);
+      htmlDOM.addEventListener('touchmove', handleMove);
+   }
 }
 
 function handleMove(e) {
-   mouseCoordHistory.push(
-      { X: e.clientX, Y: e.clientY, T: Date.now() }
-   );
+   if (e.touches) e = e.touches[0];
 
-   if (mouseCoordHistory.length > 10) mouseCoordHistory.shift();
+   mouseCoordHistory.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
+
    if (mouseCoordHistory.length < 2) return;
+   if (mouseCoordHistory.length > MAX_HISTORY_LENGTH) mouseCoordHistory.shift();
 
-   let initMouseCoord = mouseCoordHistory[0];
-   let diffMouseCoord = mouseCoordHistory[mouseCoordHistory.length - 1];
+   if (player.option.physics.isEnabled) calculatePhysics();
 
+   calculateScreenMovement();
+   plotScreenByCoord();
+}
+
+function handleEnd() {
+   player.hidden.isTouchscreen
+   ? htmlDOM.removeEventListener('touchmove', handleMove)
+   : htmlDOM.removeEventListener('pointermove', handleMove);
+
+   mouseCoordHistory = [];
+
+   if (player.option.physics.isEnabled && player.option.physics.screenSlipperiness > 0)
+      applyScreenSlipperiness()
+}
+
+
+
+function calculatePhysics() {
+   // This actually is forEach but non-inclusive to the final length value, basically only done four
+   // times a trigger when mouseCoordHistory is at full length (5). Probably could've done with
+   // an if (...) { continue }, though I assume that wouldn't be as optimized
+   for (let i = 1; i < mouseCoordHistory.length; i++) {
+      const dx = mouseCoordHistory[i].X - mouseCoordHistory[i-1].X;
+      const dy = mouseCoordHistory[i].Y - mouseCoordHistory[i-1].Y;
+      const length = Math.hypot(dx, dy);
+
+      if (length > 0)
+         physics.direction.push({ X: dx / length, Y: dy / length });
+
+      if (physics.direction.length > MAX_HISTORY_LENGTH)
+         physics.direction.shift();
+   }
+
+   const avgDirection = { X: 0, Y: 0 };
+   const dirLength = physics.direction.length;
+
+   physics.direction.forEach(vector => {
+      avgDirection.X += vector.X;
+      avgDirection.Y += vector.Y;
+   });
+
+   if (dirLength > 0) {
+      avgDirection.X / dirLength;
+      avgDirection.Y / dirLength;
+   }
+
+   physics.angleAvg = Math.atan2(avgDirection.Y, avgDirection.X) * 180 / Math.PI;
+
+   const init = mouseCoordHistory[0];
+   const diff = mouseCoordHistory[mouseCoordHistory.length - 1];
+   
    const delta = {
-      X: diffMouseCoord.X - initMouseCoord.X,
-      Y: diffMouseCoord.X - initMouseCoord.Y,
-      Interval: diffMouseCoord.T - initMouseCoord.T,
+      X: diff.X - init.X,
+      Y: diff.Y - init.Y,
+      T: diff.T - init.T,
    };
 
-   physics.angle = Math.atan2(delta.Y, delta.X) * 180 / Math.PI;
-
-   //! Bit of warning here as we use the fifth and first coord here, though Interval is applied
-   //  so I'm not as sure if it still remains accurate
-   physics.velocity =
-      ( Math.sqrt(delta.X ** 2 + delta.Y ** 2) ) / delta.Interval;
-
-   console.log(physics, mouseCoordHistory);
+   physics.velocity = ( Math.sqrt(delta.X ** 2 + delta.Y ** 2) ) / delta.T;
 }
 
-function handleEnd(e) {
-   htmlDOM.removeEventListener('pointermove', handleMove)
-   
-   mouseCoordHistory = [];
+function calculateScreenMovement() {
+   const L = mouseCoordHistory.length;
+   const init = mouseCoordHistory[L - 2];
+   const diff = mouseCoordHistory[L - 1];
+
+   const delta = {
+      X: diff.X - init.X,
+      Y: diff.Y - init.Y,
+   }
+
+   screenCoord.X += delta.X;
+   screenCoord.Y += delta.Y;
+}
+
+function applyScreenSlipperiness() {
+
 }
 
 
 
+function plotScreenByCoord() {
+   const zoom = player.option.zoomLevel;
+   const style = `${screenCoord.X * zoom}px ${screenCoord.Y * zoom}px`
 
-
-// document.querySelector('#user-interface').style.translate = `${-140 * player.option.zoomLevel}px ${-80 * player.option.zoomLevel}px`; im going to sleep
+   userInterface.style.translate = style;
+   background.style.backgroundPosition = style;
+}

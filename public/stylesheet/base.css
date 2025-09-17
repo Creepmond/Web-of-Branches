@@ -1,9 +1,5 @@
 /*# General */
 
-:root {
-  --zoom-strength: 1;
-}
-
 * {
   user-select: none;
   text-align: center;
@@ -55,20 +51,17 @@ button span {
   align-items: center;
 }
 
-#dynamic-content > * {
-  scale: var(--zoom-strength);
-}
-
 #user-interface {
   /* The pixel difference on translate is based on a standard study's half-size */
-  translate:
-    calc(-140px * var(--zoom-strength))
-    calc(-80px * var(--zoom-strength));
+  translate: -140px -80px;
 }
 
 #background {
-  width: calc(100vw / var(--zoom-strength));
-  height: calc(100vh / var(--zoom-strength));
+  /* Using the same position from #user-interface makes the JS simpler */
+  background-position: -140px -80px;
+
+  width: 100vw;
+  height: 100vh;
 
   position: fixed;
   z-index: -2;
