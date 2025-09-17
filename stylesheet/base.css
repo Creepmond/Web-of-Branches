@@ -11,9 +11,6 @@
 }
 
 html {
-  /*! This is probably the cause why Mobile expands, while other devices don't: Computers, in fact, still */
-  /*! do expand, it's just overflow might only stop it happening to Computers, while it doesn't affect */
-  /*! Mobile. */
   overflow: hidden;
 }
 
@@ -41,25 +38,30 @@ button span {
 
 
 
-
 /*# Semantic */
 
-#ui-dynamic {
+#dynamic-content {
   cursor: move;
-  
-  /* Funny, how, to make it dynamic, I have to make it fixed (to modify its position) */
-  position: absolute;
-  inset: 50vh auto auto 50vw;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#user-interface {
+  /* The pixel difference on translate is based on a standard study's half-size */
+  translate: -140px -80px;
 }
 
 #background {
-  cursor: move;
+  /* Using the same position from #user-interface makes the JS simpler */
+  background-position: -140px -80px;
 
-  /* Annoying visual problem with grid being stretched or squished because of background:
-  repeating-linear-gradient with responsive design biting my... I tried aspect-ratio property
-  paired with some height: max(100vw, 100vh), but seems like I'll need better approach */
-  height: 100%;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
 
   position: fixed;
   z-index: -2;
