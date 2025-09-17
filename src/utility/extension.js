@@ -49,3 +49,21 @@ Set.prototype.hasArray = function(value) {
 };
 
 //# END - Set
+
+
+
+
+
+/*
+//# Number
+
+Number.prototype.toRadian = function() {
+   return this * (Math.PI / 180)
+}
+
+Number.prototype.toDegree = function() {
+   return this * (180 / Math.PI)
+}
+
+//# END - Number
+*/

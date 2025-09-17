@@ -5,11 +5,12 @@ window.player = {
    studyBoughtBits: new Set(),
    lastHoveredStudy: [],
    option: {
+      parallax: 1,
       tickrate: 33,
       zoomLevel: 1,
       physics: {
-         isEnabled: false,
-         screenSlipperiness: 0,
+         isEnabled: true,
+         screenSlipperiness: 0.95,
       },
    },
    hidden: {

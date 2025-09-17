@@ -2,7 +2,7 @@
 import StudyButton from "@/component/base/StudyButton.vue";
 import Study from "@/core/state/study";
 
-import { origin } from "@/utility/constants.js";
+import { originStudy } from "@/utility/constants.js";
 
 export default {
   name: "Tree",
@@ -27,8 +27,8 @@ export default {
         });
       } else {
         // Should have a special handler for when Storage is implemented
-        this.imperativeBoughtObject[origin] = true;
-        this.imperativeAvailableObject[origin] = true;
+        this.imperativeBoughtObject[originStudy] = true;
+        this.imperativeAvailableObject[originStudy] = true;
         
         // This is terrible, what else is new
         const originDerivative_ids = Study([0,0]).allDerivative;
