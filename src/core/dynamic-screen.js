@@ -1,30 +1,30 @@
 // TODO: (InProgress) Zoom support (mobile: two-finger, laptop: pad, pc: mouse wheel)
 // TODO: Dynamic CSS stuff (Header's shadow is affected by movement) (optional)
+// TODO: (on top of other things) make this actually in sync with tickrate (player.option.tickrate)
 //* Wow, this guy likes to trouble himself
 
 const       htmlDOM = document.querySelector('html');
 const    background = document.getElementById('background');
 const userInterface = document.getElementById('user-interface');
-// Set: .style.setProperty(name, value)
-// Get: getComputedStyle(root).getPropertyValue(name)
 
 let physics = { velocity: 0, angleAvg_rad: 0, direction: [] };
 let mouseCoordHistory = [];
 
-const VELOCITY_STRENGTH = 2;
+const VELOCITY_STRENGTH = 1.71;
 const VELOCITY_THRESHOLD = 0.1;
 const MAX_HISTORY_LENGTH = 5;
 
 // Based on the initial translate of the #user-interface, you can see details on @/public/stylesheet/
 // base.css at around line 64. I'm too lazy to just base it off from that, so it's better to just deal
 // with this
-const screenCoord = { X: -140, Y: -80 };
+const screenCoord = player.last.screenCoord || { X: -140, Y: -80 };
 
 htmlDOM.addEventListener('pointerdown', handleStart);
-htmlDOM.addEventListener('pointerup', handleEnd);
 htmlDOM.addEventListener('touchend', handleEnd);
 
 function handleStart(e) {
+   mouseCoordHistory.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
+
    if (e.pointerType === 'mouse') {
       player.hidden.isTouchscreen = false;
       
@@ -46,20 +46,22 @@ function handleMove(e) {
    if (mouseCoordHistory.length < 2) return;
    if (mouseCoordHistory.length > MAX_HISTORY_LENGTH) mouseCoordHistory.shift();
 
-   if (player.option.physics.isEnabled) calculatePhysics();
+   if (player.physics.isEnabled) calculatePhysics();
 
    calculateScreenMovement();
    plotScreenByCoord();
 }
 
 function handleEnd() {
+   player.last.screenCoord = screenCoord;
+
    player.hidden.isTouchscreen
    ? htmlDOM.removeEventListener('touchmove', handleMove)
    : htmlDOM.removeEventListener('pointermove', handleMove);
 
    mouseCoordHistory = [];
 
-   if (player.option.physics.isEnabled && player.option.physics.screenSlipperiness > 0)
+   if (player.physics.isEnabled && player.physics.screenSlipperiness > 0)
       applyScreenSlipperiness()
 }
 
@@ -94,7 +96,7 @@ function calculatePhysics() {
       avgDirection.Y / dirLength;
    }
 
-   physics.angleAvg_rad = Math.atan2(avgDirection.Y, avgDirection.X);
+   physics.angleAvg_rad = Math.atan2(avgDirection.Y, avgDirection.X) 
 
    const init = mouseCoordHistory[0];
    const diff = mouseCoordHistory[mouseCoordHistory.length - 1];
@@ -105,7 +107,7 @@ function calculatePhysics() {
       T: diff.T - init.T,
    };
 
-   physics.velocity = ( Math.sqrt(delta.X ** 2 + delta.Y ** 2) ) / delta.T;
+   physics.velocity = ( Math.sqrt(delta.X ** 2 + delta.Y ** 2) ) / delta.T * VELOCITY_STRENGTH;;
 }
 
 function calculateScreenMovement() {
@@ -126,14 +128,14 @@ function applyScreenSlipperiness() {
    if (physics.velocity < VELOCITY_THRESHOLD) return;
 
    const angle = physics.angleAvg_rad;
-   const velocity = physics.velocity * VELOCITY_STRENGTH;
+   const velocity = physics.velocity;
 
    screenCoord.X += Math.cos(angle) * velocity;
    screenCoord.Y += Math.sin(angle) * velocity;
 
    plotScreenByCoord();
 
-   physics.velocity *= player.option.physics.screenSlipperiness;
+   physics.velocity *= player.physics.screenSlipperiness;
 
    //! For better PCs and such, this effect would last for longer, not sure if I care to apply it
    requestAnimationFrame(applyScreenSlipperiness)
@@ -142,12 +144,19 @@ function applyScreenSlipperiness() {
 
 
 function plotScreenByCoord() {
-   const zoom = player.option.zoomLevel;
    const parallax = player.option.parallax;
+   const zoom = player.option.zoomLevel;
 
    userInterface.style.translate =
-      `${screenCoord.X * zoom}px ${screenCoord.Y * zoom}px`;
+      `${screenCoord.X}px ${screenCoord.Y}px`;
 
    background.style.backgroundPosition =
-      `${screenCoord.X * parallax * zoom}px ${screenCoord.Y * parallax * zoom}px`;
+      `${screenCoord.X * parallax / zoom}px ${screenCoord.Y * parallax / zoom}px`;
+
+   //! I'll probably move this to a seperate Vue handler, when I add Options and such
+   const childElement = document.querySelectorAll('#dynamic-content > *');
+   childElement.forEach(el => { el.style.scale = zoom })
+
+   background.style.height = `${100 / zoom}vh`;
+   background.style.width = `${100 / zoom}vw`;
 }

@@ -71,9 +71,9 @@ export default {
     },
     changeLastHoveredStudy() {
       if ( !this.imperativeIsAvailable ) return;
-      if ( rmRef(player.lastHoveredStudy) === rmRef(this.id) ) return;
+      if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
 
-      player.lastHoveredStudy = this.id;
+      player.last.hoveredStudy = this.id;
     },
   },
 };

@@ -8,8 +8,8 @@ export default {
   }},
   methods: {
     update() {
-      if (player.lastHoveredStudy.length === 2)
-        this.Study = Study(player.lastHoveredStudy);
+      if (player.last.hoveredStudy.length === 2)
+        this.Study = Study(player.last.hoveredStudy);
 
       requestAnimationFrame(this.update)
     },
