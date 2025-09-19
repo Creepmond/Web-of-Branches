@@ -1,3 +1,5 @@
+import { DC } from "../utility/constants.js";
+
 export default function gameloop(handler) {
    setTimeout(tick, player.option.tickrate, handler);
    
@@ -8,10 +10,17 @@ export default function gameloop(handler) {
 };
 
 gameloop(() => {
-   const tickrate = player.option.tickrate;
+   if (Study([1,0]).effect) {
+      const tickrate = player.option.tickrate;
 
-   player.seed = player.seed
-      .add( Study([1,0]).effect.dividedBy(tickrate)
-         .times( Study([2,0.5]).effect )
-      )
+      const boundarySlowdown = player.seed.gt('1')
+         ? player.seed.pow(0.05)
+         : DC.D1;
+
+      Currency.seed.add(
+         Study([1,0]).effect
+            .times( Study([2,0.5]).effect )
+            .div(boundarySlowdown)
+      );
+   };
 });

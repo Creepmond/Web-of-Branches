@@ -39,9 +39,10 @@ class StudyState extends GameMechanicState {
 
    get effect() {
       const effectType = this.data.effect.type;
+      const tickrate = player.option.tickrate;
 
       switch (effectType) {
-         case 'passiveRate': return this.isBought ? this.data.effect.value : DC.D0;
+         case 'passiveRate': return this.isBought ? this.data.effect.value.div(tickrate) : DC.D0;
          case 'multiplier': return this.isBought ? this.data.effect.value : DC.D1; 
       }
    }

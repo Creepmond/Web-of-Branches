@@ -4,9 +4,14 @@ import { isDecimal } from "./typecheck.js";
 //# Decimal
 
 window.format = function(value, places = 0, placesUnder1000 = 0) {
-   value = isDecimal(value) ? value.floor() : Math.floor(value)
+   if (!isDecimal(value)) value = new Decimal(value);
+   if ( value.neq(0) ) {
+      // Here, 0.4 is used rather than 0.5 (for flooring), because it appears like base-format rounds
+      // values exactly at 0.5
+      const dynamicFloorValue = 10 ** (placesUnder1000 * -1) * 0.4;
+      value = value.sub(dynamicFloorValue);
+   }
 
-   if (!isDecimal) value = new Decimal(value);
    return Notation.mixedScientific.format(value, places, placesUnder1000, 3);
 };
 
