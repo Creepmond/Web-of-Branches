@@ -1,4 +1,4 @@
-// TODO: (InProgress) Zoom support (mobile: two-finger, laptop: pad, pc: mouse wheel)
+// TODO: (50%: Halted) Zoom support (mobile: two-finger, laptop: pad, pc: mouse wheel)
 // TODO: Dynamic CSS stuff (Header's shadow is affected by movement) (optional)
 // TODO: (on top of other things) make this actually in sync with tickrate (player.option.tickrate)
 //* Wow, this guy likes to trouble himself
@@ -21,6 +21,8 @@ const screenCoord = player.last.screenCoord || { X: -140, Y: -80 };
 
 htmlDOM.addEventListener('pointerdown', handleStart);
 htmlDOM.addEventListener('touchend', handleEnd);
+
+htmlDOM.addEventListener('wheel', handleZoom)
 
 function handleStart(e) {
    mouseCoordHistory.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
@@ -63,6 +65,28 @@ function handleEnd() {
 
    if (player.physics.isEnabled && player.physics.screenSlipperiness > 0)
       applyScreenSlipperiness()
+}
+
+function handleZoom(e) {
+   //! Sorry for this terrible handling, I'll fix it next time. I'm a bit sleepy already
+   player.option.zoomLevel += e.deltaY / 4000;
+   
+   const zoom = player.option.zoomLevel;
+   if (zoom > 1.5) {
+      player.option.zoomLevel = 1.5;
+      return;
+   } else if (zoom < 0.2) {
+      player.option.zoomLevel = 0.2;
+      return;
+   }
+
+   const childElement = document.querySelectorAll('#dynamic-content > *');
+   childElement.forEach(el => { el.style.scale = zoom })
+
+   // Viewports here are 101 rather than 100 because of fractional pixels causing the very rim to
+   // often not showing properly. Or I'm going insane. Better to be safe than sorry
+   background.style.height = `${101 / zoom}vh`;
+   background.style.width = `${101 / zoom}vw`;
 }
 
 
@@ -152,11 +176,4 @@ function plotScreenByCoord() {
 
    background.style.backgroundPosition =
       `${screenCoord.X * parallax / zoom}px ${screenCoord.Y * parallax / zoom}px`;
-
-   //! I'll probably move this to a seperate Vue handler, when I add Options and such
-   const childElement = document.querySelectorAll('#dynamic-content > *');
-   childElement.forEach(el => { el.style.scale = zoom })
-
-   background.style.height = `${100 / zoom}vh`;
-   background.style.width = `${100 / zoom}vw`;
 }

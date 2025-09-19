@@ -60,8 +60,9 @@ button span {
   /* Using the same position from #user-interface makes the JS simpler */
   background-position: -140px -80px;
 
-  width: 100vw;
-  height: 100vh;
+  /* Another JS thing, see @/core/dynamic-screen.js */
+  width: 101vw;
+  height: 101vh;
 
   position: fixed;
   z-index: -2;

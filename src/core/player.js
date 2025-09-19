@@ -4,7 +4,7 @@ window.player = {
    seed: DC.D1,
    studyBoughtBits: new Set(),
    option: {
-      parallax: 0.6,
+      parallax: 0.8,
       tickrate: 33,
       zoomLevel: 1,
    },
