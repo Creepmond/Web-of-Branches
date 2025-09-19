@@ -1,0 +1,36 @@
+import { DC } from "@/utility/constants.js";
+
+Currency.seed = new class extends Currency {
+   get value() { return player.seed; }
+   set value(value) { player.seed = value }
+};
+
+// Hm, this looks like it probably can be a general Class——I'll leave as is for now, but when
+// Currencies like Shards or Strings get added it'll probably useful. It's only really because
+// I'm not sure how the structure of those Currencies would be a tick why I'm holding out (and
+// of course laziness) (and simply because I haven't seen AD use this kind of structure)
+const Seed = {
+   get passiveRate() {
+      return Study([1,0]).effect;
+   },
+
+   get multipliers() {
+      return Study([2,0.5]).effect
+   },
+
+   get boundarySlowdown() {
+      return player.seed.gt('1000')
+         ? player.seed.sub(999).pow(0.02)
+         : DC.D1;
+   },
+
+   tick() {
+      Currency.seed.add(
+         this.passiveRate
+         .times(this.multipliers)
+         .div(this.boundarySlowdown)
+      );
+   },
+};
+
+window.Seed = Seed;

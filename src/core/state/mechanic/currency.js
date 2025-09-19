@@ -1,11 +1,18 @@
 // OK... I have no excuse for this one. Whaddya know I've watched One Piece, piracy is in my blood
-import { DC } from "../utility/constants.js";
+import { DC } from "@/utility/constants.js";
 
+/**
+ * @class
+ */
 class Currency {
    get value() { throw new Error("Currency 'value' is not implemented") }
    set value(value) { throw new Error("Currency 'value' is not implemented" ) }
 
    get startingValue() { return DC.D0 }
+
+   set(amount) {
+      this.value = new Decimal(amount);
+   }
 
    add(amount) {
       this.value = this.value.add(amount);
@@ -58,11 +65,6 @@ class Currency {
    reset() {
       this.value = this.startingValue;
    }
-}
-
-Currency.seed = new class extends Currency {
-   get value() { return player.seed; }
-   set value(value) { player.seed = value }
 }
 
 window.Currency = Currency;

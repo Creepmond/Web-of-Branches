@@ -74,3 +74,4 @@ Study.allId = function() {
 };
 
 export default Study;
+window.Study = Study;

@@ -5,7 +5,8 @@ import { isDecimal } from "./typecheck.js";
 
 window.format = function(value, places = 0, placesUnder1000 = 0) {
    if (!isDecimal(value)) value = new Decimal(value);
-   if ( value.neq(0) ) {
+
+   if ( value.lte(-0.5) || value.gte(0.5) ) {
       // Here, 0.4 is used rather than 0.5 (for flooring), because it appears like base-format rounds
       // values exactly at 0.5
       const dynamicFloorValue = 10 ** (placesUnder1000 * -1) * 0.4;

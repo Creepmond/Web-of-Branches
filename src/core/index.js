@@ -1,5 +1,5 @@
 import "./player.js";
-import "./currency.js";
+import "./state/mechanic/currency.js";
 
 import "./dynamic-screen.js";
 import "./modal.js";
