@@ -1,9 +1,6 @@
 // OK... I have no excuse for this one. Whaddya know I've watched One Piece, piracy is in my blood
 import { DC } from "@/utility/constants.js";
 
-/**
- * @class
- */
 class Currency {
    get value() { throw new Error("Currency 'value' is not implemented") }
    set value(value) { throw new Error("Currency 'value' is not implemented" ) }

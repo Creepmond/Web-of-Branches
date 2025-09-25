@@ -19,5 +19,7 @@ window.player = {
    hidden: {
       isTouchscreen: false,
       hasEverReachedBoundary: false,
+      studyAll_id: [],
+      obfuscationUnicodePool: [],
    },
-}
+};

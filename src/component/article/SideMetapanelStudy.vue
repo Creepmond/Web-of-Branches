@@ -6,6 +6,16 @@ export default {
 
     frameId: 0,
   }},
+  computed: {
+    formatEffect() {
+      const effectInfo = this.Study.effectInfo;
+
+      switch (effectInfo.type) {
+        case 'passiveRate': return `${formatPassRate(effectInfo.value, effectInfo.target)}`;
+        case 'multiplier': return `${formatX(effectInfo.value)} ${effectInfo.target}`;
+      }
+    }
+  },
   methods: {
     update() {
       if (player.last.hoveredStudy.length === 2)
@@ -39,7 +49,7 @@ export default {
       </span>
       <span class="c-study-data" v-if="Study.effectInfo">
         <span class="c-study-data-semantic">Effect:</span>
-        {{ Study.effectInfo.value }}
+        {{ formatEffect }}
       </span>
       <span class="c-study-data" v-if="1 + 1 === 3"> <!-- Apologies for this absurd method, but
       Compoundeds are a headache for later -->

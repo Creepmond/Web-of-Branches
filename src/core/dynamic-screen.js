@@ -26,7 +26,7 @@ htmlDOM.addEventListener('touchend', handleEnd);
 //! I think also adding where the client coordinates and applying some calculateScreenMovement()
 //! may help make the zoom more dynamic, though it would require me to constantly have mouse-
 //! history...
-//// htmlDOM.addEventListener('wheel', handleZoom)
+htmlDOM.addEventListener('wheel', handleZoom)
 
 function handleStart(e) {
    mouseCoordHistory.push({ X: e.clientX, Y: e.clientY, T: Date.now() });

@@ -23,8 +23,10 @@ window.formatX = function(value) {
    return `×${format(value)}`;
 };
 
-window.formatPassRate = function(value) {
-   return `+${format(value)} /s`;
+window.formatPassRate = function(value, target) {
+   return target
+   ? `+${format(value)} ${target}/s`
+   : `+${format(value)} /s`;
 };
 
 window.formatCoord = function(value, value2) {
@@ -61,14 +63,24 @@ const exemptUnicodePool = acceptedUnicode.flatMap(range => {
    return codePool;
 });
 
-const unicodePool = acceptedUnicode.flatMap(range => {
-   const codePool = [];
-   for (let i = range.min; i <= range.max; i++) {
-      if (exemptUnicodePool.includes(i)) continue;
-      codePool.push(i);
-   };
-   return codePool;
-});
+const unicodePool = function() {
+   if (player.hidden.obfuscationUnicodePool.length > 0)
+      return player.hidden.obfuscationUnicodePool;
+
+   const acceptedPool = acceptedUnicode.flatMap(range => {
+      const codePool = [];
+      for (let i = range.min; i <= range.max; i++) {
+         if (exemptUnicodePool.includes(i)) continue;
+         codePool.push(i);
+      };
+      return codePool;
+   });
+
+   player.hidden.obfuscationUnicodePool = acceptedPool;
+   return acceptedPool;
+};
+
+
 
 String.prototype.caesarOne = function(shift) {
    const code = this.charCodeAt(0);
@@ -77,24 +89,13 @@ String.prototype.caesarOne = function(shift) {
    if (code === 32) {
       return String.fromCharCode(32)
    } else {
-      const index = unicodePool.indexOf(code);
+      const index = unicodePool().indexOf(code);
       if (index === -1) return this;
-      if (!shift) shift = Math.randomRange_int(1, unicodePool.length);
+      if (!shift) shift = Math.randomRange_int(1, unicodePool().length);
 
-      return String.fromCharCode( unicodePool.at(index - shift));
+      return String.fromCharCode( unicodePool().at(index - shift));
    }
 }
-
-/*
-! Useless, I think
-String.prototype.obfuscateOne = function() {
-   const strArray = this.split('');
-   const randomIndex = Math.randomRange_int(0, strArray.length - 1);
-   strArray[randomIndex] = strArray[randomIndex].caesarOne()
-
-   return strArray.join('');
-};
-*/
 
 String.prototype.obfuscateAll = function() {
    return this

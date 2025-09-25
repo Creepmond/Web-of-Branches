@@ -73,9 +73,12 @@ export default {
 
       this.$emit('purchase', this.id);
 
-      player.seed = player.seed.sub(this.StudyInstance.cost);
+      Currency.seed.sub(this.StudyInstance.cost);
 
       this.StudyInstance.purchase();
+      if (this.StudyInstance.effectInfo.type === 'callback')
+        this.StudyInstance.effect;
+
       this.isBought = true;
       this.isAvailable = false;
     },
@@ -111,7 +114,7 @@ export default {
     <StudyLink
       v-bind:id
       v-bind:allDerivative
-      :isObfuscated="!imperativeIsBought"
+      :isObfuscated="(!imperativeIsBought || !isBought) && !isAvailable"
     />
   </div>
 </template>

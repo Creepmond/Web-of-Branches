@@ -4,7 +4,7 @@ import { DC } from "@/utility/constants.js";
 // instead compress all three to just derivative as that's the only one you'd fairly need,
 // but '../state/study.js' unfortunately is structured to make looking at the other instances too difficult
 // lest optimization hazards come in. FYI my laptop's battery does not like things too unoptimized. I
-// guess it's a task for me when I'm better at structuring (or the I get enough headaches)
+// guess it's a task for me when I'm better at structuring (or that I get enough headaches)
 
 export const regularStudy = [
    {
@@ -14,8 +14,14 @@ export const regularStudy = [
       imperative: [],
       description: "Plant the first Seed",
       specify: "Reap the Seed after 4s",
-      effect() { setTimeout() },
-      cost: DC.D0,
+      effect: {
+         call() {
+            setTimeout( () => { Currency.seed.add(1) }, 4000 )
+         },
+         type: 'callback',
+         target: 'Seed',
+      },
+      cost: DC.D1,
    },
 
    {
@@ -28,7 +34,7 @@ export const regularStudy = [
       effect: {
          value: DC.D1,
          type: 'passiveRate',
-         target: 'seed',
+         target: 'Seed',
       },
       cost: DC.D1,
    },
@@ -53,7 +59,7 @@ export const regularStudy = [
       effect: {
          value: DC.D3,
          type: 'multiplier',
-         target: 'seed',
+         target: 'Seed',
       },
       cost: DC.D7,
    },

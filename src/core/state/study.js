@@ -48,6 +48,7 @@ class StudyState extends GameMechanicState {
       switch (effectType) {
          case 'passiveRate': return this.isBought ? this.data.effect.value.div(tickrate) : DC.D0;
          case 'multiplier': return this.isBought ? this.data.effect.value : DC.D1; 
+         case 'callback': this.data.effect.call();
       }
    }
 
@@ -69,15 +70,24 @@ class StudyState extends GameMechanicState {
  */
 const Study = StudyState.createAccessor(GameData.regularStudy);
 
-Object.defineProperty(Study, 'allId', {
-   get() {
-      const all_id = [];
-      GameData.regularStudy.forEach(study => {
-         all_id.push(study.id);
-      });
-      return all_id;
-   }
-})
+//! This handler may cause problems for modding? Actually, it'll cause problems for me too in
+//! development. Well, I guess only if I have Storage (which I don't lol)
+const studyAll_id = function() {
+   if (player.hidden.studyAll_id.length > 0)
+      return player.hidden.studyAll_id;
+
+   const all_id = [];
+   GameData.regularStudy.forEach(study => {
+      all_id.push(study.id);
+   });
+   
+   player.hidden.studyAll_id = all_id;
+   return all_id
+}
+
+Object.defineProperties(Study, {
+   allId: { get() { return studyAll_id() } },
+});
 
 export default Study;
 window.Study = Study;
