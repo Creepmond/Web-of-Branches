@@ -24,6 +24,9 @@ export default {
     StudyInstance() {
       return Study(this.id);
     },
+    allDerivative() {
+      return this.StudyInstance.allDerivative
+    },
     isBranchNode() {
       return this.StudyInstance.isBranchNode
     },
@@ -105,7 +108,11 @@ export default {
         :cost="StudyInstance.cost"
       />
     </button>
-    <StudyLink />
+    <StudyLink
+      v-bind:id
+      v-bind:allDerivative
+      :isObfuscated="!imperativeIsBought"
+    />
   </div>
 </template>
 

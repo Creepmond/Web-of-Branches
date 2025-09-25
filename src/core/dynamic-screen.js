@@ -23,6 +23,9 @@ htmlDOM.addEventListener('pointerdown', handleStart);
 htmlDOM.addEventListener('touchend', handleEnd);
 
 // Don't really want zoom for a while. Just the fact that handling is there was my initial goal
+//! I think also adding where the client coordinates and applying some calculateScreenMovement()
+//! may help make the zoom more dynamic, though it would require me to constantly have mouse-
+//! history...
 //// htmlDOM.addEventListener('wheel', handleZoom)
 
 function handleStart(e) {

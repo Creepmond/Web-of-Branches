@@ -42,3 +42,27 @@
 }
 
 /*# END - Studies */
+
+
+
+
+
+@keyframes loop-dash-array {
+  100% {
+    /* This is the negative of stroke-dasharray's sum (60px + 20px) */
+    stroke-dashoffset: -80px;
+  }
+}
+
+/*# Study Links */
+
+.c-study-link_segment,
+.c-study-link_ray-dashing {
+  transition: stroke 0.2s ease-in-out;
+}
+
+.c-study-link_ray-dashing--animated {
+  animation: loop-dash-array 1s linear infinite;
+}
+
+/*# END - Study Links */

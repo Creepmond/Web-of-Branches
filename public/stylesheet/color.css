@@ -18,7 +18,7 @@
   --color-grey: #2e3440;
   --color-grey-acc: #22272f;
   --color-rich-black: #1f2426;
-  --color-rich-black-acc: #1c2022; /*! Unused */
+  --color-rich-black-acc: #1c2022;
 }
 
 /** General variables that use relative color syntax */
@@ -101,7 +101,6 @@ span {
 :root {
   --color-study-bg: hsl(from var(--color-study) calc(h - 5) calc(s * 0.65) calc(l * 0.5));
   --color-study-acc: hsl(from var(--color-study) h calc(s - 5) calc(l - 15));
-  --opaque-color-study-acc: hsl(from var(--color-study-acc) h s l / 0.5);
 
   --color-study-grey: #3d3d3d;
   --color-study-grey-acc: #262626;
@@ -134,6 +133,12 @@ span {
 }
 .o-prim-study--obfuscated span {
   color: var(--color-text-weaker);
+}
+
+.o-prim-study--obfuscated::before {
+  background-color: var(--color-rich-black);
+
+  outline: var(--color-rich-black-acc);
 }
 
 .o-prim-study--unavailable {
@@ -213,7 +218,15 @@ span {
 /*# Study Links */
 
 .c-study-link {
-  stroke: var(--opaque-color-study-acc);
+  stroke: var(--color-study-acc);
+}
+
+.c-study-link_segment--obfuscated {
+  stroke: var(--color-grey);
+}
+
+.c-study-link_ray-dashing--obfuscated {
+  stroke: var(--color-grey-acc);
 }
 
 /*# END - Study Links */
