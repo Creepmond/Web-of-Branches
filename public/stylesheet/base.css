@@ -65,7 +65,7 @@ button span {
   height: 101vh;
 
   position: fixed;
-  z-index: -2;
+  z-index: -3;
 }
 
 /*# END - Semantic */

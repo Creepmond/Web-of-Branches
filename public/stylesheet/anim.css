@@ -23,6 +23,10 @@
 
 
 
+.o-prim-study--obfuscated::before {
+  inset: 2px;
+}
+
 .o-prim-study--unavailable::before {
   outline: 0;
   

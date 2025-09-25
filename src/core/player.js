@@ -18,5 +18,6 @@ window.player = {
    },
    hidden: {
       isTouchscreen: false,
+      hasEverReachedBoundary: false,
    },
 }

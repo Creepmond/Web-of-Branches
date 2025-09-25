@@ -22,7 +22,8 @@ const screenCoord = player.last.screenCoord || { X: -140, Y: -80 };
 htmlDOM.addEventListener('pointerdown', handleStart);
 htmlDOM.addEventListener('touchend', handleEnd);
 
-htmlDOM.addEventListener('wheel', handleZoom)
+// Don't really want zoom for a while. Just the fact that handling is there was my initial goal
+//// htmlDOM.addEventListener('wheel', handleZoom)
 
 function handleStart(e) {
    mouseCoordHistory.push({ X: e.clientX, Y: e.clientY, T: Date.now() });

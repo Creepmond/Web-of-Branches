@@ -1,5 +1,6 @@
 <script>
 import StudyButtonFace from "./StudyButtonFace.vue";
+import StudyLink from "./StudyLink.vue";
 
 export default {
   name: "StudyButton",
@@ -9,7 +10,10 @@ export default {
     imperativeIsAvailable: Boolean,
   },
   emits: ['purchase', 'available'],
-  components: { StudyButtonFace, },
+  components: {
+    StudyButtonFace,
+    StudyLink,
+  },
   data() { return {
     isAvailable: false,
     isBought: false,
@@ -19,6 +23,9 @@ export default {
   computed: {
     StudyInstance() {
       return Study(this.id);
+    },
+    isBranchNode() {
+      return this.StudyInstance.isBranchNode
     },
     availabilityClass() {
       const state = 'o-prim-study--';
@@ -81,15 +88,13 @@ export default {
 
 <template>
   <div class="l-prim-study__positioning" :style="position">
-    <div class="l-prim-study-id">
-      <span class="c-prim-study-id">
-        {{ id }}
-      </span>
-    </div>
+    <span class="c-prim-study-id">
+      {{ id }}
+    </span>
     <button
       class="o-prim-study"
       :class="availabilityClass"
-      @click="purchase"
+      @click.exact="purchase"
       @mouseenter="changeLastHoveredStudy"
     > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
     anyway so idk -->
@@ -100,16 +105,13 @@ export default {
         :cost="StudyInstance.cost"
       />
     </button>
+    <StudyLink />
   </div>
 </template>
 
 <style>
 .l-prim-study__positioning {
   position: absolute;
-}
-
-.l-prim-study-id {
-  position: relative;
 }
 
 .c-prim-study-id {

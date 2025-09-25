@@ -1,6 +1,5 @@
 <script>
 import StudyButton from "@/component/base/StudyButton.vue";
-import Study from "@/core/state/study";
 
 import { originStudy } from "@/utility/constants.js";
 
@@ -13,7 +12,7 @@ export default {
   }},
   computed: {
     visibleStudies() {
-      return Study.allId();
+      return Study.allId;
     },
   },
   methods: {
@@ -46,7 +45,7 @@ export default {
     },
   },
   created() {
-    Study.allId().forEach(study => {
+    Study.allId.forEach(study => {
       this.imperativeBoughtObject[ rmRef(study) ] = false;
       this.imperativeAvailableObject[ rmRef(study) ] = false;
     });

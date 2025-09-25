@@ -6,6 +6,9 @@ import { isDecimal } from "./typecheck.js";
 window.format = function(value, places = 0, placesUnder1000 = 0) {
    if (!isDecimal(value)) value = new Decimal(value);
 
+   // Problem with this, this still causes formatting errors when it reaches the point where the
+   // notation shifts (e.g., from 1000 to 1 K), in the sense that it doesn't really format to the
+   // latter immediately. I think doing a RegEx may apply better in this case
    if ( value.lte(-0.5) || value.gte(0.5) ) {
       // Here, 0.4 is used rather than 0.5 (for flooring), because it appears like base-format rounds
       // values exactly at 0.5

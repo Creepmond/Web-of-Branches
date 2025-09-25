@@ -1,5 +1,10 @@
 import { DC } from "@/utility/constants.js";
 
+// Very very terrible handling with derivative, imperative, and isBranch. I would have hoped to
+// instead compress all three to just derivative as that's the only one you'd fairly need,
+// but ../state/study.js unfortunately is structured to make looking at the other instances too difficult
+// lest optimization hazards come in. FYI my laptop's battery does not like things too unoptimized 
+
 export const regularStudy = [
    {
       name: "The Root",
@@ -32,6 +37,7 @@ export const regularStudy = [
       id: [2, -0.5],
       derivative: [ [3, -1] ],
       imperative: [1, 0],
+      isBranchNode: true,
       description: "Seeds multiplied by a million",
       cost: DC.E3,
    },
@@ -40,6 +46,7 @@ export const regularStudy = [
       id: [2, 0.5],
       derivative: [ [3, 1] ],
       imperative: [1, 0],
+      isBranchNode: true,
       description: "Boost seed production",
       get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(3)}` },
       effect: {

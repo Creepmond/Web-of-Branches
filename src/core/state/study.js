@@ -25,6 +25,10 @@ class StudyState extends GameMechanicState {
       return this.data.description;
    }
 
+   get isBranchNode() {
+      return this.data.isBranchNode || false
+   }
+
    get specify() {
       return this.data.specify || "";
    }
@@ -65,13 +69,15 @@ class StudyState extends GameMechanicState {
  */
 const Study = StudyState.createAccessor(GameData.regularStudy);
 
-Study.allId = function() {
-   const all_id = [];
-   GameData.regularStudy.forEach(study => {
-      all_id.push(study.id);
-   });
-   return all_id;
-};
+Object.defineProperty(Study, 'allId', {
+   get() {
+      const all_id = [];
+      GameData.regularStudy.forEach(study => {
+         all_id.push(study.id);
+      });
+      return all_id;
+   }
+})
 
 export default Study;
 window.Study = Study;
