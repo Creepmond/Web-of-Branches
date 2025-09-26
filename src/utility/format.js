@@ -19,19 +19,23 @@ window.format = function(value, places = 0, placesUnder1000 = 0) {
    return Notation.mixedScientific.format(value, places, placesUnder1000, 3);
 };
 
+window.formatPassRate = function(value, target) {
+   return target
+   ? `+${format(value)} ${target}/sec`
+   : `+${format(value)} /sec`;
+};
+
 window.formatX = function(value) {
    return `×${format(value)}`;
 };
 
-window.formatPassRate = function(value, target) {
-   return target
-   ? `+${format(value)} ${target}/s`
-   : `+${format(value)} /s`;
+window.formatPow = function(value) {
+   return `^${format(value)}`;
 };
 
 window.formatCoord = function(value, value2) {
    return `[${value}, ${value2}]`;
-}
+};
 
 //# END - Decimal
 

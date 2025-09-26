@@ -68,4 +68,15 @@ button span {
   z-index: -3;
 }
 
+
+
+.c-hotkey {
+  font-family: Monospace;
+
+  padding: 1px 3px;
+  border-radius: 2px;
+
+  display: inline;
+}
+
 /*# END - Semantic */

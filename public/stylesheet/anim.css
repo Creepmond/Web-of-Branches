@@ -18,7 +18,7 @@
 }
 
 .o-prim-study--bought::before {
-  transition: inset 0.3s var(--anim-over-in-and-out);
+  transition: inset 0.3s var(--anim-over-in-and-out), outline-width 0.15s
 }
 
 
@@ -37,8 +37,15 @@
   inset: 0;
 }
 
-.o-prim-study--bought::before {
+.o-prim-study--bought::before,
+.o-prim-study--bought.o-prim-study--node::before {
   inset: -4px;
+}
+
+.o-prim-study--respecced::before {
+  outline-width: 4px;
+
+  inset: -6px
 }
 
 /*# END - Studies */

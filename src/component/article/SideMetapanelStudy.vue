@@ -13,6 +13,8 @@ export default {
       switch (effectInfo.type) {
         case 'passiveRate': return `${formatPassRate(effectInfo.value, effectInfo.target)}`;
         case 'multiplier': return `${formatX(effectInfo.value)} ${effectInfo.target}`;
+        case 'exponent': return  `${formatPow(effectInfo.value)} ${effectInfo.target}`;
+        case 'unlock': return `Unlock ${effectInfo.target}`;
       }
     }
   },
@@ -45,7 +47,7 @@ export default {
       </span>
       <span class="c-study-data" v-if="Study.specify">
         <span class="c-study-data-semantic">Specified:</span>
-        {{ Study.specify }}
+        <span class="c-study-data-value" v-html="Study.specify"/>
       </span>
       <span class="c-study-data" v-if="Study.effectInfo">
         <span class="c-study-data-semantic">Effect:</span>

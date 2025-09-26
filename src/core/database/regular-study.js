@@ -16,7 +16,7 @@ export const regularStudy = [
       specify: "Reap the Seed after 4s",
       effect: {
          call() {
-            setTimeout( () => { Currency.seed.add(1) }, 4000 )
+            setTimeout( () => { Currency.seed.add(30) }, 500 )
          },
          type: 'callback',
          target: 'Seed',
@@ -77,8 +77,12 @@ export const regularStudy = [
       id: [3, 1],
       derivative: [ [4, 1] ],
       imperative: [2, 0.5],
-      description: "Unlock Respeccing",
-      specify: "Click a Branch with the ctrl key to toggle respeccing",
+      description: "Return from a branched node",
+      specify: `Click a Branch with the <div class="c-hotkey">ctrl</div> or <div class="c-hotkey">cmd&#8984;</div> key to toggle respeccing`,
+      effect: {
+         type: 'unlock',
+         target: 'Respec',
+      },
       cost: DC.D25,
    },
 

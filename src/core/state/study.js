@@ -30,6 +30,7 @@ class StudyState extends GameMechanicState {
          case 'passiveRate': return this.isBought ? effect.value.div(player.option.tickrate) : DC.D0;
          case 'multiplier': return this.isBought ? effect.value : DC.D1;
          case 'exponent': return this.isBought ? effect.value : DC.D1;
+         case 'unlock': ; return this.isBought ? true : false;
          case 'callback': effect.call(); return DC.D0;
       }
    }

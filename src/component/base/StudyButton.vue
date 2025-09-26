@@ -32,11 +32,16 @@ export default {
       return this.StudyInstance.isBranchNode
     },
     respecClass() {
-      if (!this.isBranchNode) return;
+      // This might seem stupid (and because it is), but I have to expose the reactive property
+      // "isRespecced" so that it tracks this whenever "isRespecced" changes. Though I realize
+      // it's not as optimized, this is technically more readable(?) (in a way)
+      const isRespecced = this.isRespecced;
+
+      if (!this.isBranchNode || !Study([3,1]).effect) return;
 
       const state = 'o-prim-study--';
 
-      return this.isRespecced
+      return isRespecced
         ? state + 'respecced'
         : state + 'node';
     },
@@ -117,6 +122,7 @@ export default {
       :class="[availabilityClass, respecClass]"
       @click.exact="purchase"
       @click.ctrl.exact="respec"
+      @click.meta.exact="respec"
       @mouseenter="changeLastHoveredStudy"
     > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
     anyway so idk -->
@@ -145,7 +151,7 @@ export default {
   font-weight: 300;
 
   position: absolute;
-  inset: -40px auto auto 0;
+  inset: -45px auto auto 0;
 }
 
 .o-prim-study {

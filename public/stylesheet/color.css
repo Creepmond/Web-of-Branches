@@ -58,6 +58,28 @@ span {
 
 
 :root {
+  --color-key: #f8f8ff;
+
+  --color-key-acc: hsl(from var(--color-key) h calc(s * 0.5) l);
+  --color-key-text: hsl(from var(--color-key) h s calc(100 - l));
+}
+
+/*# Semantic */
+
+.c-hotkey {
+  background-color: var(--color-key);
+  color: var(--color-key-text);
+
+  border: 2px var(--color-key-acc) outset;
+}
+
+/*# END - Semantic */
+
+
+
+
+
+:root {
   /* Kruta I am so sorry to steal your palette */
   --color-fixed: #322d4b;
   --color-fixed-accent: #4cc2fe;
@@ -101,6 +123,10 @@ span {
 :root {
   --color-study-bg: hsl(from var(--color-study) calc(h - 5) calc(s * 0.65) calc(l * 0.5));
   --color-study-acc: hsl(from var(--color-study) h calc(s - 5) calc(l - 15));
+
+  --color-study-focus: color-mix(in oklch, var(--color-study), var(--color-good) 5%);
+  --color-study-bg-focus: hsl(from var(--color-study-focus) calc(h - 5) calc(s * 0.65) calc(l * 0.6));
+  --color-study-acc-focus: hsl(from var(--color-study-focus) h calc(s - 5) calc(l - 5));
 
   --color-study-grey: #3d3d3d;
   --color-study-grey-acc: #262626;
@@ -207,6 +233,18 @@ span {
 
 .o-prim-study--bought::before {
   background-color: var(--color-study-acc);
+}
+
+
+
+.o-prim-study--respecced {
+  background-color: var(--color-study-bg-focus);
+}
+
+.o-prim-study--respecced::before {
+  background-color: var(--color-study-acc-focus);
+
+  outline-color: var(--color-study-focus);
 }
 
 /*# END - Studies */
