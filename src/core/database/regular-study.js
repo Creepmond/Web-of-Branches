@@ -73,12 +73,13 @@ export const regularStudy = [
       cost: DC.E100,
    },
    {
-      name: "Sprout 2",
+      name: "Leaf Behind",
       id: [3, 1],
       derivative: [ [4, 1] ],
       imperative: [2, 0.5],
-      description: "Sprout 2",
-      cost: DC.E1E15,
+      description: "Unlock Respeccing",
+      specify: "Click a Branch with the ctrl key to toggle respeccing",
+      cost: DC.D25,
    },
 
    {

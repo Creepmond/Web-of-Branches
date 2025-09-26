@@ -4,60 +4,39 @@ import { DC } from "@/utility/constants.js";
 class StudyState extends GameMechanicState {
    constructor(data) {
       super(data)
-      
+
+      this.name = data.name;
+      this.allDerivative = data.derivative;
+      this.imperative = data.imperative;
+      this.description = data.description;
+      this.specify = data.specify || "";
+      this.cost = data.cost;
+      this.effectInfo = data.effect;
+
+      this.isBranchNode = data.isBranchNode || false;
+
       this.isAvailable = false;
       this.imperativeIsBought = false;
    }
 
-   get name() {
-      return this.data.name;
-   }
-
-   get allDerivative() {
-      return this.data.derivative;
-   }
-
-   get imperative() {
-      return this.data.imperative;
-   }
-
-   get description() {
-      return this.data.description;
-   }
-
-   get isBranchNode() {
-      return this.data.isBranchNode || false
-   }
-
-   get specify() {
-      return this.data.specify || "";
-   }
-
-   get cost() {
-      return this.data.cost;
-   }
-
-   get effectInfo() {
-      return this.data.effect;
+   get isBought() {
+      return player.studyBoughtBits.hasArray(this.id);
    }
 
    get effect() {
-      const effectType = this.data.effect.type;
-      const tickrate = player.option.tickrate;
+      const effect = this.effectInfo;
 
-      switch (effectType) {
-         case 'passiveRate': return this.isBought ? this.data.effect.value.div(tickrate) : DC.D0;
-         case 'multiplier': return this.isBought ? this.data.effect.value : DC.D1; 
-         case 'callback': this.data.effect.call();
+      switch (effect.type) {
+         case 'passiveRate': return this.isBought ? effect.value.div(player.option.tickrate) : DC.D0;
+         case 'multiplier': return this.isBought ? effect.value : DC.D1;
+         case 'exponent': return this.isBought ? effect.value : DC.D1;
+         case 'callback': effect.call(); return DC.D0;
       }
    }
 
    purchase() {
       player.studyBoughtBits.addArray(this.id);
-   }
-
-   get isBought() {
-      return player.studyBoughtBits.hasArray(this.id);
+      player.studyExposedBits.addArray(this.id);
    }
 }
 

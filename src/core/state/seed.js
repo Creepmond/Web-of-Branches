@@ -18,16 +18,28 @@ const Seed = {
       return Study([2,0.5]).effect
    },
 
+   get exponents() {
+      return DC.D1;
+   },
+
    get boundarySlowdown() {
-      return player.seed.gt('1000')
-         ? player.seed.sub(999).pow(0.02)
-         : DC.D1;
+      const slowdown = player.seed.sub(999).pow(0.02);
+
+      if (player.hidden.hasEverReachedBoundary) {
+         return slowdown;
+      } else if ( player.seed.gt('1000') ) {
+         player.hidden.hasEverReachedBoundary = true;
+         return slowdown;
+      } else {
+         return DC.D1;
+      }
    },
 
    tick() {
       Currency.seed.add(
          this.passiveRate
          .times(this.multipliers)
+         .pow(this.exponents)
          .div(this.boundarySlowdown)
       );
    },

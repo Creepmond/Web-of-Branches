@@ -21,7 +21,7 @@ export default {
         const derivative_ids = Study(id).allDerivative;
 
         derivative_ids.forEach(study => {
-          this.imperativeAvailableObject[ rmRef(study) ] = true;
+          this.imperativeAvailableObject[ rmRef(study) ] = Study(id).isAvailable;
           this.imperativeBoughtObject[ rmRef(study) ] = Study(id).isBought;
         });
       } else {

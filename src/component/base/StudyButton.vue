@@ -17,6 +17,7 @@ export default {
   data() { return {
     isAvailable: false,
     isBought: false,
+    isRespecced: false,
 
     frameId: 0,
   }},
@@ -29,6 +30,15 @@ export default {
     },
     isBranchNode() {
       return this.StudyInstance.isBranchNode
+    },
+    respecClass() {
+      if (!this.isBranchNode) return;
+
+      const state = 'o-prim-study--';
+
+      return this.isRespecced
+        ? state + 'respecced'
+        : state + 'node';
     },
     availabilityClass() {
       const state = 'o-prim-study--';
@@ -82,8 +92,13 @@ export default {
       this.isBought = true;
       this.isAvailable = false;
     },
+    respec() {
+      if (!this.isBought || !this.isBranchNode) return;
+
+      this.isRespecced = !this.isRespecced;
+    },
     changeLastHoveredStudy() {
-      if ( !this.imperativeIsAvailable ) return;
+      if ( !this.imperativeIsAvailable && !this.imperativeIsBought ) return;
       if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
 
       player.last.hoveredStudy = this.id;
@@ -99,13 +114,14 @@ export default {
     </span>
     <button
       class="o-prim-study"
-      :class="availabilityClass"
+      :class="[availabilityClass, respecClass]"
       @click.exact="purchase"
+      @click.ctrl.exact="respec"
       @mouseenter="changeLastHoveredStudy"
     > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
     anyway so idk -->
       <StudyButtonFace
-        :isObfuscated="!imperativeIsAvailable"
+        :isObfuscated="!imperativeIsAvailable && !imperativeIsBought"
         :rawName="StudyInstance.name"
         :rawDesc="StudyInstance.description"
         :cost="StudyInstance.cost"

@@ -1,10 +1,6 @@
 export default class GameMechanicState {
    constructor(data) {
-      this.data = data;
-   }
-
-   get id() {
-      return this.data.id;
+      this.id = data.id;
    }
 
    static createAccessor(gamedata) {
