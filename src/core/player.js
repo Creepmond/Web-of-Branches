@@ -15,7 +15,7 @@ window.player = {
    },
    last: {
       hoveredStudy: [],
-      headerTab: '',
+      headerTab: 'Resources',
       screenCoord: null,
    },
    hidden: {

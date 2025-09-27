@@ -4,6 +4,18 @@
 
 
 
+/*# Header */
+
+.c-header-tab-button {
+  transition: background-color 0.15s, outline-color 0.3s;
+}
+
+/*# END - Header */
+
+
+
+
+
 /*# Studies */
 
 .o-prim-study {

@@ -23,7 +23,7 @@ export default {
 
 <style>
 .o-fixed-ui {
-  padding: 12px 16px 16px;
+  /* padding: 12px 16px 16px; */
 
   position: fixed;
 

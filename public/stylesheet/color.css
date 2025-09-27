@@ -1,5 +1,6 @@
 :root {
   --color-ui: #2f2d39;
+  --color-ui-acc: #4cc2fe;
 
   --color-good: #5ac466;
   --color-bad: #efbf8f;
@@ -82,23 +83,38 @@ span {
 
 
 :root {
-  --color-ui: #2f2d39;
   --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
+  --opaque-color-focus-ui: hsl(from var(--color-ui) h s calc(l * 1.4) / 0.6);
 
-  --color-ui-acc: #4cc2fe;
+  --opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.6);
 }
 
 
 
 /*# Header */
 
-.o-header {
+.c-header-subject {
   background-color: var(--opaque-color-ui);
+}
+
+.c-header-tab-button {
+  background-color: var(--opaque-color-ui);
+  color: var(--color-text);
+
+  outline-color: transparent;
+}
+
+.c-header-tab-button:hover {
+  background-color: var(--opaque-color-focus-ui);
+}
+
+.c-header-tab-button--flipped {
+  outline-color: var(--opaque-color-ui-acc);
 }
 
 .l-header-indicator {
   border-image:
-    linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 20% 80%, transparent 100%) 1;
+    linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 40% 60%, transparent 100%) 1;
 }
 
 .c-header-currency-value {
