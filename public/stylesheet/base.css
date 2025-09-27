@@ -74,6 +74,7 @@ button span {
   font-family: Monospace;
 
   padding: 1px 3px;
+  border: 2px outset;
   border-radius: 2px;
 
   display: inline;

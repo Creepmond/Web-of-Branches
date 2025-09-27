@@ -1,4 +1,6 @@
 :root {
+  --color-ui: #2f2d39;
+
   --color-good: #5ac466;
   --color-bad: #efbf8f;
   
@@ -70,7 +72,7 @@ span {
   background-color: var(--color-key);
   color: var(--color-key-text);
 
-  border: 2px var(--color-key-acc) outset;
+  border-color: var(--color-key-acc);
 }
 
 /*# END - Semantic */
@@ -80,9 +82,10 @@ span {
 
 
 :root {
-  /* Kruta I am so sorry to steal your palette */
-  --color-fixed: #322d4b;
-  --color-fixed-accent: #4cc2fe;
+  --color-ui: #2f2d39;
+  --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
+
+  --color-ui-acc: #4cc2fe;
 }
 
 
@@ -90,14 +93,16 @@ span {
 /*# Header */
 
 .o-header {
-  background-color: var(--color-fixed);
-  outline: 1px solid var(--color-fixed-accent);
-
-  box-shadow: inset 0 0 15px -5px var(--color-fixed-accent);
+  background-color: var(--opaque-color-ui);
 }
 
-.o-header::after {
-  box-shadow: 4px 4px 10px var(--color-fixed-accent);
+.l-header-indicator {
+  border-image:
+    linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 20% 80%, transparent 100%) 1;
+}
+
+.c-header-currency-value {
+  border-bottom: var(--color-ui);
 }
 
 /*# END - Header */

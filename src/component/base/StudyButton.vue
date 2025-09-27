@@ -1,4 +1,6 @@
 <script>
+import { setUpdateloop } from "@/core/interval.js";
+
 import StudyButtonFace from "./StudyButtonFace.vue";
 import StudyLink from "./StudyLink.vue";
 
@@ -81,7 +83,7 @@ export default {
 
       this.isAvailable = player.seed.gte(this.StudyInstance.cost);
 
-      this.frameId = requestAnimationFrame(this.update);
+      this.frameId = setUpdateloop(this.update);
     },
     purchase() {
       if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;

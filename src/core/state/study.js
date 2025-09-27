@@ -27,7 +27,7 @@ class StudyState extends GameMechanicState {
       const effect = this.effectInfo;
 
       switch (effect.type) {
-         case 'passiveRate': return this.isBought ? effect.value.div(player.option.tickrate) : DC.D0;
+         case 'passiveRate': return this.isBought ? effect.value.div(1000 / player.option.tickrate) : DC.D0;
          case 'multiplier': return this.isBought ? effect.value : DC.D1;
          case 'exponent': return this.isBought ? effect.value : DC.D1;
          case 'unlock': ; return this.isBought ? true : false;
@@ -52,6 +52,9 @@ const Study = StudyState.createAccessor(GameData.regularStudy);
 
 //! This handler may cause problems for modding? Actually, it'll cause problems for me too in
 //! development. Well, I guess only if I have Storage (which I don't lol)
+
+// I forgot, but I realize I probably could just move this to a seperate object "Studies",
+// incidentally the same method AD uses
 const studyAll_id = function() {
    if (player.hidden.studyAll_id.length > 0)
       return player.hidden.studyAll_id;

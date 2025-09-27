@@ -1,4 +1,6 @@
 <script>
+import { setUpdateloop } from "@/core/interval.js";
+
 export default {
   name: "SideMetapanelStudy",
   data() { return {
@@ -23,7 +25,7 @@ export default {
       if (player.last.hoveredStudy.length === 2)
         this.Study = Study(player.last.hoveredStudy);
 
-      requestAnimationFrame(this.update)
+      setUpdateloop(this.update)
     },
   },
   mounted() {

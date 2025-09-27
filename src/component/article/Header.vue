@@ -1,45 +1,29 @@
 <script>
+import HeaderTabs from "./HeaderTabs.vue";
+import HeaderResources from "./HeaderResources.vue";
+
 export default {
   name: "Header",
-  data() { return {
-    seed: 0,
-
-    frameId: 0,
-  }},
-  computed: {
-    seedAmount() {
-      return format(this.seed, 2, 0);
-    },
-  },
-  methods: {
-    update() {
-      this.seed = player.seed;
-      this.frameId = requestAnimationFrame(this.update);
-    },
-  },
-  mounted() {
-    this.update();
+  components: {
+    HeaderTabs,
+    HeaderResources,
   },
 };
 </script>
 
 <template>
   <div class="o-fixed-ui o-header">
-    <span class="o-header-currency_seeds">
-      Seeds: {{ seedAmount }}
-    </span>
+    <HeaderTabs />
+    <HeaderResources />
   </div>
 </template>
 
 <style>
 .o-header {
-  inset: 10px auto auto 10px;
-}
+  backdrop-filter: blur(2px);
 
-.o-header::after {
-  content: '';
-  
-  position: absolute;
-  inset: 0;
+  border-radius: 0 8px 8px 8px;
+
+  inset: 10px auto auto 10px;
 }
 </style>
