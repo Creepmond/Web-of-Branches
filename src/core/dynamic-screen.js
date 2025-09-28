@@ -28,6 +28,8 @@ htmlDOM.addEventListener('touchend', handleEnd);
 htmlDOM.addEventListener('wheel', handleZoom)
 
 function handleStart(e) {
+   if (e.target.className.includes('vue-slider')) return;
+
    mouseCoordHistory.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
 
    if (e.pointerType === 'mouse') {
@@ -170,7 +172,7 @@ function applyScreenSlipperiness() {
 
 
 
-function plotScreenByCoord() {
+export function plotScreenByCoord() {
    const parallax = player.option.parallax;
    const zoom = player.option.zoomLevel;
 

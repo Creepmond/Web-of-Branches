@@ -41,7 +41,7 @@ export default {
 
     <div class="c-header-subject">
       
-      <svg class="l-header-indicator" viewBox="-15 -23 30 30" >
+      <svg class="l-header-indicator" viewBox="-15 -22 30 30" >
         <g
           class="l-header-indicator-tabs"
           :transform="`translate(${headerIndicatorPosition}, 0)`"
@@ -78,7 +78,7 @@ export default {
 
 .l-header-indicator {
   text-anchor: middle;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 300;
 
   padding: 0 32px;
@@ -86,7 +86,7 @@ export default {
   border-bottom: 1px solid;
 
   height: 1em;
-  width: 9rem;
+  width: 8em;
 
   display: inline-block;
 }
@@ -102,5 +102,12 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.l-header-content > * {
+  margin: 0 8px;
+
+  display: flex;
+  justify-content: space-between;
 }
 </style>

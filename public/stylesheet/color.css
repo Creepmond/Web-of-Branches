@@ -87,6 +87,9 @@ text {
 
 
 :root {
+  --color-ui-contrast: hsl(from var(--color-ui) h s calc(100 - l));
+  --opaque-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / 0.4);
+
   --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
   --opaque-color-focus-ui: hsl(from var(--color-ui) h s calc(0.8 * l + 10) / 0.6);
 
@@ -96,6 +99,18 @@ text {
 
 
 /*# Header */
+
+.vue-slider-rail {
+  background-color: var(--opaque-color-ui-contrast);
+}
+
+.vue-slider-point {
+  background-color: var(--color-ui-contrast);
+}
+
+.vue-slider-bar {
+  background-color: var(--color-ui-acc);
+}
 
 .c-header-subject {
   background-color: var(--opaque-color-ui);

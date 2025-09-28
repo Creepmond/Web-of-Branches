@@ -31,4 +31,8 @@ export default {
 
   z-index: 2;
 }
+
+.o-fixed-ui span {
+  font-size: 15px;
+}
 </style>

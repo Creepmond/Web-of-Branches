@@ -26,24 +26,17 @@ export default {
 </script>
 
 <template>
-  <div class="c-header-content">
+  <div class="c-header-content-resource">
     <span class="c-header-currency-type">Seeds:</span>
     <span class="c-header-currency-value">{{ seedAmount }}</span>
   </div>
-  <div class="c-header-content">
+  <div class="c-header-content-resource">
     <span class="c-header-currency-type">Spectres:</span>
     <span class="c-header-currency-value">0</span>
   </div>
 </template>
 
 <style>
-.c-header-content {
-  margin: 0 8px;
-
-  display: flex;
-  justify-content: space-between;
-}
-
 /* Moreorless a prototype for if I color-code the currencies
 .c-header-currency-type {
   padding: 2px 0 0 8px;

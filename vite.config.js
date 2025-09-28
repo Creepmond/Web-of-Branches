@@ -8,7 +8,13 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   base: '/Web-of-Branches/',
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: tag => tag === "VueSlider"
+        }
+      }
+    }),
     vueDevTools(),
   ],
   resolve: {

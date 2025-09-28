@@ -37,7 +37,7 @@ export default {
 .c-header-tab-button {
   pointer-events: auto;
 
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 300;
 
   padding: 6px 12px;

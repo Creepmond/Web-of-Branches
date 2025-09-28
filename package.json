@@ -16,7 +16,8 @@
   "dependencies": {
     "@antimatter-dimensions/notations": "^3.2.0",
     "break_infinity.js": "^2.2.0",
-    "vue": "^3.5.18"
+    "vue": "^3.5.18",
+    "vue-3-slider-component": "^1.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
