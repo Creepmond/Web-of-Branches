@@ -72,9 +72,9 @@ function handleEnd() {
       applyScreenSlipperiness()
 }
 
-function handleZoom(e) {
+export function handleZoom(e) {
    //! Sorry for this terrible handling, I'll fix it next time. I'm a bit sleepy already
-   player.option.zoomLevel += e.deltaY / 4000;
+   if (e) player.option.zoomLevel += e.deltaY / 4000;
    
    const zoom = player.option.zoomLevel;
    if (zoom > 1.5) {

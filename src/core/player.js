@@ -5,7 +5,7 @@ window.player = {
    studyBoughtBits: new Set(),
    studyExposedBits: new Set(),
    option: {
-      parallax: 0.8,
+      parallax: 0.4,
       tickrate: 33,
       zoomLevel: 1,
    },

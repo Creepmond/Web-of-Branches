@@ -88,18 +88,21 @@ text {
 
 :root {
   --color-ui-contrast: hsl(from var(--color-ui) h s calc(100 - l));
-  --opaque-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / 0.4);
+  --opaque-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / 0.3);
 
   --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
   --opaque-color-focus-ui: hsl(from var(--color-ui) h s calc(0.8 * l + 10) / 0.6);
 
-  --opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.6);
+  --opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.5);
 }
 
 
 
 /*# Header */
 
+/* See './src/component/base/DefaultSlider.vue'. Unfortunately, this is one of the elements that I cannot
+directly modify the background-color of, as its bound to the component itself. I based the value on
+var(--opaque-color-ui-contrast), however */
 .vue-slider-rail {
   background-color: var(--opaque-color-ui-contrast);
 }
@@ -115,6 +118,8 @@ text {
 .c-header-subject {
   background-color: var(--opaque-color-ui);
 }
+
+
 
 .c-header-tab-button {
   background-color: var(--opaque-color-ui);
@@ -136,8 +141,14 @@ text {
     linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 40% 60%, transparent 100%) 1;
 }
 
+
+
 .c-header-currency-value {
   border-bottom: var(--color-ui);
+}
+
+.c-header-option-calculated {
+  border-color: var(--opaque-color-ui-acc);
 }
 
 /*# END - Header */

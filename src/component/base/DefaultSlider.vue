@@ -12,7 +12,10 @@ export default {
   computed: {
     sliderPosition() {
       // rangeProperty's values are: [min, max, step = 1]
-      return this.modelValue / this.rangeProperty[1] * 100;
+      const min = this.rangeProperty[0]
+      const max = this.rangeProperty[1]
+
+      return (this.modelValue - min) / (max - min) * 100;
     },
   },
   methods: {
@@ -33,6 +36,9 @@ export default {
     v-bind:modelValue
     @change="updateModelValue"
     @dragging="updateModelValue"
+    :duration="0"
+    :railStyle="{backgroundColor: '#c8c6d24d'}"
+    :dotSize="12"
   >
     <template #dot>
       <div class="vue-slider-point" />
@@ -48,10 +54,6 @@ export default {
   pointer-events: auto;
 
   text-decoration-style: inline-block;
-}
-
-.vue-slider-rail {
-  background-color: none;
 }
 
 .vue-slider-point {
