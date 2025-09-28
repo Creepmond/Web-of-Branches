@@ -18,7 +18,8 @@ body {
   font-size: 20px;
 }
 
-span {
+span,
+text {
   cursor: text;
 
   font-family: Bitter, Times, Serif;

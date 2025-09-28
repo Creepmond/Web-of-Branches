@@ -10,6 +10,10 @@
   transition: background-color 0.15s, outline-color 0.3s;
 }
 
+.l-header-indicator-tabs {
+  transition: transform 0.3s ease-in-out;
+}
+
 /*# END - Header */
 
 

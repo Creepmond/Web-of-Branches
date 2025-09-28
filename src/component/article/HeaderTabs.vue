@@ -2,12 +2,10 @@
 export default {
   name: "HeaderTabs",
   props: {
+    tabList: Array,
     tabbed: String,
   },
   emits: ['flip'],
-  data() { return {
-    tabList: ['Resources', 'Stats', 'Options'],
-  }},
   methods: {
     tabbedState(flip) {
       if (flip === this.tabbed) return 'c-header-tab-button--flipped'
@@ -37,6 +35,8 @@ export default {
 }
 
 .c-header-tab-button {
+  pointer-events: auto;
+
   font-size: 16px;
   font-weight: 300;
 

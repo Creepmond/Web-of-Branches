@@ -39,6 +39,10 @@ span {
   color: var(--color-text);
 }
 
+text {
+  fill: var(--color-text);
+}
+
 
 
 /*# Background */
@@ -84,7 +88,7 @@ span {
 
 :root {
   --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
-  --opaque-color-focus-ui: hsl(from var(--color-ui) h s calc(l * 1.4) / 0.6);
+  --opaque-color-focus-ui: hsl(from var(--color-ui) h s calc(0.8 * l + 10) / 0.6);
 
   --opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.6);
 }

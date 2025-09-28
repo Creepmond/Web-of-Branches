@@ -26,40 +26,17 @@ export default {
 </script>
 
 <template>
-  <div class="l-header-indicator">
-    <span class="c-header-indicator">
-      Resources
-    </span>
+  <div class="c-header-content">
+    <span class="c-header-currency-type">Seeds:</span>
+    <span class="c-header-currency-value">{{ seedAmount }}</span>
   </div>
-  <div class="l-header-content l-header-content--currency">
-    <div class="c-header-content">
-      <span class="c-header-currency-type">Seeds:</span>
-      <span class="c-header-currency-value">{{ seedAmount }}</span>
-    </div>
-    <div class="c-header-content">
-      <span class="c-header-currency-type">Spectres:</span>
-      <span class="c-header-currency-value">0</span>
-    </div>
+  <div class="c-header-content">
+    <span class="c-header-currency-type">Spectres:</span>
+    <span class="c-header-currency-value">0</span>
   </div>
 </template>
 
 <style>
-.l-header-indicator {
-  padding: 0 32px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid;
-}
-
-.c-header-indicator {
-  font-size: 30px;
-}
-
-.l-header-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .c-header-content {
   margin: 0 8px;
 
