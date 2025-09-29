@@ -1,5 +1,7 @@
-<script>
+<script>;
 import Tree from "./Tree.vue";
+
+import { setUpdateloop } from "@/core/interval"
 
 const htmlDOM = document.querySelector('html');
 
@@ -39,7 +41,7 @@ export default {
     handleStart(e) {
       if (e.target.className.includes('vue-slider')) return;
 
-      this.physicsIsActive = player.physics.IsEnabled;
+      this.physicsIsActive = player.physics.isEnabled;
       this.screenSlip = player.physics.screenSlipperiness;
 
       if (this.physicsIsActive)
@@ -54,6 +56,7 @@ export default {
       this.diffMouseCoord = { X: e.clientX, Y: e.clientY };
 
       if (this.physicsIsActive) {
+        console.log(this.mouseCoordHist)
         this.mouseCoordHist.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
 
         if (this.mouseCoordHist.length < 2) return;
@@ -64,26 +67,29 @@ export default {
       this.initMouseCoord = this.diffMouseCoord;
     },
 
-    handleEnd() {
-      player.last.screenCoord = this.screenCoord;
-
+    handleEnd(e) {
       htmlDOM.removeEventListener('pointermove', this.handleMove);
 
+      player.last.screenCoord = this.screenCoord;
+
       if (!this.physicsIsActive) return;
+      this.calculatePhysics();
       this.mouseCoordHist = [];
 
       if (this.screenSlip === 0) return;
-      this.calculateSlipperiness()
+      this.calculateSlipperiness();
     },
 
 
 
-    calculatePhysics() { //// rgcijd9weqopemfcioqmrpiogmiomjgj iixjs-9cjs
-      const mouseCoordHist = this.mouseCoordHist;
-
-      for (let i = 1; i < mouseCoordHist.length; i++) {
-        const dx = mouseCoordHist[i].X - mouseCoordHist[i-1].X;
-        const dy = mouseCoordHist[i].Y - mouseCoordHist[i-1].Y;
+    calculatePhysics() {
+      // This actually is forEach but non-inclusive to the final length value, basically only
+      // done four times a trigger when mouseCoordHistory is at full length (5). Probably
+      // could've done with an if (...) { continue }, though I assume that wouldn't be as
+      // optimized
+      for (let i = 1; i < this.mouseCoordHist.length; i++) {
+        const dx = this.mouseCoordHist[i].X - this.mouseCoordHist[i-1].X;
+        const dy = this.mouseCoordHist[i].Y - this.mouseCoordHist[i-1].Y;
         const length = Math.hypot(dx, dy);
 
         if (length > 0)
@@ -91,37 +97,38 @@ export default {
 
         if (this.directionHist.length > MAX_HISTORY_LENGTH)
           this.directionHist.shift();
+      }
 
-        const avgDirection = { X: 0, Y: 0 };
-        const dirLength = this.directionHist.length;
+      const avgDirection = { X: 0, Y: 0 };
+      const dirLength = this.directionHist.length;
 
-        this.directionHist.forEach(vector => {
-          avgDirection.X += vector.X;
-          avgDirection.Y += vector.Y;
-        });
+      this.directionHist.forEach(vector => {
+        avgDirection.X += vector.X;
+        avgDirection.Y += vector.Y;
+      });
 
-        if (dirLength > 0) {
-          avgDirection.X / dirLength;
-          avgDirection.Y / dirLength;
-        }
+      if (dirLength > 0) {
+        avgDirection.X / dirLength;
+        avgDirection.Y / dirLength;
+      }
 
-        this.angleAvg_rad = Math.atan2(avgDirection.Y, avgDirection.X) 
+      this.angleAvg_rad = Math.atan2(avgDirection.Y, avgDirection.X) 
 
-        const init = mouseCoordHist[0];
-        const diff = mouseCoordHist[mouseCoordHist - 1];
-        
-        const delta = {
+      const init = this.mouseCoordHist[0];
+      const diff = this.mouseCoordHist[this.mouseCoordHist.length - 1];
+   
+      const delta = {
           X: diff.X - init.X,
           Y: diff.Y - init.Y,
           T: diff.T - init.T,
-        };
-
-        this.velocity =
-          ( Math.sqrt(delta.X ** 2 + delta.Y ** 2) ) / delta.T * VELOCITY_STRENGTH;
       };
+
+      this.velocity =
+        ( Math.sqrt(delta.X ** 2 + delta.Y ** 2) ) / delta.T * VELOCITY_STRENGTH;
     },
 
     calculateScreenMovement() {
+      /*
       const init = this.initMouseCoord;
       const diff = this.diffMouseCoord;
 
@@ -132,9 +139,14 @@ export default {
 
       this.screenCoord.X += delta.X;
       this.screenCoord.Y += delta.Y;
+      */
+
+      this.screenCoord.X += this.diffMouseCoord.X - this.initMouseCoord.X;
+      this.screenCoord.Y += this.diffMouseCoord.Y - this.initMouseCoord.Y;
     },
 
-    calculateScreenSlipperiness() {
+    calculateSlipperiness() {
+      console.log(this.velocity, this.screenCoord)
       if (this.velocity < VELOCITY_THRESHOLD) return;
 
       const angle = this.angleAvg_rad;
@@ -148,10 +160,11 @@ export default {
       // is at 0.901-0.999. Of course, I  make the calculated value a root, but the problem is
       // twofold with the same rigidness plus it probably affects performance a little more
       // than dealing with the value 0.901-0.999 itself
-      this.velocity *= player.physics.screenSlipperiness;
+      this.velocity *= this.screenSlip;
 
       //! For better PCs and such, this effect would last for shorter, not sure if I care to
       //  apply it
+      setUpdateloop(this.calculateSlipperiness)
     },
   },
   computed: {
