@@ -77,12 +77,10 @@ export function handleZoom(e) {
    if (e) player.option.zoomLevel += e.deltaY / 4000;
    
    const zoom = player.option.zoomLevel;
-   if (zoom > 1.5) {
-      player.option.zoomLevel = 1.5;
-      return;
-   } else if (zoom < 0.2) {
+   if (zoom >= 2) {
+      player.option.zoomLevel = 2;
+   } else if (zoom <= 0.2) {
       player.option.zoomLevel = 0.2;
-      return;
    }
 
    const childElement = document.querySelectorAll('#dynamic-content > *');
@@ -164,9 +162,15 @@ function applyScreenSlipperiness() {
 
    plotScreenByCoord();
 
+   //* See '@/component/article/HeaderOption.vue' at around Line 33. The value of screen slipperiness
+   //  never actually reaches less than 0.9 (unless it's already at 0 of course), and that's because
+   //  the effect is way too rigid less than 0.9, so every value is at 0.901-0.999. Of course, I
+   //  could make the calculated value a root, but the problem is twofold with the same rigidness
+   //  plus it probably affects performance a little more than dealing with the value 0.901-0.999
+   //  itself
    physics.velocity *= player.physics.screenSlipperiness;
 
-   //! For better PCs and such, this effect would last for longer, not sure if I care to apply it
+   //! For better PCs and such, this effect would last for shorter, not sure if I care to apply it
    requestAnimationFrame(applyScreenSlipperiness)
 }
 

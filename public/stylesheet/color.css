@@ -147,8 +147,27 @@ var(--opaque-color-ui-contrast), however */
   border-bottom: var(--color-ui);
 }
 
-.c-header-option-calculated {
+.c-header-option-calculated,
+.c-header-option-toggle {
   border-color: var(--opaque-color-ui-acc);
+}
+
+
+
+#c-header-physics-indicator {
+  border-image:
+    linear-gradient(90deg, transparent 0%, var(--opaque-color-ui-acc) 20% 80%, transparent 100%) 1;
+}
+
+#c-header-physics-indicator::before {
+  border-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--opaque-color-ui-acc) 30% 36%,
+    transparent 36% 64%,
+    var(--opaque-color-ui-acc) 64% 70%,
+    transparent 100%
+  ) 1;
 }
 
 /*# END - Header */

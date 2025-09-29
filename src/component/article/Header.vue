@@ -78,7 +78,7 @@ export default {
 
 .l-header-indicator {
   text-anchor: middle;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 300;
 
   padding: 0 32px;
@@ -104,7 +104,7 @@ export default {
   gap: 4px;
 }
 
-.l-header-content > * {
+.l-header-content > *:not(.l-cut) {
   margin: 0 8px;
 
   display: flex;

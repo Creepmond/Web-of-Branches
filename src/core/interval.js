@@ -17,8 +17,16 @@ export function setCooldown(handler, duration) {
  * @param {function} handler - Usually just "setUpdateloop(this.update)"
  */
 export function setUpdateloop(handler) {
-   setTimeout(handler, player.option.tickrate);
+   return setTimeout(handler, player.option.tickrate);
 };
+
+/**
+ * Clears the setUpdateloop based on the frameId (intervalId by technicality)
+ * @param {Number} frameId
+ */
+export function clearUpdateloop(frameId) {
+   if (typeof frameId === 'number') clearTimeout(frameId);
+}
 
 export function setGameloop(handler) {
    setTimeout(tick, player.option.tickrate, handler);

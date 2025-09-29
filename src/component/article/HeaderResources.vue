@@ -1,12 +1,12 @@
 <script>
-import { setUpdateloop } from "@/core/interval.js";
+import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
   name: "HeaderResources",
   data() { return {
     seed: 0,
 
-    frameId: 0,
+    frameId: null,
   }},
   computed: {
     seedAmount() {
@@ -21,6 +21,10 @@ export default {
   },
   mounted() {
     this.update();
+  },
+  beforeUnmount() {
+    clearUpdateloop(this.frameId);
+    this.frameId = null;
   },
 };
 </script>
