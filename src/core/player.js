@@ -10,7 +10,7 @@ window.player = {
       zoomLevel: 1,
    },
    physics: {
-      isEnabled: true,
+      isEnabled: false,
       screenSlipperiness: 0.98,
    },
    last: {

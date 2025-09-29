@@ -16,6 +16,9 @@ export default {
     screenCoord: { X: -140, Y: -80 }, // See the <style> why these are the values
     initMouseCoord: { X: 0, Y: 0 },
     diffMouseCoord: { X: 0, Y: 0 },
+    
+    zoomTarget: { X: 0, Y: 0 },
+    zoomLevel: 0,
 
     // For Physics
     physicsIsActive: false,
@@ -36,6 +39,9 @@ export default {
   mounted() {
     htmlDOM.addEventListener('pointerdown', this.handleStart);
     htmlDOM.addEventListener('pointerup', this.handleEnd);
+
+    this.zoomLevel = player.option.zoomLevel;
+    htmlDOM.addEventListener('wheel', this.handleZoom);
   },
   methods: {
     handleStart(e) {
@@ -56,7 +62,6 @@ export default {
       this.diffMouseCoord = { X: e.clientX, Y: e.clientY };
 
       if (this.physicsIsActive) {
-        console.log(this.mouseCoordHist)
         this.mouseCoordHist.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
 
         if (this.mouseCoordHist.length < 2) return;
@@ -67,17 +72,23 @@ export default {
       this.initMouseCoord = this.diffMouseCoord;
     },
 
-    handleEnd(e) {
+    handleEnd() {
       htmlDOM.removeEventListener('pointermove', this.handleMove);
 
       player.last.screenCoord = this.screenCoord;
 
-      if (!this.physicsIsActive) return;
+      if (!this.physicsIsActive || this.mouseCoordHist.length < 2) return;
       this.calculatePhysics();
       this.mouseCoordHist = [];
 
       if (this.screenSlip === 0) return;
       this.calculateSlipperiness();
+    },
+
+    handleZoom(e) {
+      if (e) this.zoomLevel += e.deltaY / 4000;
+
+      this.zoomLevel = this.zoomLevel.valueOf().clamp(0.2, 2);
     },
 
 
@@ -116,7 +127,7 @@ export default {
 
       const init = this.mouseCoordHist[0];
       const diff = this.mouseCoordHist[this.mouseCoordHist.length - 1];
-   
+
       const delta = {
           X: diff.X - init.X,
           Y: diff.Y - init.Y,
@@ -128,25 +139,16 @@ export default {
     },
 
     calculateScreenMovement() {
-      /*
-      const init = this.initMouseCoord;
-      const diff = this.diffMouseCoord;
-
-      const delta = {
-        X: diff.X - init.X,
-        Y: diff.Y - init.Y,
-      }
-
-      this.screenCoord.X += delta.X;
-      this.screenCoord.Y += delta.Y;
-      */
-
+      // This is just from Lines 128-135, but I compressed it since the structure is readable
+      // like this anyways. This uses the initMouseCoord and diffMouseCoord whereas
+      // calculatePhysics() is derived from the mouseCoordHistory is because I couldn't figure
+      // out how to make init *not* the same as diff. As you could have saw, after handleMove()
+      // is calculated, init is already equal to diff
       this.screenCoord.X += this.diffMouseCoord.X - this.initMouseCoord.X;
       this.screenCoord.Y += this.diffMouseCoord.Y - this.initMouseCoord.Y;
     },
 
     calculateSlipperiness() {
-      console.log(this.velocity, this.screenCoord)
       if (this.velocity < VELOCITY_THRESHOLD) return;
 
       const angle = this.angleAvg_rad;
@@ -162,9 +164,10 @@ export default {
       // than dealing with the value 0.901-0.999 itself
       this.velocity *= this.screenSlip;
 
-      //! For better PCs and such, this effect would last for shorter, not sure if I care to
-      //  apply it
-      setUpdateloop(this.calculateSlipperiness)
+      // This has a hilarious side-effect of being affected by tickrate. I'm not sure if I'm
+      // inclined to support this behaviour (e.g., making velocity stronger based on tickrate),
+      // or just going back to requestAnimationFrame(). Both are great, to be fair.
+      setUpdateloop(this.calculateSlipperiness);
     },
   },
   computed: {
@@ -190,23 +193,34 @@ export default {
 <template>
   <article
     id="user-interface"
-    :style="`translate: ${uiPos.X}px ${uiPos.Y}px`"
+    :style="`
+      transform:
+        scale(${zoomLevel})
+        translate(${uiPos.X}px, ${uiPos.Y}px);
+    `"
   >
     <Tree />
   </article>
   <figure
     id="background"
-    :style="`background-position: ${bgPos.X}px ${bgPos.Y}px`"
+    :style="`
+      width: ${101 / zoomLevel}vw;
+      height: ${101 / zoomLevel}vh;
+      transform: scale(${zoomLevel});
+      background-position: ${bgPos.X}px ${bgPos.Y}px;
+    `"
   />
+  <!--Viewports here are 101 rather than 100 because of fractional pixels causing the very
+  rim to often not showing properly. Or I'm going insane. Better to be safe than sorry-->
 </template>
 
 <style>
 #user-interface {
-  /* The pixel difference on translate is based on a standard study's half-size */
-  translate: -140px -80px;
+  
 }
 
 #background {
+  /* The pixel difference on translate is based on a standard study's half-size */
   background-position: -140px -80px;
 
   width: 101vw;

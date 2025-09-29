@@ -54,9 +54,13 @@ Set.prototype.hasArray = function(value) {
 
 
 
-/*
 //# Number
 
+Number.prototype.clamp = function(min, max) {
+   return Math.min(Math.max(this.valueOf(), min), max);
+};
+
+/*
 Number.prototype.toRadian = function() {
    return this * (Math.PI / 180)
 }
@@ -64,6 +68,6 @@ Number.prototype.toRadian = function() {
 Number.prototype.toDegree = function() {
    return this * (180 / Math.PI)
 }
+*/
 
 //# END - Number
-*/

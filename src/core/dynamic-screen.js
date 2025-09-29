@@ -25,7 +25,7 @@ const screenCoord = player.last.screenCoord || { X: -140, Y: -80 };
 //! I think also adding where the client coordinates and applying some calculateScreenMovement()
 //! may help make the zoom more dynamic, though it would require me to constantly have mouse-
 //! history...
-htmlDOM.addEventListener('wheel', handleZoom)
+//// htmlDOM.addEventListener('wheel', handleZoom)
 
 function handleStart(e) {
    if (e.target.className.includes('vue-slider')) return;
