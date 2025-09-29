@@ -4,6 +4,22 @@
 
 
 
+/*# Header */
+
+.c-header-tab-button {
+  transition: background-color 0.15s, outline-color 0.3s;
+}
+
+.l-header-indicator-tabs {
+  transition: transform 0.3s ease-in-out;
+}
+
+/*# END - Header */
+
+
+
+
+
 /*# Studies */
 
 .o-prim-study {
@@ -18,7 +34,7 @@
 }
 
 .o-prim-study--bought::before {
-  transition: inset 0.3s var(--anim-over-in-and-out);
+  transition: inset 0.3s var(--anim-over-in-and-out), outline-width 0.15s
 }
 
 
@@ -37,8 +53,15 @@
   inset: 0;
 }
 
-.o-prim-study--bought::before {
+.o-prim-study--bought::before,
+.o-prim-study--bought.o-prim-study--node::before {
   inset: -4px;
+}
+
+.o-prim-study--respecced::before {
+  outline-width: 4px;
+
+  inset: -6px
 }
 
 /*# END - Studies */

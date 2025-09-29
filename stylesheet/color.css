@@ -1,8 +1,11 @@
 :root {
+  --color-ui: #2f2d39;
+  --color-ui-acc: #4cc2fe;
+
   --color-good: #5ac466;
   --color-bad: #efbf8f;
   
-  --color-study: #f8300d
+  --color-study: #f8300d;
 }
 
 /** Monochromatic hell... */
@@ -36,6 +39,10 @@ span {
   color: var(--color-text);
 }
 
+text {
+  fill: var(--color-text);
+}
+
 
 
 /*# Background */
@@ -58,24 +65,109 @@ span {
 
 
 :root {
-  /* Kruta I am so sorry to steal your palette */
-  --color-fixed: #322d4b;
-  --color-fixed-accent: #4cc2fe;
+  --color-key: #f8f8ff;
+
+  --color-key-acc: hsl(from var(--color-key) h calc(s * 0.5) l);
+  --color-key-text: hsl(from var(--color-key) h s calc(100 - l));
+}
+
+/*# Semantic */
+
+.c-hotkey {
+  background-color: var(--color-key);
+  color: var(--color-key-text);
+
+  border-color: var(--color-key-acc);
+}
+
+/*# END - Semantic */
+
+
+
+
+
+:root {
+  --color-ui-contrast: hsl(from var(--color-ui) h s calc(100 - l));
+  --opaque-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / 0.3);
+
+  --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
+  --opaque-color-focus-ui: hsl(from var(--color-ui) h s calc(0.8 * l + 10) / 0.6);
+
+  --opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.5);
 }
 
 
 
 /*# Header */
 
-.o-header {
-  background-color: var(--color-fixed);
-  outline: 1px solid var(--color-fixed-accent);
-
-  box-shadow: inset 0 0 15px -5px var(--color-fixed-accent);
+/* See './src/component/base/DefaultSlider.vue'. Unfortunately, this is one of the elements that I cannot
+directly modify the background-color of, as its bound to the component itself. I based the value on
+var(--opaque-color-ui-contrast), however */
+.vue-slider-rail {
+  background-color: var(--opaque-color-ui-contrast);
 }
 
-.o-header::after {
-  box-shadow: 4px 4px 10px var(--color-fixed-accent);
+.vue-slider-point {
+  background-color: var(--color-ui-contrast);
+}
+
+.vue-slider-bar {
+  background-color: var(--color-ui-acc);
+}
+
+.c-header-subject {
+  background-color: var(--opaque-color-ui);
+}
+
+
+
+.c-header-tab-button {
+  background-color: var(--opaque-color-ui);
+  color: var(--color-text);
+
+  outline-color: transparent;
+}
+
+.c-header-tab-button:hover {
+  background-color: var(--opaque-color-focus-ui);
+}
+
+.c-header-tab-button--flipped {
+  outline-color: var(--opaque-color-ui-acc);
+}
+
+.l-header-indicator {
+  border-image:
+    linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 40% 60%, transparent 100%) 1;
+}
+
+
+
+.c-header-currency-value {
+  border-bottom: var(--color-ui);
+}
+
+.c-header-option-calculated,
+.c-header-option-toggle {
+  border-color: var(--opaque-color-ui-acc);
+}
+
+
+
+#c-header-physics-indicator {
+  border-image:
+    linear-gradient(90deg, transparent 0%, var(--opaque-color-ui-acc) 20% 80%, transparent 100%) 1;
+}
+
+#c-header-physics-indicator::before {
+  border-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--opaque-color-ui-acc) 30% 36%,
+    transparent 36% 64%,
+    var(--opaque-color-ui-acc) 64% 70%,
+    transparent 100%
+  ) 1;
 }
 
 /*# END - Header */
@@ -101,6 +193,10 @@ span {
 :root {
   --color-study-bg: hsl(from var(--color-study) calc(h - 5) calc(s * 0.65) calc(l * 0.5));
   --color-study-acc: hsl(from var(--color-study) h calc(s - 5) calc(l - 15));
+
+  --color-study-focus: color-mix(in oklch, var(--color-study), var(--color-good) 5%);
+  --color-study-bg-focus: hsl(from var(--color-study-focus) calc(h - 5) calc(s * 0.65) calc(l * 0.6));
+  --color-study-acc-focus: hsl(from var(--color-study-focus) h calc(s - 5) calc(l - 5));
 
   --color-study-grey: #3d3d3d;
   --color-study-grey-acc: #262626;
@@ -207,6 +303,18 @@ span {
 
 .o-prim-study--bought::before {
   background-color: var(--color-study-acc);
+}
+
+
+
+.o-prim-study--respecced {
+  background-color: var(--color-study-bg-focus);
+}
+
+.o-prim-study--respecced::before {
+  background-color: var(--color-study-acc-focus);
+
+  outline-color: var(--color-study-focus);
 }
 
 /*# END - Studies */

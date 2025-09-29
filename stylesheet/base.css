@@ -18,7 +18,8 @@ body {
   font-size: 20px;
 }
 
-span {
+span,
+text {
   cursor: text;
 
   font-family: Bitter, Times, Serif;
@@ -66,6 +67,22 @@ button span {
 
   position: fixed;
   z-index: -3;
+}
+
+
+
+.c-hotkey {
+  font-family: Monospace;
+
+  padding: 1px 3px;
+  border: 2px outset;
+  border-radius: 2px;
+
+  display: inline;
+}
+
+.vue-slider {
+  cursor: pointer;
 }
 
 /*# END - Semantic */
