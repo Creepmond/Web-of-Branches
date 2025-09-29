@@ -19,8 +19,8 @@ const MAX_HISTORY_LENGTH = 5;
 // with this
 const screenCoord = player.last.screenCoord || { X: -140, Y: -80 };
 
-htmlDOM.addEventListener('pointerdown', handleStart);
-htmlDOM.addEventListener('touchend', handleEnd);
+//// htmlDOM.addEventListener('pointerdown', handleStart);
+//// htmlDOM.addEventListener('touchend', handleEnd);
 
 //! I think also adding where the client coordinates and applying some calculateScreenMovement()
 //! may help make the zoom more dynamic, though it would require me to constantly have mouse-

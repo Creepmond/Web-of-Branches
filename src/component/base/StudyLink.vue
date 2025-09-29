@@ -55,6 +55,8 @@ export default {
 
 <style>
 .l-study-link {
+  pointer-events: none;
+
   width: 100%;
   height: 100%;
 

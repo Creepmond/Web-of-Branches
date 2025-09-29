@@ -1,8 +1,9 @@
 import { createApp } from "vue";
 import GameUIFixed from "./component/GameUIFixed.vue";
-import GameUI from "./component/Tree.vue";
+import GameUIDynamic from "./component/GameUIDynamic.vue";
 
 const FixedUI = createApp(GameUIFixed)
 FixedUI.mount('#fixed-content');
 
-const UI = createApp(GameUI).mount('#user-interface');
+const DynamicUI = createApp(GameUIDynamic)
+DynamicUI.mount('#dynamic-content');
