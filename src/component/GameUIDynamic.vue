@@ -1,10 +1,9 @@
 <script>
-import { plotScreenByCoord } from "@/core/dynamic-screen";
 import Tree from "./Tree.vue";
 
 const htmlDOM = document.querySelector('html');
 
-const VELOCITY_STRENGTH = 1.71;
+const VELOCITY_STRENGTH = 1.71; // Euler's minus one. It was done solely on a whim
 const VELOCITY_THRESHOLD = 0.1;
 const MAX_HISTORY_LENGTH = 5;
 
@@ -12,14 +11,21 @@ export default {
   name: "GameUIDynamic",
   components: { Tree, },
   data() { return {
-    screenCoord: { X: 0, Y: 0 },
-    mouseCoordHistory: [],
+    screenCoord: { X: -140, Y: -80 }, // See the <style> why these are the values
+    initMouseCoord: { X: 0, Y: 0 },
+    diffMouseCoord: { X: 0, Y: 0 },
+
+    // For Physics
+    physicsIsActive: false,
+    screenSlip: 0,
+    mouseCoordHist: [],
 
     // Physics values
     velocity: 0,
     angleAvg_rad: 0,
-    directionHistory: [],
+    directionHist: [],
   }},
+
   // Not sure if it's a better habit to remain stagnant where each key of an SFC rests. I mean,
   // it's usually components, props and emits, then reactive data, watchers, computed, methods,
   // then the lifecycle hooks. I've accidently made a pattern, but this situation makes more
@@ -33,34 +39,47 @@ export default {
     handleStart(e) {
       if (e.target.className.includes('vue-slider')) return;
 
-      this.mouseCoordHistory.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
+      this.physicsIsActive = player.physics.IsEnabled;
+      this.screenSlip = player.physics.screenSlipperiness;
+
+      if (this.physicsIsActive)
+        this.mouseCoordHist.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
+
+      this.initMouseCoord = { X: e.clientX, Y: e.clientY };
 
       htmlDOM.addEventListener('pointermove', this.handleMove);
     },
+    
     handleMove(e) {
-      this.mouseCoordHistory.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
+      this.diffMouseCoord = { X: e.clientX, Y: e.clientY };
 
-      if (this.mouseCoordHistory.length < 2) return;
-      if (this.mouseCoordHistory.length > MAX_HISTORY_LENGTH)
-        this.mouseCoordHistory.shift();
+      if (this.physicsIsActive) {
+        this.mouseCoordHist.push({ X: e.clientX, Y: e.clientY, T: Date.now() });
 
-      if (player.physics.isEnabled) this.calculatePhysics();
+        if (this.mouseCoordHist.length < 2) return;
+        if (this.mouseCoordHist.length > MAX_HISTORY_LENGTH) this.mouseCoordHist.shift();
+      }
 
       this.calculateScreenMovement();
+      this.initMouseCoord = this.diffMouseCoord;
     },
+
     handleEnd() {
       player.last.screenCoord = this.screenCoord;
 
       htmlDOM.removeEventListener('pointermove', this.handleMove);
 
-      this.mouseCoordHistory = [];
+      if (!this.physicsIsActive) return;
+      this.mouseCoordHist = [];
 
-      if (player.physics.isEnabled && player.physics.screenSlipperiness > 0)
-        this.applyScreenSlipperiness()
+      if (this.screenSlip === 0) return;
+      this.calculateSlipperiness()
     },
 
-    calculatePhysics() {
-      const mouseCoordHist = this.mouseCoordHistory;
+
+
+    calculatePhysics() { //// rgcijd9weqopemfcioqmrpiogmiomjgj iixjs-9cjs
+      const mouseCoordHist = this.mouseCoordHist;
 
       for (let i = 1; i < mouseCoordHist.length; i++) {
         const dx = mouseCoordHist[i].X - mouseCoordHist[i-1].X;
@@ -68,15 +87,15 @@ export default {
         const length = Math.hypot(dx, dy);
 
         if (length > 0)
-          this.directionHistory.push({ X: dx / length, Y: dy / length });
+          this.directionHist.push({ X: dx / length, Y: dy / length });
 
-        if (this.directionHistory.length > MAX_HISTORY_LENGTH)
-          this.directionHistory.shift();
+        if (this.directionHist.length > MAX_HISTORY_LENGTH)
+          this.directionHist.shift();
 
         const avgDirection = { X: 0, Y: 0 };
-        const dirLength = this.directionHistory.length;
+        const dirLength = this.directionHist.length;
 
-        this.directionHistory.forEach(vector => {
+        this.directionHist.forEach(vector => {
           avgDirection.X += vector.X;
           avgDirection.Y += vector.Y;
         });
@@ -101,10 +120,10 @@ export default {
           ( Math.sqrt(delta.X ** 2 + delta.Y ** 2) ) / delta.T * VELOCITY_STRENGTH;
       };
     },
+
     calculateScreenMovement() {
-      const L = this.mouseCoordHistory.length;
-      const init = this.mouseCoordHistory[L - 2];
-      const diff = this.mouseCoordHistory[L - 1];
+      const init = this.initMouseCoord;
+      const diff = this.diffMouseCoord;
 
       const delta = {
         X: diff.X - init.X,
@@ -114,14 +133,14 @@ export default {
       this.screenCoord.X += delta.X;
       this.screenCoord.Y += delta.Y;
     },
-    applyScreenSlipperiness() {
+
+    calculateScreenSlipperiness() {
       if (this.velocity < VELOCITY_THRESHOLD) return;
 
       const angle = this.angleAvg_rad;
-      const velocity = this.velocity;
 
-      this.screenCoord.X += Math.cos(angle) * velocity;
-      this.screenCoord.Y += Math.sin(angle) * velocity;
+      this.screenCoord.X += Math.cos(angle) * this.velocity;
+      this.screenCoord.Y += Math.sin(angle) * this.velocity;
 
       //* See '@/component/article/HeaderOption.vue' at around Line 33. The value of screen 
       // slipperiness never actually reaches less than 0.9 (unless it's already at 0 of
@@ -131,8 +150,8 @@ export default {
       // than dealing with the value 0.901-0.999 itself
       this.velocity *= player.physics.screenSlipperiness;
 
-       //! For better PCs and such, this effect would last for shorter, not sure if I care to
-       //  apply it
+      //! For better PCs and such, this effect would last for shorter, not sure if I care to
+      //  apply it
     },
   },
   computed: {
@@ -169,5 +188,18 @@ export default {
 </template>
 
 <style>
+#user-interface {
+  /* The pixel difference on translate is based on a standard study's half-size */
+  translate: -140px -80px;
+}
 
+#background {
+  background-position: -140px -80px;
+
+  width: 101vw;
+  height: 101vh;
+
+  position: fixed;
+  z-index: -3;
+}
 </style>
