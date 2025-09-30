@@ -19,7 +19,7 @@ window.player = {
       screenCoord: null,
    },
    hidden: {
-      isTouchscreen: false,
+      deviceScreenType: '',
       hasEverReachedBoundary: false,
       studyAll_id: [],
       obfuscationUnicodePool: [],

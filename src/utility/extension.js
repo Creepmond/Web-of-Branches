@@ -13,7 +13,7 @@ Array.prototype.first = function() {
 };
 
 Array.prototype.last = function() {
-   return this.toReversed().first();
+   return this.toReversed()[0];
 };
 
 Array.range = function(array, staticNum = 0) {

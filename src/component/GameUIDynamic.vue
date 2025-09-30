@@ -66,7 +66,7 @@ export default {
     },
 
     handleStart(e) {
-      if (e.target.className.includes('vue-slider')) return;
+      if (e.target.closest('.vue-slider')) return;
 
       this.physicsIsActive = player.physics.isEnabled;
       this.screenSlip = player.physics.screenSlipperiness;
@@ -76,10 +76,12 @@ export default {
 
       this.initMouseCoord = { X: e.clientX, Y: e.clientY };
 
-      htmlDOM.addEventListener('pointermove', this.handleMove);
+      this.setMoveHandling(e);
     },
     
     handleMove(e) {
+      if (e.touches) e = e.touches[0];
+
       this.diffMouseCoord = { X: e.clientX, Y: e.clientY };
 
       if (this.physicsIsActive) {
@@ -93,8 +95,8 @@ export default {
       this.initMouseCoord = this.diffMouseCoord;
     },
 
-    handleEnd() {
-      htmlDOM.removeEventListener('pointermove', this.handleMove);
+    handleEnd(e) {
+      this.endMoveHandling(e);
 
       player.last.screenCoord = this.screenCoord;
 
@@ -121,6 +123,8 @@ export default {
 
       this.screenCoord.X += this.zoomTarget.X * ( (1 / init) - (1 / diff) );
       this.screenCoord.Y += this.zoomTarget.Y * ( (1 / init) - (1 / diff) );
+
+      this.zoomTarget = { X: 0, Y: 0 };
     },
 
 
@@ -200,6 +204,25 @@ export default {
       // inclined to support this behaviour (e.g., making velocity stronger based on tickrate),
       // or just going back to requestAnimationFrame(). Both are great, to be fair.
       setUpdateloop(this.calculateSlipperiness);
+    },
+
+
+
+    // This is to figure out which listener to use for handleEnd(), as PointerEvents with
+    // touchscreen seems more "eager" than any other PointerEvent, as in the sense that
+    //
+    setMoveHandling(e) {
+      player.hidden.deviceScreenType = e.pointerType;
+
+      e.pointerType === 'touch'
+        ? htmlDOM.addEventListener('touchmove', this.handleMove, { passive: false })
+        : htmlDOM.addEventListener('pointermove', this.handleMove, { passive: false });
+    },
+
+    endMoveHandling(e) {
+      e.pointerType === 'touch'
+        ? htmlDOM.removeEventListener('touchmove', this.handleMove)
+        : htmlDOM.removeEventListener('pointermove', this.handleMove);
     },
 
     // Do I need to make it a method? Nah. Did I do it anyway? Hell yes.
