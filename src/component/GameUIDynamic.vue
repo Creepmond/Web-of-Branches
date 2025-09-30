@@ -17,7 +17,9 @@ export default {
     initMouseCoord: { X: 0, Y: 0 },
     diffMouseCoord: { X: 0, Y: 0 },
     
-    zoomTarget: { X: 0, Y: 0 },
+    // For Zoom
+    screenDims: { W: 0, H: 0 },
+    zoomTarget: { X: -140, Y: -80 }, // See the <style> why these are the values
     zoomLevel: 0,
 
     // For Physics
@@ -36,11 +38,17 @@ export default {
   // then the lifecycle hooks. I've accidently made a pattern, but this situation makes more
   // sense to place lifecycle hooks before methods. Well, it doesn't ultimately matter but a
   // thought's a thought
+  beforeMount() {
+    this.zoomLevel = player.option.zoomLevel;
+    this.setScreenDims();
+  },
   mounted() {
+    // Movement
     htmlDOM.addEventListener('pointerdown', this.handleStart);
     htmlDOM.addEventListener('pointerup', this.handleEnd);
 
-    this.zoomLevel = player.option.zoomLevel;
+    // Zoom
+    window.addEventListener('resize', this.setScreenDims);
     htmlDOM.addEventListener('wheel', this.handleZoom);
   },
   methods: {
@@ -86,9 +94,28 @@ export default {
     },
 
     handleZoom(e) {
-      if (e) this.zoomLevel += e.deltaY / 4000;
+      if (e) {
+        this.zoomTarget = {
+          X: this.screenDims.W / 2 - e.clientX,
+          Y: this.screenDims.H / 2 - e.clientY,
+        };
+      };
 
+      const init = this.zoomLevel;
+      
+      if (e) this.zoomLevel += e.deltaY / 4000;
       this.zoomLevel = this.zoomLevel.valueOf().clamp(0.2, 2);
+
+      const diff = this.zoomLevel;
+
+      this.screenCoord.X += this.zoomTarget.X * ( (1 / init) - (1 / diff) );
+      this.screenCoord.Y += this.zoomTarget.Y * ( (1 / init) - (1 / diff) );
+      /*
+      this.screenCoord.X += 0;
+      this.screenCoord.Y += 0;
+      */
+
+      this.zoomTarget = { X: -140, Y: -80 };
     },
 
 
@@ -169,6 +196,12 @@ export default {
       // or just going back to requestAnimationFrame(). Both are great, to be fair.
       setUpdateloop(this.calculateSlipperiness);
     },
+
+    // Do I need to make it a method? Nah. Did I do it anyway? Hell yes.
+    setScreenDims() {
+      this.screenDims.W = window.innerWidth;
+      this.screenDims.H = window.innerHeight;
+    },
   },
   computed: {
     uiPos() {
@@ -215,10 +248,6 @@ export default {
 </template>
 
 <style>
-#user-interface {
-  
-}
-
 #background {
   /* The pixel difference on translate is based on a standard study's half-size */
   background-position: -140px -80px;
