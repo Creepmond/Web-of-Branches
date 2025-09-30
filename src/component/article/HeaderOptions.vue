@@ -2,9 +2,6 @@
 import DefaultSlider from "@/component/base/DefaultSlider.vue";
 import DefaultToggle from "@/component/base/DefaultToggle.vue"
 
-import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
-import { plotScreenByCoord, handleZoom } from "@/core/dynamic-screen.js";
-
 export default {
   name: "HeaderOptions",
   components: {
@@ -18,17 +15,13 @@ export default {
 
     physicsBoolean: false,
     slipperinessValue: 0,
-
-    frameId: null,
   }},
   watch: {
     parallaxValue(value) {
       player.option.parallax = value / 100;
-      plotScreenByCoord();
     },
     zoomValue() {
       player.option.zoomLevel = this.zoomValue / 100;
-      handleZoom();
     },
     tickrateValue(value) {
       player.option.tickrate = value;
@@ -61,17 +54,6 @@ export default {
       return `${this.slipperinessValue}%`;
     },
   },
-  methods: {
-    update() {
-      // I'm well aware this causes problems and that this one is in particular is a little messy... I
-      // think this is a warning I should probably make '#dynamic-content' a Vue component so that I can
-      // have more free-form event-handling. Welp, problem for future-me am I right or am I right lads
-
-      player.option.zoomLevel = this.zoomValue / 100;
-      
-      this.frameId = setUpdateloop(this.update);
-    }
-  },
   beforeMount() {
     this.parallaxValue = player.option.parallax * 100;
     this.zoomValue = player.option.zoomLevel * 100;
@@ -81,13 +63,6 @@ export default {
     player.physics.screenSlipperiness === 0
     ? this.slipperinessValue = 0
     : this.slipperinessValue = Math.floor((player.physics.screenSlipperiness * 100 - 90) * 10);
-  },
-  mounted() {
-    this.update();
-  },
-  beforeUnmount() {
-    clearUpdateloop(this.frameId);
-    this.frameId = null;
   },
 };
 </script>
@@ -115,7 +90,7 @@ export default {
       <DefaultSlider
         class="c-header-option-slider"
         id="c-header-option-zoom-value"
-        :rangeProperty="[20, 200, 5]"
+        :rangeProperty="[15, 300, 5]"
         :modelValue="zoomValue"
         @slide="zoomValue = $event"
       />

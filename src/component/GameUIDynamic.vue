@@ -5,7 +5,8 @@ import { setUpdateloop } from "@/core/interval"
 
 const htmlDOM = document.querySelector('html');
 
-const VELOCITY_STRENGTH = 1.71; // Euler's minus one. It was done solely on a whim
+const ZOOM_STRENGTH = 1.03; // It was chosen solely on a whim
+const VELOCITY_STRENGTH = 1.71; // Euler's minus one. Also by a whim
 const VELOCITY_THRESHOLD = 0.1;
 const MAX_HISTORY_LENGTH = 5;
 
@@ -21,6 +22,7 @@ export default {
     screenDims: { W: 0, H: 0 },
     zoomTarget: { X: -140, Y: -80 }, // See the <style> why these are the values
     zoomLevel: 0,
+    parallaxValue: 0,
 
     // For Physics
     physicsIsActive: false,
@@ -31,6 +33,8 @@ export default {
     velocity: 0,
     angleAvg_rad: 0,
     directionHist: [],
+
+    frameId: null,
   }},
 
   // Not sure if it's a better habit to remain stagnant where each key of an SFC rests. I mean,
@@ -40,9 +44,12 @@ export default {
   // thought's a thought
   beforeMount() {
     this.zoomLevel = player.option.zoomLevel;
+    this.parallaxValue = player.option.parallax;
     this.setScreenDims();
   },
   mounted() {
+    this.update();
+
     // Movement
     htmlDOM.addEventListener('pointerdown', this.handleStart);
     htmlDOM.addEventListener('pointerup', this.handleEnd);
@@ -52,6 +59,12 @@ export default {
     htmlDOM.addEventListener('wheel', this.handleZoom);
   },
   methods: {
+    update() {
+      this.zoomLevel = player.option.zoomLevel;
+      this.parallaxValue = player.option.parallax;
+      setUpdateloop(this.update);
+    },
+
     handleStart(e) {
       if (e.target.className.includes('vue-slider')) return;
 
@@ -94,28 +107,20 @@ export default {
     },
 
     handleZoom(e) {
-      if (e) {
-        this.zoomTarget = {
-          X: this.screenDims.W / 2 - e.clientX,
-          Y: this.screenDims.H / 2 - e.clientY,
-        };
+      this.zoomTarget = {
+        X: this.screenDims.W / 2 - e.clientX,
+        Y: this.screenDims.H / 2 - e.clientY,
       };
 
       const init = this.zoomLevel;
       
-      if (e) this.zoomLevel += e.deltaY / 4000;
-      this.zoomLevel = this.zoomLevel.valueOf().clamp(0.2, 2);
+      this.zoomLevel *= Math.pow(ZOOM_STRENGTH, e.deltaY / 100);
+      this.zoomLevel = this.zoomLevel.valueOf().clamp(0.15, 3);
 
       const diff = this.zoomLevel;
 
       this.screenCoord.X += this.zoomTarget.X * ( (1 / init) - (1 / diff) );
       this.screenCoord.Y += this.zoomTarget.Y * ( (1 / init) - (1 / diff) );
-      /*
-      this.screenCoord.X += 0;
-      this.screenCoord.Y += 0;
-      */
-
-      this.zoomTarget = { X: -140, Y: -80 };
     },
 
 
@@ -166,13 +171,13 @@ export default {
     },
 
     calculateScreenMovement() {
-      // This is just from Lines 128-135, but I compressed it since the structure is readable
-      // like this anyways. This uses the initMouseCoord and diffMouseCoord whereas
-      // calculatePhysics() is derived from the mouseCoordHistory is because I couldn't figure
-      // out how to make init *not* the same as diff. As you could have saw, after handleMove()
-      // is calculated, init is already equal to diff
-      this.screenCoord.X += this.diffMouseCoord.X - this.initMouseCoord.X;
-      this.screenCoord.Y += this.diffMouseCoord.Y - this.initMouseCoord.Y;
+      const delta = {
+        X: this.diffMouseCoord.X - this.initMouseCoord.X,
+        Y: this.diffMouseCoord.Y - this.initMouseCoord.Y,
+      }
+
+      this.screenCoord.X += delta.X * (1 / this.zoomLevel);
+      this.screenCoord.Y += delta.Y * (1 / this.zoomLevel);
     },
 
     calculateSlipperiness() {
@@ -180,8 +185,8 @@ export default {
 
       const angle = this.angleAvg_rad;
 
-      this.screenCoord.X += Math.cos(angle) * this.velocity;
-      this.screenCoord.Y += Math.sin(angle) * this.velocity;
+      this.screenCoord.X += Math.cos(angle) * this.velocity * (1 / this.zoomLevel);
+      this.screenCoord.Y += Math.sin(angle) * this.velocity * (1 / this.zoomLevel);
 
       //* See '@/component/article/HeaderOption.vue' at around Line 33. The value of screen 
       // slipperiness never actually reaches less than 0.9 (unless it's already at 0 of
@@ -203,6 +208,11 @@ export default {
       this.screenDims.H = window.innerHeight;
     },
   },
+  watch: {
+    zoomLevel() {
+      player.option.zoomLevel = this.zoomLevel;
+    },
+  },
   computed: {
     uiPos() {
       return {
@@ -211,12 +221,9 @@ export default {
       }
     },
     bgPos() {
-      const parallax = player.option.parallax;
-      const zoom = player.option.zoomLevel;
-
       return {
-        X: this.screenCoord.X * parallax / zoom,
-        Y: this.screenCoord.Y * parallax / zoom,
+        X: this.screenCoord.X * this.parallaxValue,
+        Y: this.screenCoord.Y * this.parallaxValue,
       };
     }
   },
