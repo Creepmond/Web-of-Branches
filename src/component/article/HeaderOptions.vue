@@ -1,6 +1,11 @@
 <script>
+//* The values shown here are not entirely accurate to their values in the player object
+//  (for example, screen  here ranges 0-100, but player.option.screenSlipperiness receives this
+//  value from 0 in the case of 0, or 0.901-0.999 in between)
 import DefaultSlider from "@/component/base/DefaultSlider.vue";
 import DefaultToggle from "@/component/base/DefaultToggle.vue"
+
+import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
   name: "HeaderOptions",
@@ -15,6 +20,8 @@ export default {
 
     physicsBoolean: false,
     slipperinessValue: 0,
+
+    frameId: null,
   }},
   watch: {
     parallaxValue(value) {
@@ -40,6 +47,13 @@ export default {
       player.physics.screenSlipperiness = appliedSlip / 100;
     },
   },
+  methods: {
+    update() {
+      this.zoomValue = player.option.zoomLevel * 100;
+      
+      this.frameId = setUpdateloop(this.update);
+    }
+  },
   computed: {
     parallaxFormat() {
       if (this.parallaxValue === 0) return 'FIXED';
@@ -63,6 +77,13 @@ export default {
     player.physics.screenSlipperiness === 0
     ? this.slipperinessValue = 0
     : this.slipperinessValue = Math.floor((player.physics.screenSlipperiness * 100 - 90) * 10);
+  },
+  mounted() {
+    this.update();
+  },
+  beforeUnmount() {
+    clearUpdateloop(this.frameId);
+    this.frameId = null;
   },
 };
 </script>
@@ -168,10 +189,6 @@ export default {
   border-style: solid;
   border-radius: 4px;
   gap: 8px;
-}
-
-.c-header-option-toggle {
-  
 }
 
 .c-header-option-slider {

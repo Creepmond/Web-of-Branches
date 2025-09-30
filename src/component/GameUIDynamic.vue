@@ -1,4 +1,6 @@
 <script>;
+// TODO: (80%: Halted) Zoom support (mobile: two-finger) (mobile: fix minor bugs)
+
 import Tree from "./Tree.vue";
 
 import { setUpdateloop } from "@/core/interval"
@@ -116,15 +118,13 @@ export default {
 
       const init = this.zoomLevel;
       
-      this.zoomLevel *= Math.pow(ZOOM_STRENGTH, e.deltaY / 100);
+      this.zoomLevel *= Math.pow(ZOOM_STRENGTH, e.deltaY / -8);
       this.zoomLevel = this.zoomLevel.valueOf().clamp(0.15, 3);
 
       const diff = this.zoomLevel;
 
       this.screenCoord.X += this.zoomTarget.X * ( (1 / init) - (1 / diff) );
       this.screenCoord.Y += this.zoomTarget.Y * ( (1 / init) - (1 / diff) );
-
-      this.zoomTarget = { X: 0, Y: 0 };
     },
 
 
