@@ -2,7 +2,7 @@
 import VueSlider from "vue-3-slider-component";
 
 export default {
-  name: "DefaultSlider",
+  name: "Slider",
   components: { VueSlider, },
   props: { rangeProperty: Array, modelValue: Number, },
   emits: ['slide'],

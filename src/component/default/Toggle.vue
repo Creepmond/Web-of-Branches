@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "DefaultToggle",
+  name: "Toggle",
   props: {
     modelValue: Boolean,
     on: String,

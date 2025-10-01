@@ -1,6 +1,6 @@
 <script>
-import Header from "@/component/article/Header.vue";
-import SideMetapanel from "@/component/article/SideMetapanel.vue";
+import Header from "@/component/article/header/Header.vue";
+import SideMetapanel from "@/component/article/metapanel/Metapanel.vue";
 
 export default {
   name: "GameUIFixed",

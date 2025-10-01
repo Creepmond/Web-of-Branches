@@ -3,6 +3,7 @@ import HeaderTabs from "./HeaderTabs.vue";
 
 import HeaderResources from "./HeaderResources.vue";
 import HeaderOptions from "./HeaderOptions.vue";
+import HeaderInformation from "./HeaderInformation.vue";
 
 import { setUpdateloop } from "@/core/interval.js";
 
@@ -12,9 +13,10 @@ export default {
     HeaderTabs,
     HeaderResources,
     HeaderOptions,
+    HeaderInformation,
   },
   data() { return {
-    tabList: ['Resources', 'Stats', 'Options'],
+    tabList: ['Resources', 'Stats', 'Options', 'Information'],
     tabbed: 'Resources',
   }},
   computed: {

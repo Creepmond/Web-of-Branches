@@ -2,16 +2,16 @@
 //* The values shown here are not entirely accurate to their values in the player object
 //  (for example, screen  here ranges 0-100, but player.option.screenSlipperiness receives this
 //  value from 0 in the case of 0, or 0.901-0.999 in between)
-import DefaultSlider from "@/component/base/DefaultSlider.vue";
-import DefaultToggle from "@/component/base/DefaultToggle.vue"
+import Slider from "@/component/default/Slider.vue";
+import Toggle from "@/component/default/Toggle.vue"
 
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
   name: "HeaderOptions",
   components: {
-    DefaultSlider,
-    DefaultToggle,
+    Slider,
+    Toggle,
   },
   data() { return {
     parallaxValue: 0,
@@ -93,7 +93,7 @@ export default {
 
     <span class="c-header-option-type">BG Parallax:</span>
     <div class="c-header-option-calculated">
-      <DefaultSlider
+      <Slider
         class="c-header-option-slider"
         id="c-header-option-parallax-value"
         :rangeProperty="[0, 200, 5]"
@@ -108,7 +108,7 @@ export default {
 
     <span class="c-header-option-type">Zoom Level:</span>
     <div class="c-header-option-calculated">
-      <DefaultSlider
+      <Slider
         class="c-header-option-slider"
         id="c-header-option-zoom-value"
         :rangeProperty="[15, 300, 5]"
@@ -123,7 +123,7 @@ export default {
 
     <span class="c-header-option-type">Tickrate:</span>
     <div class="c-header-option-calculated">
-      <DefaultSlider
+      <Slider
         class="c-header-option-slider"
         id="c-header-option-tickrate-value"
         :rangeProperty="[33, 200, 1]"
@@ -145,7 +145,7 @@ export default {
   <div class="c-header-content-option">
 
     <span class="c-header-option-type">Is Enabled:</span>
-    <DefaultToggle
+    <Toggle
       class="c-header-option-toggle"
       v-model="physicsBoolean"
       :on="'Enabled'"
@@ -157,7 +157,7 @@ export default {
 
     <span class="c-header-option-type">Slipperiness:</span>
     <div class="c-header-option-calculated">
-      <DefaultSlider
+      <Slider
         class="c-header-option-slider"
         id="c-header-option-slipperiness-value"
         :rangeProperty="[0, 100, 5]"
