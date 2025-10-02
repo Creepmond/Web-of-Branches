@@ -190,6 +190,15 @@ var(--opaque-color-ui-contrast), however */
   outline-color: var(--color-ui-acc);
 }
 
+.l-metapanel--study_name {
+  border-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-ui-acc) 20% 80%,
+    transparent 100%
+  ) 1;
+}
+
 /*# END - Metapanel */
 
 

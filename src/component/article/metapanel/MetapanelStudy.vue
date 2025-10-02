@@ -55,6 +55,12 @@ export default {
         v-html="Study.name"
       />
     </div>
+    <div class="l-metapanel--study-info">
+      <div class="l-metapanel--study_desc">
+        <span class="c-metapanel--study-semantic">Description:</span>
+        <span class="c-metapanel--study-value">{{ Study.description }}</span>
+      </div>
+    </div>
   </template>
 </template>
 
@@ -83,11 +89,35 @@ export default {
   left: 0;
 }
 
+.l-metapanel--study_name {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+
+  display: flex;
+  justify-content: center;
+}
+
 /* I *really* hate selector specifity */
-.l-metapanel--study_name .c-metapanel--study_name {
+.l-metapanel--study_name > .c-metapanel--study_name {
   font-size: 32px;
   font-weight: 300;
 
-  padding: 0 12px;
+  padding: 0 12px 2px;
+}
+
+/* Grr */
+.c-metapanel--study_name > .sup,
+.c-metapanel--study_name > .sub {
+  font-size: inherit;
+}
+
+.l-metapanel--study-info > * {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.l-metapanel--study-info {
+  margin-top: 4px;
 }
 </style>

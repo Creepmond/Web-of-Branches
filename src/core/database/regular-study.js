@@ -40,7 +40,7 @@ export const regularStudy = [
    },
 
    {
-      name: "1<sup>st</sup> Branch",
+      name: `1<span class="sup">st</span> Branch`,
       id: [2, -0.5],
       derivative: [ [3, -1] ],
       imperative: [1, 0],
@@ -49,7 +49,7 @@ export const regularStudy = [
       cost: DC.E3,
    },
    {
-      name: "2<sup>nd</sup> Branch",
+      name: `2<span class="sup">nd</span> Branch`,
       id: [2, 0.5],
       derivative: [ [3, 1] ],
       imperative: [1, 0],
