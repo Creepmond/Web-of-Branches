@@ -31,7 +31,10 @@ export default {
   z-index: 2;
 }
 
+
 .o-fixed-ui span {
+  pointer-events: auto;
+  
   font-size: 15px;
 }
 </style>

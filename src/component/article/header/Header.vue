@@ -93,6 +93,10 @@ export default {
   display: inline-block;
 }
 
+.c-header-indicator-flip {
+  pointer-events: auto;
+}
+
 .c-header-subject {
   width: fit-content;
 

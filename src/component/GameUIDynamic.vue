@@ -55,10 +55,11 @@ export default {
     // Movement
     htmlDOM.addEventListener('pointerdown', this.handleStart);
     htmlDOM.addEventListener('pointerup', this.handleEnd);
+    htmlDOM.addEventListener('touchend', this.handleEnd); // Compatability with mobile
 
     // Zoom
     window.addEventListener('resize', this.setScreenDims);
-    htmlDOM.addEventListener('wheel', this.handleZoom);
+    htmlDOM.addEventListener('wheel', this.handleZoom, { passive: false });
   },
   methods: {
     update() {
@@ -98,6 +99,7 @@ export default {
     },
 
     handleEnd(e) {
+      console.log(e)
       this.endMoveHandling(e);
 
       player.last.screenCoord = this.screenCoord;
@@ -111,6 +113,8 @@ export default {
     },
 
     handleZoom(e) {
+      e.preventDefault();
+
       this.zoomTarget = {
         X: this.screenDims.W / 2 - e.clientX,
         Y: this.screenDims.H / 2 - e.clientY,
@@ -118,7 +122,7 @@ export default {
 
       const init = this.zoomLevel;
       
-      this.zoomLevel *= Math.pow(ZOOM_STRENGTH, e.deltaY / -8);
+      this.zoomLevel *= Math.pow(ZOOM_STRENGTH, Math.round(e.deltaY) / -8);
       this.zoomLevel = this.zoomLevel.valueOf().clamp(0.15, 3);
 
       const diff = this.zoomLevel;

@@ -1,15 +1,15 @@
 <script>
-import SideMetapanelStudy from "./MetapanelStudy.vue";
+import MetapanelStudy from "./MetapanelStudy.vue";
 
 export default {
-  name: "SideMetapanel",
-  components: { SideMetapanelStudy, },
+  name: "Metapanel",
+  components: { MetapanelStudy, },
 }
 </script>
 
 <template>
-  <div class="o-fixed-ui o-sidebar-metapanel">
-    
+  <div class="o-fixed-ui o-metapanel o-metapanel--study">
+    <MetapanelStudy />
   </div>
 </template>
 

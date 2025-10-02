@@ -2,7 +2,7 @@
 import { setUpdateloop } from "@/core/interval.js";
 
 export default {
-  name: "SideMetapanelStudy",
+  name: "MetapanelStudy",
   data() { return {
     Study: undefined,
 
@@ -32,7 +32,9 @@ export default {
 </script>
 
 <template>
-  
+  <div class="">
+
+  </div>
 </template>
 
 <style>
