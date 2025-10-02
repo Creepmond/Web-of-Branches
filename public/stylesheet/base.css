@@ -34,6 +34,11 @@ button span {
   font-size: 20px;
 }
 
+sup {
+  vertical-align: top;
+  font-size: 0.65em;
+}
+
 /*# END - General */
 
 

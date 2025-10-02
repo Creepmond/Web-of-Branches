@@ -178,11 +178,23 @@ var(--opaque-color-ui-contrast), however */
 
 
 
-/*# Sidebar Metapanel */
+/*# Metapanel */
+
+.o-metapanel {
+  background-color: var(--opaque-color-ui);
+}
+
+.c-metapanel--study_id {
+  background-color: var(--opaque-color-ui);
+
+  outline-color: var(--color-ui-acc);
+}
+
+/*# END - Metapanel */
 
 
 
-/*# END - Sidebar Metapanel*/
+
 
 
 

@@ -35,8 +35,6 @@ export default {
     velocity: 0,
     angleAvg_rad: 0,
     directionHist: [],
-
-    frameId: null,
   }},
 
   // Not sure if it's a better habit to remain stagnant where each key of an SFC rests. I mean,
@@ -99,7 +97,6 @@ export default {
     },
 
     handleEnd(e) {
-      console.log(e)
       this.endMoveHandling(e);
 
       player.last.screenCoord = this.screenCoord;

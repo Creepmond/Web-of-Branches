@@ -12,12 +12,8 @@ export default {
 </script>
 
 <template>
-  <!-- Fixed UI (Anything that covers a lot of the screen in general, really) is something Mobile
-  is crying about. There should be a particular handler when dealing with the rest of Fixed
-  UI (e.g., Metapanel, and such if any more are alike). It can be dealt with for a Settings
-  Modal, or something. -->
-  <SideMetapanel />
   <Header />
+  <SideMetapanel />
 </template>
 
 <style>
@@ -30,7 +26,6 @@ export default {
 
   z-index: 2;
 }
-
 
 .o-fixed-ui span {
   pointer-events: auto;
