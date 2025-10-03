@@ -68,9 +68,6 @@ const exemptUnicodePool = acceptedUnicode.flatMap(range => {
 });
 
 const unicodePool = function() {
-   if (player.hidden.obfuscationUnicodePool.length > 0)
-      return player.hidden.obfuscationUnicodePool;
-
    const acceptedPool = acceptedUnicode.flatMap(range => {
       const codePool = [];
       for (let i = range.min; i <= range.max; i++) {
@@ -80,7 +77,6 @@ const unicodePool = function() {
       return codePool;
    });
 
-   player.hidden.obfuscationUnicodePool = acceptedPool;
    return acceptedPool;
 };
 

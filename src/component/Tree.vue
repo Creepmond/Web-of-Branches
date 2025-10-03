@@ -12,13 +12,13 @@ export default {
   }},
   computed: {
     visibleStudies() {
-      return Study.allId;
+      return Studies.allId;
     },
   },
   methods: {
     checkStudyState(id) {
       if (id) {
-        const derivative_ids = Study(id).allDerivative;
+        const derivative_ids = Study(id).derivative;
 
         derivative_ids.forEach(study => {
           this.imperativeAvailableObject[ rmRef(study) ] = Study(id).isAvailable;
@@ -30,7 +30,7 @@ export default {
         this.imperativeAvailableObject[originStudy] = true;
         
         // This is terrible, what else is new
-        const originDerivative_ids = Study([0,0]).allDerivative;
+        const originDerivative_ids = Study([0,0]).derivative;
 
         originDerivative_ids.forEach(study => {
           this.imperativeAvailableObject[ rmRef(study) ] = true;
@@ -45,7 +45,7 @@ export default {
     },
   },
   created() {
-    Study.allId.forEach(study => {
+    Studies.allId.forEach(study => {
       this.imperativeBoughtObject[ rmRef(study) ] = false;
       this.imperativeAvailableObject[ rmRef(study) ] = false;
     });

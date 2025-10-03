@@ -21,7 +21,5 @@ window.player = {
    hidden: {
       deviceScreenType: '',
       hasEverReachedBoundary: false,
-      studyAll_id: [],
-      obfuscationUnicodePool: [],
    },
 };

@@ -1,19 +1,30 @@
 import GameMechanicState from "./mechanic/gamestate.js";
 import { DC } from "@/utility/constants.js";
 
+const Studies = {
+   get allId() {
+      const all_id = [];
+      GameData.regularStudy.forEach(study => {
+         all_id.push(study.id);
+      });
+      
+      return all_id
+   },
+};
+
 class StudyState extends GameMechanicState {
    constructor(data) {
       super(data)
 
       this.name = data.name;
-      this.allDerivative = data.derivative;
-      this.imperative = data.imperative;
+      this.derivative = data.derivative;
+      this.imperative = undefined; // Handled based on this.derivative
       this.description = data.description;
       this.specify = data.specify || "";
       this.cost = data.cost;
       this.effectInfo = data.effect;
 
-      this.isBranchNode = data.isBranchNode || false;
+      this.isBranchNode = false;
 
       this.isAvailable = false;
       this.imperativeIsBought = false;
@@ -50,27 +61,14 @@ class StudyState extends GameMechanicState {
  */
 const Study = StudyState.createAccessor(GameData.regularStudy);
 
-//! This handler may cause problems for modding? Actually, it'll cause problems for me too in
-//! development. Well, I guess only if I have Storage (which I don't lol)
+Studies.allId.forEach(index => {
+   const studyDerivatives = Study(index).derivative;
 
-// I forgot, but I realize I probably could just move this to a seperate object "Studies",
-// incidentally the same method AD uses
-const studyAll_id = function() {
-   if (player.hidden.studyAll_id.length > 0)
-      return player.hidden.studyAll_id;
-
-   const all_id = [];
-   GameData.regularStudy.forEach(study => {
-      all_id.push(study.id);
-   });
-   
-   player.hidden.studyAll_id = all_id;
-   return all_id
-}
-
-Object.defineProperties(Study, {
-   allId: { get() { return studyAll_id() } },
+   studyDerivatives.forEach(child => {
+      if (studyDerivatives.length >= 2) Study(child).isBranchNode = true;
+      Study(child).imperative = index;
+   })
 });
 
-export default Study;
+window.Studies = Studies;
 window.Study = Study;

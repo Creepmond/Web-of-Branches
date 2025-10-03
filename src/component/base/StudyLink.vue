@@ -3,7 +3,7 @@ export default {
   name: "StudyLink",
   props: {
     id: Array,
-    allDerivative: Array,
+    derivative: Array,
     isObfuscated: Boolean,
   },
   computed: {
@@ -34,7 +34,7 @@ export default {
     viewBox="-100 -100 200 200"
   >
     <g
-      v-for="studyCoord of allDerivative"
+      v-for="studyCoord of derivative"
       class="c-study-link"
     >
       <line

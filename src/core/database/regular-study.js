@@ -1,17 +1,10 @@
 import { DC } from "@/utility/constants.js";
 
-// Very very terrible handling with derivative, imperative, and isBranch. I would have hoped to
-// instead compress all three to just derivative as that's the only one you'd fairly need,
-// but '../state/study.js' unfortunately is structured to make looking at the other instances too difficult
-// lest optimization hazards come in. FYI my laptop's battery does not like things too unoptimized. I
-// guess it's a task for me when I'm better at structuring (or that I get enough headaches)
-
 export const regularStudy = [
    {
       name: "The Root",
       id: [0, 0],
       derivative: [ [1, 0] ],
-      imperative: [],
       description: "Plant the first Seed",
       specify: "Reap the Seed after 4s",
       effect: {
@@ -28,7 +21,6 @@ export const regularStudy = [
       name: "Sprout",
       id: [1, 0],
       derivative: [ [2, 0] ],
-      imperative: [0, 0],
       description: "Slowly produce Seeds",
       get specify() { return `Increase Seeds rate by ${formatPassRate(1)}` },
       effect: {
@@ -43,7 +35,6 @@ export const regularStudy = [
       name: `Three Trees`,
       id: [2, 0],
       derivative: [ [3, -0.5], [3, 0.5] ],
-      imperative: [1, 0],
       description: "Boost seed production",
       get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(3)}` },
       effect: {
@@ -58,8 +49,6 @@ export const regularStudy = [
       name: `1<span class="sup">st</span> Branch`,
       id: [3, -0.5],
       derivative: [ [4, -1] ],
-      imperative: [2, 0],
-      isBranchNode: true,
       description: "Seeds multiplied by a million",
       cost: DC.E3,
    },
@@ -67,7 +56,6 @@ export const regularStudy = [
       name: `2<span class="sup">nd</span> Branch`,
       id: [3, 0.5],
       derivative: [ [4, 1] ],
-      imperative: [2, 0],
       isBranchNode: true,
       description: "Boost seed production",
       get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(2)}` },
@@ -83,7 +71,6 @@ export const regularStudy = [
       name: "I love trees",
       id: [4, -1],
       derivative: [],
-      imperative: [3, -0.5],
       description: "Mr. Beast gives YOU a million",
       cost: DC.E100,
    },
@@ -91,7 +78,6 @@ export const regularStudy = [
       name: "Leaf Behind",
       id: [4, 1],
       derivative: [ [5, 1] ],
-      imperative: [3, 0.5],
       description: "Return from a branched node",
       specify: `Click a Branch with the <div class="c-hotkey">ctrl</div> or <div class="c-hotkey">cmd&#8984;</div> key to toggle respeccing`,
       effect: {
@@ -105,7 +91,6 @@ export const regularStudy = [
       name: "Leaf Behind",
       id: [5, 1],
       derivative: [],
-      imperative: [4, 1],
       description: "Return from a branched node",
       specify: `Click a Branch with the <div class="c-hotkey">ctrl</div> or <div class="c-hotkey">cmd&#8984;</div> key to toggle respeccing`,
       effect: {
