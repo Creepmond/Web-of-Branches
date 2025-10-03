@@ -6,10 +6,10 @@ export const regularStudy = [
       id: [0, 0],
       derivative: [ [1, 0] ],
       description: "Plant the first Seed",
-      specify: "Reap the Seed after 4s",
+      specify: "Reap the Seed after 8s",
       effect: {
          call() {
-            setTimeout( () => { Currency.seed.add(1) }, 4000 )
+            setTimeout( () => { Currency.seed.add(1) }, 8000 )
          },
          type: 'callback',
          target: 'Seed',
@@ -35,14 +35,14 @@ export const regularStudy = [
       name: `Three Trees`,
       id: [2, 0],
       derivative: [ [3, -0.5], [3, 0.5] ],
-      description: "Boost seed production",
+      description: "Gain multiple seeds at once",
       get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(3)}` },
       effect: {
          value: DC.D3,
          type: 'multiplier',
          target: 'Seed',
       },
-      cost: DC.D7,
+      cost: DC.D15,
    },
 
    {
@@ -84,11 +84,11 @@ export const regularStudy = [
          type: 'unlock',
          target: 'Respec',
       },
-      cost: DC.D80,
+      cost: DC.D90,
    },
    
    {
-      name: "Leaf Behind",
+      name: "Thyme is essence",
       id: [5, 1],
       derivative: [],
       description: "Return from a branched node",
@@ -97,6 +97,6 @@ export const regularStudy = [
          type: 'unlock',
          target: 'Respec',
       },
-      cost: DC.D25,
+      cost: DC.D100,
    },
 ];

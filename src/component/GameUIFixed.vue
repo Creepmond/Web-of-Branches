@@ -12,8 +12,8 @@ export default {
 </script>
 
 <template>
-  <Metapanel />
   <Header />
+  <Metapanel />
 </template>
 
 <style>

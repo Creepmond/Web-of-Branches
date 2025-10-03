@@ -123,7 +123,7 @@ export default {
 <style>
 .l-metapanel--study_id {
   position: absolute;
-  inset: auto auto 0 0;
+  inset: 10px auto auto 0;
 }
 
 /* I hate selector specifity */

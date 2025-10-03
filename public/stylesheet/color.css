@@ -184,6 +184,15 @@ var(--opaque-color-ui-contrast), however */
   background-color: var(--opaque-color-ui);
 }
 
+.c-metapanel-cancel::after,
+.c-metapanel-cancel {
+  background-color: var(--color-ui);
+
+  border-color: var(--color-ui-acc);
+}
+
+
+
 .c-metapanel--study_id {
   background-color: var(--opaque-color-ui);
 

@@ -16,6 +16,11 @@ export default {
 
       setUpdateloop(this.update);
     },
+    cancel() {
+      // Different handler when there's more Metapanel types
+      player.last.hoveredStudy = []
+      this.metapanelIsShown = false
+    }
   },
   mounted() {
     this.update()
@@ -29,6 +34,12 @@ export default {
       v-if="metapanelIsShown"
     >
       <div class="c-metapanel-relative">
+        <div class="l-metapanel-cancel">
+          <button
+            @click="cancel"
+            class="c-metapanel-cancel"
+          />
+        </div>
         <MetapanelStudy />
       </div>
     </template>
@@ -41,7 +52,7 @@ export default {
   
   border-radius: 8px 0 8px 8px;
 
-  inset: 10px 10px auto auto;
+  inset: 16px 10px auto auto;
 }
 
 .c-metapanel-relative {
@@ -50,5 +61,26 @@ export default {
   padding: 12px 16px 20px;
 
   position: relative;
+}
+
+.l-metapanel-cancel {
+  width: 0;
+  height: 0;
+
+  position: absolute;
+  inset: auto 10px 0 auto;
+}
+
+.c-metapanel-cancel {
+  pointer-events: auto;
+
+  width: 32px;
+  height: 32px;
+  
+  transform: translate(-50%, -50%);
+  
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 50%;
 }
 </style>
