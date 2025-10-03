@@ -1,27 +1,25 @@
 :root {
   --color-ui: #2f2d39;
-  --color-ui-acc: #4cc2fe;
+  --color-ui-acc: #4dc3fe;
 
+  --color-text: #e4e4e4;
   --color-good: #5ac466;
   --color-bad: #efbf8f;
+
+  --color-grey: #2e3440;
+  --color-rich-black: #202527;
   
   --color-study: #f8300d;
 }
 
 /** Monochromatic hell... */
 :root {
-  --color-bg: #0d0d0d;
-  --color-bg-stripes: #0f1315;
-  --color-bg-contrast: #d0d0d0;
+  --color-text-weak:   hsl(from var(--color-text) h s calc(0.5 * l + 25));
+  --color-text-weaker: hsl(from var(--color-text-weak) h s calc(0.1 * l + 30));
 
-  --color-text: #e4e4e4;
-  --color-text-weak: #a4a4a4;
-  --color-text-weaker: #4a5559;
-
-  --color-grey: #2e3440;
-  --color-grey-acc: #22272f;
-  --color-rich-black: #1f2426;
-  --color-rich-black-acc: #1c2022;
+  /* ...Ew. I think I might want to use color-mix for these */
+  --color-grey-acc: hsl(from var(--color-grey) h s calc(l * 0.75));
+  --color-rich-black-acc: lch(from var(--color-rich-black) calc(l * 0.8) calc(c - 0.5) calc(h + 15));
 }
 
 /** General variables that use relative color syntax */
@@ -44,6 +42,12 @@ text {
 }
 
 
+
+:root {
+  --color-bg:          hsl(from var(--color-ui) h calc(s / 2) calc(l / 4));
+  --color-bg-stripes:  hsl(from var(--color-ui-acc) h calc(s * 0.2) calc(l * 0.1));
+  --color-bg-contrast: hsl(from var(--color-bg) h s calc(100 - l));
+}
 
 /*# Background */
 
@@ -174,17 +178,32 @@ var(--opaque-color-ui-contrast), however */
 
 
 
-/*# Sidebar Metapanel */
+/*# Metapanel */
 
-.o-sidebar-metapanel {
-  background-color: var(--color-grey);
+.o-metapanel {
+  background-color: var(--opaque-color-ui);
 }
 
-.c-metapanel-content > div {
-  background-color: var(--color-grey-acc);
+.c-metapanel--study_id {
+  background-color: var(--opaque-color-ui);
+
+  outline-color: var(--color-ui-acc);
 }
 
-/*# END - Sidebar Metapanel*/
+.l-metapanel--study_name {
+  border-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-ui-acc) 20% 80%,
+    transparent 100%
+  ) 1;
+}
+
+/*# END - Metapanel */
+
+
+
+
 
 
 
