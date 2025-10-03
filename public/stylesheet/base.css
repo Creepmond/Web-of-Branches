@@ -57,13 +57,19 @@ span > .sup,
 span > .sub {
   font-size: inherit;
 
-  transform: scale(0.65) translate(-0.3em, -0.35em);
-  vertical-align: top;
-
   margin-right: -0.4em;
 
   display: inline-block;
 }
+
+span > .sup {
+  transform: scale(0.65) translate(-0.3em, -0.35em);
+}
+
+span > .sub {
+  transform: scale(0.65) translate(-0.3em, 0.35em);
+}
+
 
 
 

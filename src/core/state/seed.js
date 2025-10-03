@@ -1,3 +1,4 @@
+import Effects from "@/core/state/mechanic/effects.js";
 import { DC } from "@/utility/constants.js";
 
 Currency.seed = new class extends Currency {
@@ -15,8 +16,10 @@ const Seed = {
    },
 
    get multipliers() {
-      return Study([2,0]).effect
-         .times(Study([3,0.5]).effect)
+      return Effects.times(
+         Study([2, 0]).effect,
+         Study([3, 0.5]).effect
+      )
    },
 
    get exponents() {
@@ -35,6 +38,15 @@ const Seed = {
          return DC.D1;
       }
    },
+
+   /*
+   get gainPerSec() {
+      return this.passiveRate
+         .times(this.multipliers)
+         .pow(this.exponents)
+         .div(this.boundarySlowdown)
+   },
+   */
 
    tick() {
       Currency.seed.add(

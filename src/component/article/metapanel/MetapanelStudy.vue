@@ -14,6 +14,9 @@ export default {
     Study() {
       return this.studyId.length === 0 ? undefined : Study(this.studyId);
     },
+    effectIsCallback() {
+      return this.Study.effectInfo.type === 'callback' ? true : false;
+    },
     effectIsQuantity() {
       switch (this.Study.effectInfo.type) {
         case 'callback': return false;
@@ -99,7 +102,10 @@ export default {
         <span class="c-metapanel--study-semantic">Specified:</span>
         <span class="c-metapanel--study-value" v-html="Study.specify" />
       </div>
-      <div class="l-metapanel--study_val">
+      <div
+        v-if="!effectIsCallback"
+        class="l-metapanel--study_val"
+      >
         <span class="c-metapanel--study-semantic">Current Value:</span>
         <span class="c-metapanel--study-value">{{ formatValue }}</span>
       </div>
