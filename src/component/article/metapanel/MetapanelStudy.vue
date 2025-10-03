@@ -5,6 +5,8 @@ export default {
   name: "MetapanelStudy",
   data() { return {
     studyId: [],
+    studyIsBought: false,
+    globalEffect: '',
 
     frameId: null,
   }},
@@ -12,22 +14,52 @@ export default {
     Study() {
       return this.studyId.length === 0 ? undefined : Study(this.studyId);
     },
-    formatEffect() {
+    effectIsQuantity() {
+      switch (this.Study.effectInfo.type) {
+        case 'callback': return false;
+        case 'unlock': return false;
+        default: return true;
+      };
+    },
+    formatValue() {
       const effectInfo = this.Study.effectInfo;
+      const isActive = this.studyIsBought;
 
       switch (effectInfo.type) {
-        case 'passiveRate': return `${formatPassRate(effectInfo.value, effectInfo.target)}`;
-        case 'multiplier': return `${formatX(effectInfo.value)} ${effectInfo.target}`;
-        case 'exponent': return  `${formatPow(effectInfo.value)} ${effectInfo.target}`;
-        case 'unlock': return `Unlock ${effectInfo.target}`;
-      }
+        case 'passiveRate':
+          return isActive
+            ? `${formatPassRate(effectInfo.value, effectInfo.target)}`
+            : `${formatPassRate(0, effectInfo.target)}`;
+        case 'multiplier':
+          return isActive
+            ? `${formatX(effectInfo.value)} ${effectInfo.target}`
+            : `${formatX(1)} ${effectInfo.target}`;
+        case 'exponent':
+          return isActive
+            ? `${formatPow(effectInfo.value)} ${effectInfo.target}`
+            : `${formatPow(1)} ${effectInfo.target}`;
+        case 'unlock':
+          return isActive
+            ? `Unlocked ${effectInfo.target}`
+            : `Unlock ${effectInfo.target}`;
+      };
     },
   },
   methods: {
     update() {
       this.studyId = player.last.hoveredStudy;
+      this.studyIsBought = this.Study.isBought;
+      this.formatEffect();
 
       this.frameId = setUpdateloop(this.update);
+    },
+    // Horrible. Can't even deny it now. I keep making unnecessary updates like this
+    formatEffect() {
+      switch (this.Study.effectInfo.type) {
+        case 'passiveRate': this.globalEffect = `${formatPassRate(Seed.passiveRate, 'Seed')}`; break;
+        case 'multiplier': this.globalEffect = `${formatX(Seed.multipliers)} Seed`; break;
+        case 'exponent': this.globalEffect = `${formatPow(Seed.exponents)} Seed`; break;
+      };
     },
   },
   mounted() {
@@ -59,6 +91,24 @@ export default {
       <div class="l-metapanel--study_desc">
         <span class="c-metapanel--study-semantic">Description:</span>
         <span class="c-metapanel--study-value">{{ Study.description }}</span>
+      </div>
+      <div
+        v-if="Study.specify"
+        class="l-metapanel--study_spec"
+      >
+        <span class="c-metapanel--study-semantic">Specified:</span>
+        <span class="c-metapanel--study-value" v-html="Study.specify" />
+      </div>
+      <div class="l-metapanel--study_val">
+        <span class="c-metapanel--study-semantic">Current Value:</span>
+        <span class="c-metapanel--study-value">{{ formatValue }}</span>
+      </div>
+      <div
+        v-if="effectIsQuantity"
+        class="l-metapanel--study_eff"
+      >
+        <span class="c-metapanel--study-semantic">Global Effect:</span>
+        <span class="c-metapanel--study-value">{{ globalEffect }}</span>
       </div>
     </div>
   </template>
@@ -111,13 +161,25 @@ export default {
   font-size: inherit;
 }
 
+.l-metapanel--study-info {
+  margin-top: 4px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .l-metapanel--study-info > * {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 16px;
 }
 
-.l-metapanel--study-info {
-  margin-top: 4px;
+/* Walher */
+.l-metapanel--study-info > * > .c-metapanel--study-value {
+  font-size: 20px;
+
+  text-align: right;
 }
 </style>

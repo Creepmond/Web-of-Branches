@@ -15,7 +15,8 @@ const Seed = {
    },
 
    get multipliers() {
-      return Study([2,0.5]).effect
+      return Study([2,0]).effect
+         .times(Study([3,0.5]).effect)
    },
 
    get exponents() {
@@ -37,7 +38,7 @@ const Seed = {
 
    tick() {
       Currency.seed.add(
-         this.passiveRate
+         this.passiveRate.div(1000 / player.option.tickrate)
          .times(this.multipliers)
          .pow(this.exponents)
          .div(this.boundarySlowdown)

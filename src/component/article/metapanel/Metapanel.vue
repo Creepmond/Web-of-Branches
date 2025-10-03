@@ -28,7 +28,7 @@ export default {
     <template
       v-if="metapanelIsShown"
     >
-      <div class="l-metapanel-relative">
+      <div class="c-metapanel-relative">
         <MetapanelStudy />
       </div>
     </template>
@@ -44,7 +44,9 @@ export default {
   inset: 10px 10px auto auto;
 }
 
-.l-metapanel-relative {
+.c-metapanel-relative {
+  max-width: 50vw;
+
   padding: 12px 16px 20px;
 
   position: relative;

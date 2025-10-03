@@ -16,7 +16,7 @@ export const regularStudy = [
       specify: "Reap the Seed after 4s",
       effect: {
          call() {
-            setTimeout( () => { Currency.seed.add(35) }, 400 )
+            setTimeout( () => { Currency.seed.add(1) }, 4000 )
          },
          type: 'callback',
          target: 'Seed',
@@ -27,7 +27,7 @@ export const regularStudy = [
    {
       name: "Sprout",
       id: [1, 0],
-      derivative: [ [2, -0.5], [2, 0.5] ],
+      derivative: [ [2, 0] ],
       imperative: [0, 0],
       description: "Slowly produce Seeds",
       get specify() { return `Increase Seeds rate by ${formatPassRate(1)}` },
@@ -40,20 +40,10 @@ export const regularStudy = [
    },
 
    {
-      name: `1<span class="sup">st</span> Branch`,
-      id: [2, -0.5],
-      derivative: [ [3, -1] ],
+      name: `Three Trees`,
+      id: [2, 0],
+      derivative: [ [3, -0.5], [3, 0.5] ],
       imperative: [1, 0],
-      isBranchNode: true,
-      description: "Seeds multiplied by a million",
-      cost: DC.E3,
-   },
-   {
-      name: `2<span class="sup">nd</span> Branch`,
-      id: [2, 0.5],
-      derivative: [ [3, 1] ],
-      imperative: [1, 0],
-      isBranchNode: true,
       description: "Boost seed production",
       get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(3)}` },
       effect: {
@@ -65,18 +55,57 @@ export const regularStudy = [
    },
 
    {
+      name: `1<span class="sup">st</span> Branch`,
+      id: [3, -0.5],
+      derivative: [ [4, -1] ],
+      imperative: [2, 0],
+      isBranchNode: true,
+      description: "Seeds multiplied by a million",
+      cost: DC.E3,
+   },
+   {
+      name: `2<span class="sup">nd</span> Branch`,
+      id: [3, 0.5],
+      derivative: [ [4, 1] ],
+      imperative: [2, 0],
+      isBranchNode: true,
+      description: "Boost seed production",
+      get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(2)}` },
+      effect: {
+         value: DC.D2,
+         type: 'multiplier',
+         target: 'Seed',
+      },
+      cost: DC.D25,
+   },
+
+   {
       name: "I love trees",
-      id: [3, -1],
+      id: [4, -1],
       derivative: [],
-      imperative: [2, -0.5],
+      imperative: [3, -0.5],
       description: "Mr. Beast gives YOU a million",
       cost: DC.E100,
    },
    {
       name: "Leaf Behind",
-      id: [3, 1],
-      derivative: [ [4, 1] ],
-      imperative: [2, 0.5],
+      id: [4, 1],
+      derivative: [ [5, 1] ],
+      imperative: [3, 0.5],
+      description: "Return from a branched node",
+      specify: `Click a Branch with the <div class="c-hotkey">ctrl</div> or <div class="c-hotkey">cmd&#8984;</div> key to toggle respeccing`,
+      effect: {
+         type: 'unlock',
+         target: 'Respec',
+      },
+      cost: DC.D80,
+   },
+   
+   {
+      name: "Leaf Behind",
+      id: [5, 1],
+      derivative: [],
+      imperative: [4, 1],
       description: "Return from a branched node",
       specify: `Click a Branch with the <div class="c-hotkey">ctrl</div> or <div class="c-hotkey">cmd&#8984;</div> key to toggle respeccing`,
       effect: {
@@ -84,14 +113,5 @@ export const regularStudy = [
          target: 'Respec',
       },
       cost: DC.D25,
-   },
-
-   {
-      name: "Sprout 3",
-      id: [4, 1],
-      derivative: [],
-      imperative: [3, 1],
-      description: "Sprout 2",
-      cost: DC.E1E15,
    },
 ];

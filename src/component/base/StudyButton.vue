@@ -39,7 +39,7 @@ export default {
       // it's not as optimized, this is technically more readable(?) (in a way)
       const isRespecced = this.isRespecced;
 
-      if (!this.isBranchNode || !Study([3,1]).effect) return;
+      if (!this.isBranchNode || !Study([4,1]).effect) return;
 
       const state = 'o-prim-study--';
 
