@@ -16,7 +16,7 @@ window.player = {
    last: {
       hoveredStudy: [],
       headerTab: 'Resources',
-      screenCoord: null,
+      screenCoord: { X: -140, Y: -80 },
    },
    hidden: {
       deviceScreenType: '',

@@ -71,7 +71,7 @@ export default {
   flex-direction: column;
   gap: 8px;
 
-  inset: 10px auto auto 10px;
+  inset: 8px auto auto 8px;
 }
 
 .o-header > * {

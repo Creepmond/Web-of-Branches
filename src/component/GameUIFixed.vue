@@ -1,12 +1,14 @@
 <script>
 import Header from "@/component/article/header/Header.vue";
 import Metapanel from "@/component/article/metapanel/Metapanel.vue";
+import Function from "@/component/article/function/Function.vue";
 
 export default {
   name: "GameUIFixed",
   components: {
     Header,
     Metapanel,
+    Function
   },
 };
 </script>
@@ -14,6 +16,7 @@ export default {
 <template>
   <Header />
   <Metapanel />
+  <Function />
 </template>
 
 <style>

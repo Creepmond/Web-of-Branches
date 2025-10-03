@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     update() {
+      this.screenCoord = player.last.screenCoord;
       this.zoomLevel = player.option.zoomLevel;
       this.parallaxValue = player.option.parallax;
       setUpdateloop(this.update);

@@ -52,7 +52,7 @@ export default {
   
   border-radius: 8px 0 8px 8px;
 
-  inset: 16px 10px auto auto;
+  inset: 16px 8px auto auto;
 }
 
 .c-metapanel-relative {

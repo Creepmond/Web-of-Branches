@@ -212,6 +212,16 @@ var(--opaque-color-ui-contrast), however */
 
 
 
+/*# Function */
+
+.o-function-button {
+  background-color: var(--opaque-color-ui);
+}
+
+/*# END - Function  */
+
+
+
 
 
 
