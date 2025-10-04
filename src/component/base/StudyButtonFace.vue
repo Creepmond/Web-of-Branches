@@ -1,6 +1,6 @@
 <script>
-// Reads for <span class="sup">, <span class="sub">, and </span>, if a Study ever uses it.
-const rawTextRegex = /<\/?span( class)?(="su[pb]")?>/g;
+// Reads for <span class="f-sup">, <span class="f-sub">, and </span>, if a Study ever uses it.
+const rawTextRegex = /<\/?span( class)?(="f-su[pb]")?>/g;
 
 // Transition time (ms) for unobfuscating
 const unobfuscationSpan = 1000;

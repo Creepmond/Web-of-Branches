@@ -21,8 +21,8 @@ window.format = function(value, places = 0, placesUnder1000 = 0) {
 
 window.formatPassRate = function(value, target) {
    return target
-   ? `+${format(value)} ${target}/sec`
-   : `+${format(value)} /sec`;
+   ? `+${format(value)} ${target}/s`
+   : `+${format(value)} /s`;
 };
 
 window.formatX = function(value) {

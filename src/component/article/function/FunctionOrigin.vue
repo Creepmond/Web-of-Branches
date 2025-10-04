@@ -19,16 +19,5 @@ export default {
 </template>
 
 <style>
-.o-function-button {
-  pointer-events: auto;
 
-  backdrop-filter: blur(2px);
-
-  width: 72px;
-  height: 72px;
-
-  border-radius: 50%;
-  outline-width: 1px;
-  outline-style: solid;
-}
 </style>

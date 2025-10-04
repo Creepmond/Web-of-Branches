@@ -53,8 +53,8 @@ button span {
 }
 
 /* I have to use a class for this if I wanted to animate this */
-span > .sup,
-span > .sub {
+span > .f-sup,
+span > .f-sub {
   font-size: inherit;
 
   margin-right: -0.4em;
@@ -62,11 +62,11 @@ span > .sub {
   display: inline-block;
 }
 
-span > .sup {
+span > .f-sup {
   transform: scale(0.65) translate(-0.3em, -0.35em);
 }
 
-span > .sub {
+span > .f-sub {
   transform: scale(0.65) translate(-0.3em, 0.35em);
 }
 

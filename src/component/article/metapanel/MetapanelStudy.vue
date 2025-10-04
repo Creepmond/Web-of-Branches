@@ -31,8 +31,8 @@ export default {
       switch (effectInfo.type) {
         case 'passiveRate':
           return isActive
-            ? `${formatPassRate(effectInfo.value, effectInfo.target)}`
-            : `${formatPassRate(0, effectInfo.target)}`;
+            ? `${formatPassRate(effectInfo.value)}`
+            : `${formatPassRate(0)}`;
         case 'multiplier':
           return isActive
             ? `${formatX(effectInfo.value)} ${effectInfo.target}`
@@ -59,7 +59,7 @@ export default {
     // Horrible. Can't even deny it now. I keep making unnecessary updates like this
     formatEffect() {
       switch (this.Study.effectInfo.type) {
-        case 'passiveRate': this.globalEffect = `${formatPassRate(Seed.passiveRate, 'Seed')}`; break;
+        case 'passiveRate': this.globalEffect = `${formatPassRate(Seed.passiveRate)}`; break;
         case 'multiplier': this.globalEffect = `${formatX(Seed.multipliers)} Seed`; break;
         case 'exponent': this.globalEffect = `${formatPow(Seed.exponents)} Seed`; break;
       };
@@ -162,8 +162,8 @@ export default {
 }
 
 /* Grr */
-.c-metapanel--study_name > .sup,
-.c-metapanel--study_name > .sub {
+.c-metapanel--study_name > .f-sup,
+.c-metapanel--study_name > .f-sub {
   font-size: inherit;
 }
 

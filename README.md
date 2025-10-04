@@ -4,4 +4,9 @@ The link is over here: https://creepmond.github.io/Web-of-Branches
 
 ### I won't deny it...
 
-Inspirations (or 'ctrl+c' 'ctrl+v'): Antimatter Dimensions, AD-Legendary (by Krutaman), Dodecadragons, ... (may be a growing list?)
+Inspirations (or a quickity 'ctrl+c' and 'ctrl+v'):
+- Antimatter Dimensions (Structure)
+- 'AD: Legendary' Mod by Krutaman (Design)
+- One Trillion Free Draws (Design)
+- Dodecadragons (Screen-handling)
+- ... (may be a growing list?)
