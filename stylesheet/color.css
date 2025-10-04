@@ -47,6 +47,8 @@ text {
   --color-bg:          hsl(from var(--color-ui) h calc(s / 2) calc(l / 4));
   --color-bg-stripes:  hsl(from var(--color-ui-acc) h calc(s * 0.2) calc(l * 0.1));
   --color-bg-contrast: hsl(from var(--color-bg) h s calc(100 - l));
+
+  --opaque-color-bg: hsl(from var(--color-bg) h s l / 0.5);
 }
 
 /*# Background */
@@ -77,11 +79,23 @@ text {
 
 /*# Semantic */
 
-.c-hotkey {
+.f-hotkey {
   background-color: var(--color-key);
   color: var(--color-key-text);
 
   border-color: var(--color-key-acc);
+}
+
+
+
+.o-tooltip {
+  background-color: var(--color-ui);
+
+  border-color: var(--color-ui-acc);
+}
+
+.o-tooltip::before {
+  border-color: var(--color-ui-acc);
 }
 
 /*# END - Semantic */
@@ -94,10 +108,14 @@ text {
   --color-ui-contrast: hsl(from var(--color-ui) h s calc(100 - l));
   --opaque-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / 0.3);
 
-  --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
-  --opaque-color-focus-ui: hsl(from var(--color-ui) h s calc(0.8 * l + 10) / 0.6);
+  --color-focus-ui: hsl(from var(--color-ui) h s calc(0.8 * l + 10));
 
-  --opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.5);
+  --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
+  --opaque-color-focus-ui: hsl(from var(--color-focus-ui) h s l / 0.6);
+
+  /* I'll need to make a wiki for this lol, b stands for "base" when there are "fainter" opaque colors */
+  --b-opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.3); 
+  --f1-opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.2);
 }
 
 
@@ -137,7 +155,7 @@ var(--opaque-color-ui-contrast), however */
 }
 
 .c-header-tab-button--flipped {
-  outline-color: var(--opaque-color-ui-acc);
+  outline-color: var(--b-opaque-color-ui-acc);
 }
 
 .l-header-indicator {
@@ -153,23 +171,23 @@ var(--opaque-color-ui-contrast), however */
 
 .c-header-option-calculated,
 .c-header-option-toggle {
-  border-color: var(--opaque-color-ui-acc);
+  border-color: var(--b-opaque-color-ui-acc);
 }
 
 
 
 #c-header-physics-indicator {
   border-image:
-    linear-gradient(90deg, transparent 0%, var(--opaque-color-ui-acc) 20% 80%, transparent 100%) 1;
+    linear-gradient(90deg, transparent 0%, var(--b-opaque-color-ui-acc) 20% 80%, transparent 100%) 1;
 }
 
 #c-header-physics-indicator::before {
   border-image: linear-gradient(
     90deg,
     transparent 0%,
-    var(--opaque-color-ui-acc) 30% 36%,
+    var(--b-opaque-color-ui-acc) 30% 36%,
     transparent 36% 64%,
-    var(--opaque-color-ui-acc) 64% 70%,
+    var(--b-opaque-color-ui-acc) 64% 70%,
     transparent 100%
   ) 1;
 }
@@ -183,6 +201,18 @@ var(--opaque-color-ui-contrast), however */
 .o-metapanel {
   background-color: var(--opaque-color-ui);
 }
+
+.c-metapanel-cancel {
+  background-color: var(--color-ui);
+
+  border-color: var(--color-ui-acc);
+}
+
+.c-metapanel-cancel:hover {
+  background-color: var(--color-focus-ui);
+}
+
+
 
 .c-metapanel--study_id {
   background-color: var(--opaque-color-ui);
@@ -200,6 +230,41 @@ var(--opaque-color-ui-contrast), however */
 }
 
 /*# END - Metapanel */
+
+
+
+/*# Function */
+
+.o-function {
+  background-color: var(--opaque-color-ui);
+
+  outline-color: var(--b-opaque-color-ui-acc);
+}
+
+.o-function:has(.o-function-button:hover) {
+  outline-color: var(--f1-opaque-color-ui-acc);
+}
+
+.l-function-indicator {
+  background-color: var(--color-ui);
+
+  outline-color: var(--b-opaque-color-ui-acc);
+}
+
+.o-function-button {
+  background-color: var(--color-ui);
+  
+  box-shadow: 4px 4px 4px var(--opaque-color-bg);
+  outline-color: transparent;
+}
+
+.o-function-button:hover {
+  background-color: var(--color-focus-ui);
+
+  outline-color: var(--color-ui-acc);
+}
+
+/*# END - Function  */
 
 
 

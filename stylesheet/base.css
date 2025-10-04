@@ -53,21 +53,27 @@ button span {
 }
 
 /* I have to use a class for this if I wanted to animate this */
-span > .sup,
-span > .sub {
+span > .f-sup,
+span > .f-sub {
   font-size: inherit;
-
-  transform: scale(0.65) translate(-0.3em, -0.35em);
-  vertical-align: top;
 
   margin-right: -0.4em;
 
   display: inline-block;
 }
 
+span > .f-sup {
+  transform: scale(0.65) translate(-0.3em, -0.35em);
+}
+
+span > .f-sub {
+  transform: scale(0.65) translate(-0.3em, 0.35em);
+}
 
 
-.c-hotkey {
+
+
+.f-hotkey {
   font-family: Monospace;
 
   padding: 1px 3px;

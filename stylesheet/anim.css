@@ -4,17 +4,100 @@
 
 
 
-/*# Header */
+@keyframes wipe-up {
+  0% {
+    transform: translateY(50%) scaleY(0);
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+/*# Semantic */
+
+/** Vue <Transition> */
+.a-tooltip-enter-active {
+  animation: wipe-up 0.2s var(--anim-over-in-and-out);
+}
+
+.a-tooltip-leave-active {
+  animation: wipe-up 0.2s ease-out reverse;
+}
+/** END - Vue <Transition> */
+
+/*# END - Semantic */
+
+
+
+
+
+/* From Vue, I'll improve the animation later */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  33% {
+    transform: scale(0.67, 0.33);
+  }
+  67% {
+    transform: scale(1.33, 0.67);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*# Fixeds */
 
 .c-header-tab-button {
-  transition: background-color 0.15s, outline-color 0.3s;
+  transition: background-color 0.2s, outline-color 0.3s;
 }
 
 .l-header-indicator-tabs {
   transition: transform 0.3s ease-in-out;
 }
 
-/*# END - Header */
+
+
+
+
+.c-metapanel-cancel {
+  transition: background-color 0.2s;
+}
+
+
+
+
+
+.o-function {
+  transition: outline-color 0.2s;
+}
+
+.l-function-indicator {
+  transition: opacity 0.2s;
+}
+
+.o-function-button {
+  transition: background-color 0.2s;
+}
+
+/** Vue <Transition> */
+.a-function-button-enter-active {
+  animation: bounce-in 0.3s ease-in-out;
+}
+
+.a-function-button-leave-active {
+  animation: bounce-in 0.3s ease-in-out reverse;
+}
+/** END - Vue <Transition> */
+
+
+
+.l-function-indicator:has(+ .o-function-button:hover) {
+  opacity: 0.75
+}
+
+/*# END - Fixeds */
 
 
 
@@ -34,27 +117,44 @@
   }
 }
 
+@keyframes lay-sub {
+  0% {
+    margin-right: 0;
+    transform: scale(1) translate(0);
+  }
+  20% {
+    /* Acts as a delay */
+  }
+  100% {
+    margin-right: -0.4em;
+    transform: scale(0.65) translate(-0.3em, 0.35em);
+  }
+}
+
 /*# Studies */
 
 .o-prim-study {
-  transition: box-shadow 0.15s;
+  transition: box-shadow 0.2s;
 }
 .o-prim-study span {
-  transition: color 0.15s;
+  transition: color 0.2s;
 }
 
 .o-prim-study::before {
-  transition: background-color 0.15s;
+  transition: background-color 0.2s;
 }
 
 .o-prim-study--bought::before {
-  transition: inset 0.3s var(--anim-over-in-and-out), outline-width 0.15s
+  transition: inset 0.3s var(--anim-over-in-and-out), outline-width 0.2s
 }
 
-.c-prim-study-name .sup,
-.c-prim-study-name .sub {
+.c-prim-study-name .f-sup {
   animation: raise-sup 1s var(--anim-over-in-and-out) forwards;
 }
+.c-prim-study-name .f-sub {
+  animation: lay-sub 1s var(--anim-over-in-and-out) forwards;
+}
+
 
 
 
