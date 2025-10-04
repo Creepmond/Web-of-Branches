@@ -79,7 +79,7 @@ export const regularStudy = [
       id: [4, 1],
       derivative: [ [5, 1] ],
       description: "Return from a branched node",
-      specify: `Click a Branch with the <div class="c-hotkey">ctrl</div> or <div class="c-hotkey">cmd&#8984;</div> key to toggle respeccing`,
+      specify: `Long press, or Click a Branch with the <div class="c-hotkey">ctrl</div> or <div class="c-hotkey">cmd&#8984;</div> key to toggle respeccing`,
       effect: {
          type: 'unlock',
          target: 'Respec',

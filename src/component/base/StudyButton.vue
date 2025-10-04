@@ -4,6 +4,9 @@ import { setUpdateloop } from "@/core/interval.js";
 import StudyButtonFace from "./StudyButtonFace.vue";
 import StudyLink from "./StudyLink.vue";
 
+let clickTargetCoord = { X: 0, Y: 0 };
+let holdDuration = 0;
+
 export default {
   name: "StudyButton",
   props: {
@@ -85,7 +88,22 @@ export default {
 
       this.frameId = setUpdateloop(this.update);
     },
-    purchase() {
+    setPointerdown(e) {
+      this.changeLastHoveredStudy(); // For mobile
+
+      clickTargetCoord = { X: e.clientX, Y: e.clientY };
+      holdDuration = Date.now();
+    },
+    tryPurchase(e) {
+      // If the user moves their screen when having clicked on a study, ignore
+      if (rmRef(clickTargetCoord) !== rmRef({ X: e.clientX, Y: e.clientY })) return;
+
+      const stopHold = Date.now();
+      if (stopHold - holdDuration >= 250) {
+        this.tryRespec();
+        return;
+      };
+
       if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;
 
       this.$emit('purchase', this.id);
@@ -99,7 +117,7 @@ export default {
       this.isBought = true;
       this.isAvailable = false;
     },
-    respec() {
+    tryRespec() {
       if (!this.isBought || !this.isBranchNode) return;
 
       this.isRespecced = !this.isRespecced;
@@ -122,9 +140,10 @@ export default {
     <button
       class="o-prim-study"
       :class="[availabilityClass, respecClass]"
-      @click.exact="purchase"
-      @click.ctrl.exact="respec"
-      @click.meta.exact="respec"
+      @pointerdown.exact="setPointerdown"
+      @pointerup.exact="tryPurchase"
+      @click.ctrl.exact="tryRespec"
+      @click.meta.exact="tryRespec"
       @mouseenter="changeLastHoveredStudy"
     > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
     anyway so idk -->

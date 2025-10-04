@@ -18,6 +18,26 @@
 
 
 
+/*# Metapanel */
+
+.c-metapanel-cancel {
+  transition: background-color 0.2s;
+}
+
+/*# END - Metapanel */
+
+
+
+/*# Function */
+
+.o-function-button {
+  transition: background-color 0.2s, outline-color 0.3s;
+}
+
+/*# END - Function */
+
+
+
 
 
 @keyframes raise-sup {

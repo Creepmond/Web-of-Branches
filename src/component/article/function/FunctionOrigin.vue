@@ -28,5 +28,7 @@ export default {
   height: 72px;
 
   border-radius: 50%;
+  outline-width: 1px;
+  outline-style: solid;
 }
 </style>
