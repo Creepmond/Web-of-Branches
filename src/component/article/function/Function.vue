@@ -18,7 +18,8 @@ export default {
   }},
   methods: {
     update() {
-      this.isVisible.origin = rmRef(player.last.screenCoord) !== rmRef({ X: -140, Y: -80 })
+      this.isVisible.origin = rmRef(player.last.screenCoord) !== rmRef({ X: -140, Y: -80 });
+      this.isVisible.respec = player.permaStudy.respecIsUnlocked;
 
       setUpdateloop(this.update);
     }

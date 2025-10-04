@@ -4,6 +4,9 @@ window.player = {
    seed: DC.D1,
    studyBoughtBits: new Set(),
    studyExposedBits: new Set(),
+   permaStudy: {
+      respecIsUnlocked: false,
+   },
    option: {
       parallax: 0.4,
       tickrate: 33,

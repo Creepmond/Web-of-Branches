@@ -30,9 +30,6 @@ export default {
     StudyInstance() {
       return Study(this.id);
     },
-    derivative() {
-      return this.StudyInstance.derivative
-    },
     isBranchNode() {
       return this.StudyInstance.isBranchNode
     },
@@ -98,27 +95,34 @@ export default {
       // If the user moves their screen when having clicked on a study, ignore
       if (rmRef(clickTargetCoord) !== rmRef({ X: e.clientX, Y: e.clientY })) return;
 
-      const stopHold = Date.now();
-      if (stopHold - holdDuration >= 250) {
-        this.tryRespec();
-        return;
-      };
+      if (this.isBought) {
+        const stopHold = Date.now();
+        if (stopHold - holdDuration >= 250) {
+          this.tryRespec();
+          return;
+        };
+      }
 
-      if (this.isBought || !this.isAvailable || !this.imperativeIsBought) return;
+      if (!this.isAvailable || !this.imperativeIsBought) return;
 
       this.$emit('purchase', this.id);
 
       Currency.seed.sub(this.StudyInstance.cost);
 
       this.StudyInstance.purchase();
-      if (this.StudyInstance.effectInfo.type === 'callback')
+      if (this.StudyInstance.effectInfo.type === 'callback') {
         this.StudyInstance.effect;
+      }
+      
+      if (this.StudyInstance.effectInfo.type === 'unlock') {
+        if ( rmRef(this.id) === rmRef([4,1]) ) player.permaStudy.respecIsUnlocked = true;
+      }
 
       this.isBought = true;
       this.isAvailable = false;
     },
     tryRespec() {
-      if (!this.isBought || !this.isBranchNode) return;
+      if (!this.isBought || !this.isBranchNode || !player.permaStudy.respecIsUnlocked) return;
 
       this.isRespecced = !this.isRespecced;
     },
@@ -156,7 +160,7 @@ export default {
     </button>
     <StudyLink
       v-bind:id
-      v-bind:derivative
+      :derivative="StudyInstance.derivative"
       :isObfuscated="(!imperativeIsBought || !isBought) && !isAvailable"
     />
   </div>
