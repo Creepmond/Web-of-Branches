@@ -9,7 +9,9 @@ export default {
   <button
     class="o-function-button"
   >
-    test
+    <span>
+      respec (NYI)
+    </span>
   </button>
 </template>
 

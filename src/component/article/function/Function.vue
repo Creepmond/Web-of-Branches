@@ -22,16 +22,21 @@ export default {
       this.isVisible.respec = player.permaStudy.respecIsUnlocked;
 
       setUpdateloop(this.update);
-    }
+    },
   },
   mounted() {
     this.update();
-  }
+  },
 };
 </script>
 
 <template>
   <div class="o-fixed-ui o-function">
+    <div class="l-function-indicator">
+      <span ckass="c-function-indicator">
+        Functions
+      </span>
+    </div>
     <Transition name="a-function-button">
       <!-- v-show here because for the most part, it *is* in fact visible, just not displayed in some cases -->
       <FunctionOrigin v-show="isVisible.origin" />
@@ -53,9 +58,10 @@ export default {
   backdrop-filter: blur(2px);
 
   width: fit-content;
-  height: clamp(72px, 8vw, 96px);
+  min-width: 36px;
+  height: clamp(60px, 8vw, 96px);
   
-  padding: 8px clamp(48px, 8vw, 192px);
+  padding: 8px clamp(48px, 8vw, 192px) 36px;
   border-radius: 8px 8px 0 0;
   outline-width: 1px;
   outline-style: solid;
@@ -69,10 +75,20 @@ export default {
   bottom: 0;
 }
 
+.l-function-indicator {
+  height: 28px;
+
+  outline-width: 1px;
+  outline-style: solid;
+
+  position: absolute;
+  inset: auto -4px 4px -4px;
+}
+
 .o-function-button {
   pointer-events: auto;
 
-  width: clamp(72px, 8vw, 96px);
+  width: clamp(60px, 8vw, 96px);
 
   border-radius: 50%;
   outline-width: 1px;

@@ -24,12 +24,14 @@
 /*# Fixeds */
 
 .c-header-tab-button {
-  transition: background-color 0.15s, outline-color 0.3s;
+  transition: background-color 0.2s, outline-color 0.3s;
 }
 
 .l-header-indicator-tabs {
   transition: transform 0.3s ease-in-out;
 }
+
+
 
 
 
@@ -39,8 +41,14 @@
 
 
 
+
+
 .o-function {
-  transition: outline-color 0.2s, padding 0.5s;
+  transition: outline-color 0.2s;
+}
+
+.l-function-indicator {
+  transition: opacity 0.2s;
 }
 
 .o-function-button {
@@ -56,6 +64,12 @@
   animation: bounce-in 0.3s ease-in-out reverse;
 }
 /** END - Vue <Transition> */
+
+
+
+.l-function-indicator:has(+ .o-function-button:hover) {
+  opacity: 0.75
+}
 
 /*# END - Fixeds */
 
@@ -94,18 +108,18 @@
 /*# Studies */
 
 .o-prim-study {
-  transition: box-shadow 0.15s;
+  transition: box-shadow 0.2s;
 }
 .o-prim-study span {
-  transition: color 0.15s;
+  transition: color 0.2s;
 }
 
 .o-prim-study::before {
-  transition: background-color 0.15s;
+  transition: background-color 0.2s;
 }
 
 .o-prim-study--bought::before {
-  transition: inset 0.3s var(--anim-over-in-and-out), outline-width 0.15s
+  transition: inset 0.3s var(--anim-over-in-and-out), outline-width 0.2s
 }
 
 .c-prim-study-name .f-sup {

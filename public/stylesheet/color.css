@@ -233,6 +233,12 @@ var(--opaque-color-ui-contrast), however */
   outline-color: var(--f1-opaque-color-ui-acc);
 }
 
+.l-function-indicator {
+  background-color: var(--color-ui);
+
+  outline-color: var(--b-opaque-color-ui-acc);
+}
+
 .o-function-button {
   background-color: var(--color-ui);
   
