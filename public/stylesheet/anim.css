@@ -4,6 +4,32 @@
 
 
 
+@keyframes wipe-up {
+  0% {
+    transform: translateY(50%) scaleY(0);
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+/*# Semantic */
+
+/** Vue <Transition> */
+.a-tooltip-enter-active {
+  animation: wipe-up 0.2s var(--anim-over-in-and-out);
+}
+
+.a-tooltip-leave-active {
+  animation: wipe-up 0.2s ease-out reverse;
+}
+/** END - Vue <Transition> */
+
+/*# END - Semantic */
+
+
+
+
 
 /* From Vue, I'll improve the animation later */
 @keyframes bounce-in {
