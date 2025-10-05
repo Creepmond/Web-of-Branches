@@ -12,6 +12,8 @@ export default {
     studyBoughtBits: [],
 
     studyBoughtObject: {},
+    studyExposedObject: {}, // I don't think I need this necessarily. But... ah, let's leave that a problem
+    // for later as well. Why not
     imperativeAvailableObject: {},
   }},
   computed: {
@@ -46,6 +48,7 @@ export default {
       }
 
       this.studyBoughtObject[ rmRef(id) ] = Study(id).isBought;
+      this.studyExposedObject[ rmRef(id) ] = true;
 
       const derivative_ids = Study(id).derivative;
 
@@ -55,6 +58,9 @@ export default {
     },
     studyIsBought(id) {
       return this.studyBoughtObject[ rmRef(id) ];
+    },
+    studyIsExposed(id) {
+      return this.studyExposedObject[ rmRef(id) ];
     },
     imperativeIsBought(id) {
       const thisImperative = Study(id).imperative;
@@ -67,6 +73,7 @@ export default {
   created() {
     Studies.allId.forEach(study => {
       this.studyBoughtObject[ rmRef(study) ] = false;
+      this.studyExposedObject[ rmRef(study) ] = false;
       this.imperativeAvailableObject[ rmRef(study) ] = false;
     });
   },
@@ -87,6 +94,7 @@ export default {
       @purchase="checkStudyState(study)"
       @available="checkStudyState(study)"
       :isBought="studyIsBought(study)"
+      :isExposed="studyIsExposed(study)"
       :imperativeIsBought="imperativeIsBought(study)"
       :imperativeIsAvailable="imperativeIsAvailable(study)"
     />

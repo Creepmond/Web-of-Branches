@@ -13,6 +13,11 @@ export default {
     id: Array,
     isBought: Boolean,
 
+    isExposed: {
+      type: Boolean,
+      default: false,
+    },
+
     imperativeIsBought: {
       type: Boolean,
       default: true,
@@ -60,7 +65,7 @@ export default {
         return state + 'bought';
       } else if (this.imperativeIsBought && this.isAvailable) {
         return state + 'available';
-      } else if (this.imperativeIsAvailable || this.imperativeIsBought) {
+      } else if (this.isExposed || this.imperativeIsAvailable || this.imperativeIsBought)  {
         return state + 'unavailable';
       } else {
         return state + 'obfuscated';
@@ -141,7 +146,7 @@ export default {
       this.isRespecced = !this.isRespecced;
     },
     changeLastHoveredStudy() {
-      if ( !this.imperativeIsAvailable && !this.imperativeIsBought ) return;
+      if ( !this.imperativeIsAvailable && !this.imperativeIsBought && !this.isExposed ) return;
       if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
 
       player.last.hoveredStudy = this.id;
