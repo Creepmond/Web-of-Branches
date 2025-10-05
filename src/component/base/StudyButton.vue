@@ -13,11 +13,6 @@ export default {
     id: Array,
     isBought: Boolean,
 
-    isExposed: {
-      type: Boolean,
-      default: false,
-    },
-
     imperativeIsBought: {
       type: Boolean,
       default: true,
@@ -34,6 +29,7 @@ export default {
     StudyLink,
   },
   data() { return {
+    isExposed: false,
     isAvailable: false,
     isRespecced: false,
   }},
@@ -138,6 +134,7 @@ export default {
         if ( rmRef(this.id) === rmRef([4,1]) ) player.permaStudy.respecIsUnlocked = true;
       }
 
+      this.isExposed = true;
       this.isAvailable = false;
     },
     tryRespec() {
@@ -151,6 +148,9 @@ export default {
 
       player.last.hoveredStudy = this.id;
     },
+  },
+  mounted() {
+    this.isExposed = player.studyExposedBits.hasArray(this.id);
   },
 };
 </script>
