@@ -1,8 +1,8 @@
 <script>
-import { setUpdateloop } from "@/core/interval.js";
-
 import StudyButtonFace from "./StudyButtonFace.vue";
 import StudyLink from "./StudyLink.vue";
+
+import { setUpdateloop } from "@/core/interval.js";
 
 let clickTargetCoord = { X: 0, Y: 0 };
 let holdDuration = 0;
@@ -11,8 +11,17 @@ export default {
   name: "StudyButton",
   props: {
     id: Array,
-    imperativeIsBought: Boolean,
-    imperativeIsAvailable: Boolean,
+    isBought: Boolean,
+
+    imperativeIsBought: {
+      type: Boolean,
+      default: true,
+    },
+
+    imperativeIsAvailable: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ['purchase', 'available'],
   components: {
@@ -21,10 +30,7 @@ export default {
   },
   data() { return {
     isAvailable: false,
-    isBought: false,
     isRespecced: false,
-
-    frameId: 0,
   }},
   computed: {
     StudyInstance() {
@@ -83,7 +89,7 @@ export default {
 
       this.isAvailable = player.seed.gte(this.StudyInstance.cost);
 
-      this.frameId = setUpdateloop(this.update);
+      setUpdateloop(this.update);
     },
     setPointerdown(e) {
       this.changeLastHoveredStudy(); // For mobile
@@ -101,7 +107,7 @@ export default {
           this.tryRespec();
           return;
         };
-      }
+      };
 
       if (!this.isAvailable || !this.imperativeIsBought) return;
 
@@ -114,11 +120,11 @@ export default {
         this.StudyInstance.effect;
       }
       
+      // Might be able to relgegate this to '@/core/state/study.js'
       if (this.StudyInstance.effectInfo.type === 'unlock') {
         if ( rmRef(this.id) === rmRef([4,1]) ) player.permaStudy.respecIsUnlocked = true;
       }
 
-      this.isBought = true;
       this.isAvailable = false;
     },
     tryRespec() {

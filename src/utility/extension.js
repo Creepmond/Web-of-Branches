@@ -1,6 +1,14 @@
+// Only when working with Arrays (for quick access), otherwise, call JSON.stringify and JSON.parse
+// in full
 window.rmRef = function (obj) {
    return JSON.stringify(obj);
 };
+
+window.addRef = function (obj) {
+   return JSON.parse(obj);
+};
+
+
 
 //# Array
 

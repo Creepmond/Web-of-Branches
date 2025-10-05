@@ -1,44 +1,38 @@
 <script>
 import StudyButton from "@/component/base/StudyButton.vue";
 
-import { originStudy } from "@/utility/constants.js";
-
 export default {
   name: "Tree",
   components: { StudyButton, },
   data() { return {
-    imperativeBoughtObject: {},
+    studyBoughtObject: {},
     imperativeAvailableObject: {},
   }},
   computed: {
+    // This is incomplete, I'm thinking of making the only studies visible are the ones per new section
+    // (e.g., after Seeds, etc.)
     visibleStudies() {
       return Studies.allId;
     },
   },
   methods: {
     checkStudyState(id) {
-      if (id) {
-        const derivative_ids = Study(id).derivative;
+      if (!id) return;
 
-        derivative_ids.forEach(study => {
-          this.imperativeAvailableObject[ rmRef(study) ] = Study(id).isAvailable;
-          this.imperativeBoughtObject[ rmRef(study) ] = Study(id).isBought;
-        });
-      } else {
-        // Should have a special handler for when Storage is implemented
-        this.imperativeBoughtObject[originStudy] = true;
-        this.imperativeAvailableObject[originStudy] = true;
-        
-        // This is terrible, what else is new
-        const originDerivative_ids = Study([0,0]).derivative;
+      this.studyBoughtObject[ rmRef(id) ] = Study(id).isBought;
 
-        originDerivative_ids.forEach(study => {
-          this.imperativeAvailableObject[ rmRef(study) ] = true;
-        });
-      }
+      const derivative_ids = Study(id).derivative;
+
+      derivative_ids.forEach(study => {
+        this.imperativeAvailableObject[ rmRef(study) ] = Study(id).isAvailable;
+      });
+    },
+    studyIsBought(id) {
+      return this.studyBoughtObject[ rmRef(id) ];
     },
     imperativeIsBought(id) {
-      return this.imperativeBoughtObject[ rmRef(id) ];
+      const thisImperative = Study(id).imperative;
+      return this.studyBoughtObject[ rmRef(thisImperative) ];
     },
     imperativeIsAvailable(id) {
       return this.imperativeAvailableObject[ rmRef(id) ];
@@ -46,7 +40,7 @@ export default {
   },
   created() {
     Studies.allId.forEach(study => {
-      this.imperativeBoughtObject[ rmRef(study) ] = false;
+      this.studyBoughtObject[ rmRef(study) ] = false;
       this.imperativeAvailableObject[ rmRef(study) ] = false;
     });
   },
@@ -63,6 +57,7 @@ export default {
       :id="study"
       @purchase="checkStudyState(study)"
       @available="checkStudyState(study)"
+      :isBought="studyIsBought(study)"
       :imperativeIsBought="imperativeIsBought(study)"
       :imperativeIsAvailable="imperativeIsAvailable(study)"
     />
