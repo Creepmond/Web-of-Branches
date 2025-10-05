@@ -20,13 +20,11 @@ export default {
     desc: '',
   }},
   watch: {
-    isObfuscated: {
-      handler(value) {
-        if (value) return;
+    isObfuscated(value) {
+      if (value) return;
 
-        this.stirStudyText('name', this.cleanName, this.rawName);
-        this.stirStudyText('desc', this.cleanDesc, this.rawDesc);
-      },
+      this.stirStudyText('name', this.cleanName, this.rawName);
+      this.stirStudyText('desc', this.cleanDesc, this.rawDesc);
     },
   },
   computed: {

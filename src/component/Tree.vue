@@ -1,10 +1,16 @@
 <script>
 import StudyButton from "@/component/base/StudyButton.vue";
 
+import { setUpdateloop } from "@/core/interval";
+
 export default {
   name: "Tree",
   components: { StudyButton, },
   data() { return {
+    // This one is for handling when respec happens... I might be able to improve it later, but for now
+    // as long as it works, it's fine
+    studyBoughtBits: [],
+
     studyBoughtObject: {},
     imperativeAvailableObject: {},
   }},
@@ -15,7 +21,21 @@ export default {
       return Studies.allId;
     },
   },
+  watch: {
+    studyBoughtBits(diff, init) {
+      const couplaDelta = new Set(diff).symmetricDifference(new Set(init));
+
+      couplaDelta.forEach(delta => {
+        this.studyBoughtObject[delta] = Study( addRef(delta) ).isBought;
+      });
+    },
+  },
   methods: {
+    update() {
+      this.studyBoughtBits = player.studyBoughtBits;
+
+      setUpdateloop(this.update);
+    },
     checkStudyState(id) {
       if (!id) return;
 
@@ -46,6 +66,9 @@ export default {
   },
   beforeMount() {
     this.checkStudyState();
+  },
+  mounted() {
+    this.update();
   },
 };
 </script>

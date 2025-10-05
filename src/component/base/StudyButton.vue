@@ -71,16 +71,21 @@ export default {
     },
   },
   watch: {
-    isAvailable(value) {
-      this.StudyInstance.isAvailable = value;
-      this.$emit('available', this.id);
-    },
     imperativeIsBought: {
       handler() {
         this.StudyInstance.imperativeIsBought = true;
         this.update();
       },
       immediate: true,
+    },
+    isAvailable(value) {
+      this.StudyInstance.isAvailable = value;
+      this.$emit('available', this.id);
+    },
+    isRespecced(valueIsTrue) {
+      valueIsTrue
+        ? player.last.respeccedStudy = this.id
+        : player.last.respeccedStudy = [];
     },
   },
   methods: {

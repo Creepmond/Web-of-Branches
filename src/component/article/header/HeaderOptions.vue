@@ -27,8 +27,8 @@ export default {
     parallaxValue(value) {
       player.option.parallax = value / 100;
     },
-    zoomValue() {
-      player.option.zoomLevel = this.zoomValue / 100;
+    zoomValue(value) {
+      player.option.zoomLevel = value / 100;
     },
     tickrateValue(value) {
       player.option.tickrate = value;

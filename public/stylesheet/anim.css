@@ -78,7 +78,7 @@
 }
 
 .o-function-button {
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, opacity 0.2s;
 }
 
 /** Vue <Transition> */

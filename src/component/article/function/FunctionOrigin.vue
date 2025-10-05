@@ -7,7 +7,6 @@ export default {
   methods: {
     teleportToOrigin() {
       player.last.screenCoord = { X: -140, Y: -80 };
-      player.option.zoomLevel = 1;
     },
   },
 };
@@ -28,9 +27,5 @@ export default {
 </template>
 
 <style>
-.o-function-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 </style>

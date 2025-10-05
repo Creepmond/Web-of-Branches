@@ -48,6 +48,7 @@ Set.prototype.random = function() {
    return this.get(Math.randomRange_int(0, this.size - 1));
 };
 
+/*
 Set.prototype.addArray = function(value) {
    if (Array.isArray(value)) this.add(JSON.stringify(value));
 };
@@ -55,6 +56,7 @@ Set.prototype.addArray = function(value) {
 Set.prototype.hasArray = function(value) {
    if (Array.isArray(value)) return this.has(JSON.stringify(value));
 };
+*/
 
 //# END - Set
 

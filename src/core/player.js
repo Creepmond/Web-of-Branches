@@ -2,8 +2,10 @@ import { DC } from "@/utility/constants.js";
 
 window.player = {
    seed: DC.D1,
-   studyBoughtBits: new Set(),
-   studyExposedBits: new Set(),
+   studyBoughtBits: [], // Unfortunately, working with Sets in Vue is not supported, and with having to
+   studyExposedBits: [], // deal with update(), I'll have to let go of new Set() for studyBoughtBits.
+   // However, perhaps studyExposedBits can be used like new Set()? I'm not sure, adding the though here
+   // just in case though
    permaStudy: {
       respecIsUnlocked: false,
    },
@@ -18,6 +20,7 @@ window.player = {
    },
    last: {
       hoveredStudy: [],
+      respeccedStudy: [],
       headerTab: 'Resources',
       screenCoord: { X: -140, Y: -80 },
    },

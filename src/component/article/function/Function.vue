@@ -97,5 +97,13 @@ export default {
   border-radius: 50%;
   outline-width: 1px;
   outline-style: solid;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.o-function-button--inactive {
+  opacity: 0.5;
 }
 </style>

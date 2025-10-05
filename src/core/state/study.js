@@ -30,10 +30,6 @@ class StudyState extends GameMechanicState {
       this.imperativeIsBought = false;
    }
 
-   get isBought() {
-      return player.studyBoughtBits.hasArray(this.id);
-   }
-
    get effect() {
       const effect = this.effectInfo;
 
@@ -46,9 +42,14 @@ class StudyState extends GameMechanicState {
       }
    }
 
+   get isBought() {
+      return player.studyBoughtBits.includes( rmRef(this.id) );
+   }
+
    purchase() {
-      player.studyBoughtBits.addArray(this.id);
-      player.studyExposedBits.addArray(this.id);
+      // Reassignment (for Vue; see '@/component/Tree.vue')
+      player.studyBoughtBits = player.studyBoughtBits.concat( rmRef(this.id) );
+      player.studyExposedBits = player.studyExposedBits.concat( rmRef(this.id) );
    }
 }
 

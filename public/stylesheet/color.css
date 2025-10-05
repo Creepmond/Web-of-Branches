@@ -264,6 +264,15 @@ var(--opaque-color-ui-contrast), however */
   outline-color: var(--color-ui-acc);
 }
 
+.o-function-button--inactive > .o-tooltip,
+.o-function-button--inactive:hover {
+  outline-color: var(--color-bad);
+}
+
+.o-function-button--inactive > .o-tooltip::before {
+  border-color: var(--color-bad);
+}
+
 /*# END - Function  */
 
 

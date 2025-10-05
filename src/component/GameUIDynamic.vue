@@ -234,8 +234,8 @@ export default {
     },
   },
   watch: {
-    zoomLevel() {
-      player.option.zoomLevel = this.zoomLevel;
+    zoomLevel(value) {
+      player.option.zoomLevel = value;
     },
   },
   computed: {
