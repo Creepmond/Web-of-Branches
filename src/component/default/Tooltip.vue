@@ -39,9 +39,9 @@ export default {
   height: 1.5em;
 
   padding: 4px 12px;
-  border-width: 1px;
-  border-style: solid;
   border-radius: 8px;
+  outline-width: 1px;
+  outline-style: solid;
 
   /* Not 'transform:' cause of animation */
   translate: 50% 0;

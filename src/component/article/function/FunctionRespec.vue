@@ -30,8 +30,24 @@ export default {
     respec() {
       if (!this.canRespec) return;
 
-      const studyIndex = player.studyBoughtBits.indexOf(this.respeccedStudy);
-      player.studyBoughtBits = player.studyBoughtBits.slice(0, studyIndex);
+      const diffBoughtBits = new Set();
+      //// const branches = new Set();
+
+      // This is intenetionally inside an Array, similar to how Study().derivatives are formatted (e.g.,
+      // [ [3, -0.5], [3, 0.5] ]; or [ [4, 1] ]; or simply just [  ]; if it doesn't have any derivatives
+      let targetId = [ Object.values(this.respeccedStudy) ];
+
+      do {
+        // yeah nah mate too lazy
+        if (targetId.length > 1) throw "dude make a special handling for this"
+        if (!Study(targetId[0]).isBought) break;
+
+        diffBoughtBits.addArray(targetId[0]);
+
+      } while ((targetId = Study(targetId[0]).derivative) && targetId[0]);
+
+      const newBoughtBits = new Set(player.studyBoughtBits).difference(diffBoughtBits);
+      player.studyBoughtBits = [...newBoughtBits];
 
       player.last.respeccedStudy = [];
     },

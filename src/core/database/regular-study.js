@@ -9,7 +9,7 @@ export const regularStudy = [
       specify: "Reap the Seed after 8s",
       effect: {
          call() {
-            setTimeout( () => { Currency.seed.add(199) }, 800 )
+            setTimeout( () => { Currency.seed.add(1) }, 8000 )
          },
          type: 'callback',
          target: 'Seed',

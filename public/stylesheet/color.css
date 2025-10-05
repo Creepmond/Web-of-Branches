@@ -91,7 +91,7 @@ text {
 .o-tooltip {
   background-color: var(--color-ui);
 
-  border-color: var(--color-ui-acc);
+  outline-color: var(--color-ui-acc);
 }
 
 .o-tooltip::before {
@@ -270,7 +270,7 @@ var(--opaque-color-ui-contrast), however */
 }
 
 .o-function-button--inactive > .o-tooltip::before {
-  border-color: var(--color-bad);
+  border-top-color: var(--color-bad);
 }
 
 /*# END - Function  */

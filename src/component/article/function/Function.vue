@@ -61,7 +61,7 @@ export default {
   min-width: 36px;
   height: clamp(60px, 8vw, 96px);
   
-  padding: 8px clamp(48px, 8vw, 192px) 36px;
+  padding: 8px clamp(48px, 8vw, 192px) 40px;
   border-radius: 8px 8px 0 0;
   outline-width: 1px;
   outline-style: solid;

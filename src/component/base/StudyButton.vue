@@ -49,7 +49,7 @@ export default {
 
       const state = 'o-prim-study--';
 
-      return isRespecced
+      return isRespecced && this.isBought
         ? state + 'respecced'
         : state + 'node';
     },
@@ -77,6 +77,9 @@ export default {
         this.update();
       },
       immediate: true,
+    },
+    isBought() {
+      this.update();
     },
     isAvailable(value) {
       this.StudyInstance.isAvailable = value;

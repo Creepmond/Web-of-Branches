@@ -37,7 +37,13 @@ export default {
       setUpdateloop(this.update);
     },
     checkStudyState(id) {
-      if (!id) return;
+      if (!id) {
+        // Should have special handler for when Storage is implemented, I think
+        Study([0,0]).derivative.forEach(child => {
+          this.imperativeAvailableObject[ rmRef(child) ] = true;
+        })
+        return;
+      }
 
       this.studyBoughtObject[ rmRef(id) ] = Study(id).isBought;
 
