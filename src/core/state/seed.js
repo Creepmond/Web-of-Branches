@@ -1,3 +1,5 @@
+import Timespan from "./timespan.js";
+
 import Effects from "@/core/state/mechanic/effects.js";
 import { DC } from "@/utility/constants.js";
 
@@ -18,7 +20,8 @@ const Seed = {
    get multipliers() {
       return Effects.times(
          Study([2, 0]).effect,
-         Study([3, 0.5]).effect
+         Study([3, 0.5]).effect,
+         Timespan.study5x1Effect
       )
    },
 

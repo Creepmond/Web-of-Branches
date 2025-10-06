@@ -9,6 +9,16 @@ window.player = {
    permaStudy: {
       respecIsUnlocked: false,
    },
+   time: {
+      played: DC.D0,
+      bought5x1: DC.BIMAX,
+   },
+   last: {
+      hoveredStudy: [],
+      respeccedStudy: [],
+      headerTab: 'Resources',
+      screenCoord: { X: -140, Y: -80 },
+   },
    option: {
       parallax: 0.4,
       tickrate: 33,
@@ -18,12 +28,7 @@ window.player = {
       isEnabled: false,
       screenSlipperiness: 0.98,
    },
-   last: {
-      hoveredStudy: [],
-      respeccedStudy: [],
-      headerTab: 'Resources',
-      screenCoord: { X: -140, Y: -80 },
-   },
+   
    hidden: {
       deviceScreenType: '',
       hasEverReachedBoundary: false,

@@ -1,3 +1,5 @@
+import { time } from "./state/time.js";
+
 /*
 export function setCooldown(handler, duration) {
    const callTime = Date.now();
@@ -38,6 +40,8 @@ export function setGameloop(handler) {
 };
 
 setGameloop(() => {
+   time.tick();
+   
    if (Study([1,0]).effect) {
       const tickrate = player.option.tickrate;
 

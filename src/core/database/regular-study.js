@@ -8,9 +8,7 @@ export const regularStudy = [
       description: "Plant the first Seed",
       specify: "Reap the Seed after 8s",
       effect: {
-         call() {
-            setTimeout( () => { Currency.seed.add(299) }, 80 )
-         },
+         call() { setTimeout( () => { Currency.seed.add(299) }, 80 ) },
          type: 'callback',
          target: 'Seed',
       },
@@ -96,11 +94,11 @@ export const regularStudy = [
       name: "Thyme is essence",
       id: [5, 1],
       derivative: [],
-      description: "Return from a branched node",
-      specify: `Click a Branch with the <div class="f-hotkey">ctrl</div> or <div class="f-hotkey">cmd&#8984;</div> key to toggle respeccing`,
+      description: "Compost your seeds",
+      specify: `Receive a ${formatX(15)} boost to Seed production that drastically wanes over time`,
       effect: {
-         type: 'unlock',
-         target: 'Respec',
+         type: 'synergy',
+         target: 'Seed',
       },
       cost: DC.D100,
    },
