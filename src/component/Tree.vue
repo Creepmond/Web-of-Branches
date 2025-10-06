@@ -1,6 +1,10 @@
 <script>
 import StudyButton from "@/component/base/StudyButton.vue";
 
+
+
+import Study, { Studies } from "@/core/state/study.js";
+
 import { setUpdateloop } from "@/core/interval";
 
 export default {

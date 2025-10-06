@@ -1,5 +1,5 @@
 // OK... I have no excuse for this one. Whaddya know I've watched One Piece, piracy is in my blood
-import { DC } from "@/utility/constants.js";
+import DC from "@/utility/constants.js";
 
 class Currency {
    get value() { throw new Error("Currency 'value' is not implemented") }
@@ -64,4 +64,19 @@ class Currency {
    }
 }
 
-window.Currency = Currency;
+// Perhaps it's better to seperate these, as another Currency export, given that by importing a single
+// instance would load every single one needlessly. I seriously have no clue why I'm conforming to AD's
+// style in the first place. I assume the biggest factor for this choice was given how big the game was...
+// but wouldn't that be all the more reason to call for imports? No clue... but now it's influenced a
+// random idiot who doesn't dabble in data structures and especially, optimization. Geez
+Currency.time = new class extends Currency {
+   get value() { return player.time.played; }
+   set value(value) { player.time.played = value }
+};
+
+Currency.seed = new class extends Currency {
+   get value() { return player.seed; }
+   set value(value) { player.seed = value }
+};
+
+export default Currency;

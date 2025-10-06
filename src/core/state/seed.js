@@ -1,12 +1,9 @@
+import Currency from "@/core/state/mechanic/currency.js";
+import Study from "./study.js";
 import Timespan from "./timespan.js";
 
 import Effects from "@/core/state/mechanic/effects.js";
-import { DC } from "@/utility/constants.js";
-
-Currency.seed = new class extends Currency {
-   get value() { return player.seed; }
-   set value(value) { player.seed = value }
-};
+import DC from "@/utility/constants.js";
 
 // Hm, this looks like it probably can be a general Class——I'll leave as is for now, but when
 // Currencies like Shards or Strings get added it'll probably useful. It's only really because
@@ -61,4 +58,4 @@ const Seed = {
    },
 };
 
-window.Seed = Seed;
+export default Seed;

@@ -1,9 +1,6 @@
-import { DC } from "@/utility/constants.js";
+import Currency from "@/core/state/mechanic/currency.js";
 
-Currency.time = new class extends Currency {
-   get value() { return player.time.played; }
-   set value(value) { player.time.played = value }
-};
+import DC from "@/utility/constants.js";
 
 export const time = {
    tick() {

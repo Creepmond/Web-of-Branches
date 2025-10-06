@@ -5,7 +5,9 @@ import HeaderResources from "./HeaderResources.vue";
 import HeaderOptions from "./HeaderOptions.vue";
 import HeaderInformation from "./HeaderInformation.vue";
 
-import { setUpdateloop } from "@/core/interval.js";
+
+
+//// import { setUpdateloop } from "@/core/interval.js";
 
 export default {
   name: "Header",

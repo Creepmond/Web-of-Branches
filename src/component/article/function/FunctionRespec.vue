@@ -1,6 +1,10 @@
 <script>
 import Tooltip from "@/component/default/Tooltip.vue";
 
+
+
+import Study from "@/core/state/study.js";
+
 import { setUpdateloop } from "@/core/interval.js";
 
 export default {

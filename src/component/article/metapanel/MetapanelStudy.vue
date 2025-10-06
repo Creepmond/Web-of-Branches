@@ -1,5 +1,8 @@
 <script>
-import { setUpdateloop, clearUpdateloop } from "@/core/interval";
+import Seed from "@/core/state/seed.js";
+import Study from "@/core/state/study.js";
+
+import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
   name: "MetapanelStudy",

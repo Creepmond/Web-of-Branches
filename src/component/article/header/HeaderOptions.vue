@@ -5,6 +5,8 @@
 import Slider from "@/component/default/Slider.vue";
 import Toggle from "@/component/default/Toggle.vue"
 
+
+
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {

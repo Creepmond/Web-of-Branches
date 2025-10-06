@@ -1,4 +1,6 @@
-import { DC } from "@/utility/constants.js";
+import Currency from "@/core/state/mechanic/currency.js";
+
+import DC from "@/utility/constants.js";
 
 export const regularStudy = [
    {

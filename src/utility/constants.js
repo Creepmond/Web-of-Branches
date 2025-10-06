@@ -1,6 +1,4 @@
-export const originStudy = rmRef([0, 0]);
-
-export const DC = {
+const DC = Object.freeze({
 	DM1:                  new Decimal("-1"),
 	D0:                   new Decimal("0"),
 
@@ -80,4 +78,8 @@ export const DC = {
 	E100:                 new Decimal("1e100"),
 	E1E15:                new Decimal("1e1000000000000000"),
 	BIMAX:                new Decimal("1e9000000000000000"),
-};
+});
+
+export default DC;
+
+export const originStudy = rmRef([0, 0]);

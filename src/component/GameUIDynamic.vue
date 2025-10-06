@@ -3,7 +3,9 @@
 
 import Tree from "./Tree.vue";
 
-import { setUpdateloop } from "@/core/interval"
+
+
+import { setUpdateloop } from "@/core/interval.js"
 
 const htmlDOM = document.querySelector('html');
 

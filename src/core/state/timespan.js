@@ -1,7 +1,7 @@
 //! After finishing this, remove ALL (except Utilities, I think that one makes sense) global properties.
 //  I don't think what AD was doing was good practice, anyway
 
-import { DC } from "@/utility/constants";
+import DC from "@/utility/constants.js";
 
 export default class Timespan {
    static get study5x1Effect() {

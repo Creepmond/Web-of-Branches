@@ -1,7 +1,6 @@
-import Timespan from "./timespan.js";
+import GameMechanicState from "@/core/state/mechanic/gamestate.js";
 
-import GameMechanicState from "./mechanic/gamestate.js";
-import { DC } from "@/utility/constants.js";
+import DC from "@/utility/constants.js";
 
 const Studies = {
    get allId() {
@@ -84,5 +83,5 @@ exposedStudies.forEach(shownStudy => {
    Study(shownStudy).isExposed = true;
 })
 
-window.Studies = Studies;
-window.Study = Study;
+export default Study;
+export { Studies };

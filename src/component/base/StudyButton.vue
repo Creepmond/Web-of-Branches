@@ -2,6 +2,11 @@
 import StudyButtonFace from "./StudyButtonFace.vue";
 import StudyLink from "./StudyLink.vue";
 
+
+
+import Currency from "@/core/state/mechanic/currency.js";
+import Study from "@/core/state/study.js";
+
 import { setUpdateloop } from "@/core/interval.js";
 
 let clickTargetCoord = { X: 0, Y: 0 };
