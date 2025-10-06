@@ -44,6 +44,8 @@ export const DC = {
 	D95:                  new Decimal("95"),
 	D100:                 new Decimal("100"),
 
+	D700:                 new Decimal("700"),
+
 	E1:                   new Decimal("1e1"),
 	E2:                   new Decimal("1e2"),
 	E3:                   new Decimal("1e3"),

@@ -50,7 +50,12 @@ export const regularStudy = [
       id: [3, -0.5],
       derivative: [ [4, -1] ],
       description: "Seeds multiplied by a million",
-      cost: DC.E3,
+      effect: {
+         value: DC.D2,
+         type: 'multiplier',
+         target: 'Seed',
+      },
+      cost: DC.D700,
    },
    {
       name: `2<span class="f-sup">nd</span> Branch`,
@@ -79,7 +84,7 @@ export const regularStudy = [
       id: [4, 1],
       derivative: [ [5, 1] ],
       description: "Return from a branched node",
-      specify: `Long press, or Click a Branch with the <div class="f-hotkey">ctrl</div> or <div class="f-hotkey">cmd&#8984;</div> key to toggle respeccing`,
+      specify: `Long press, or Click a Branch with the <span class="f-hotkey">ctrl</span> or <span class="f-hotkey">cmd&#8984;</span> key to toggle respeccing`,
       effect: {
          type: 'unlock',
          target: 'Respec',

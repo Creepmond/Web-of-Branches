@@ -150,7 +150,7 @@ export default {
     },
   },
   mounted() {
-    this.isExposed = player.studyExposedBits.hasArray(this.id);
+    this.isExposed = player.studyExposedBits.has(this.id);
   },
 };
 </script>
