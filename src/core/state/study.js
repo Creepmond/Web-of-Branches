@@ -35,7 +35,7 @@ class StudyState extends GameMechanicState {
    get effect() {
       const effect = this.effectInfo;
 
-      switch (effect.type) {
+      switch (effect.type[0]) {
          case 'passiveRate': return this.isBought ? effect.value : DC.D0;
          case 'multiplier': return this.isBought ? effect.value : DC.D1;
          case 'exponent': return this.isBought ? effect.value : DC.D1;
@@ -53,7 +53,7 @@ class StudyState extends GameMechanicState {
       player.studyBoughtBits = player.studyBoughtBits.concat( rmRef(this.id) );
       player.studyExposedBits.add(this.id);
 
-      if (this.effectInfo.type === 'synergy') player.time.bought5x1 = player.time.played;
+      if (this.effectInfo.type.includes('synergy')) player.time.bought5x1 = player.time.played;
 
       //// this.isExposed = true;
    }

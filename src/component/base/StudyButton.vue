@@ -130,12 +130,12 @@ export default {
       Currency.seed.sub(this.StudyInstance.cost);
 
       this.StudyInstance.purchase();
-      if (this.StudyInstance.effectInfo.type === 'callback') {
+      if (this.StudyInstance.effectInfo.type[0] === 'callback') {
         this.StudyInstance.effect;
       }
       
       // Might be able to relgegate this to '@/core/state/study.js'
-      if (this.StudyInstance.effectInfo.type === 'unlock') {
+      if (this.StudyInstance.effectInfo.type[0] === 'unlock') {
         if ( rmRef(this.id) === rmRef([4,1]) ) player.permaStudy.respecIsUnlocked = true;
       }
 

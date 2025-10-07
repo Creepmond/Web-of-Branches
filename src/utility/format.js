@@ -25,12 +25,12 @@ window.formatPassRate = function(value, target) {
    : `+${format(value)} /s`;
 };
 
-window.formatX = function(value) {
-   return `×${format(value)}`;
+window.formatX = function(value, places = 0, placesUnder1000 = 0) {
+   return `×${format(value, places, placesUnder1000)}`;
 };
 
-window.formatPow = function(value) {
-   return `^${format(value)}`;
+window.formatPow = function(value, places = 0, placesUnder1000 = 0) {
+   return `^${format(value, places, placesUnder1000)}`;
 };
 
 window.formatCoord = function(value, value2) {

@@ -8,7 +8,7 @@ export default {
   name: "MetapanelStudy",
   data() { return {
     studyId: [],
-    studyIsBought: false,
+    currentValue: '',
     globalEffect: '',
 
     frameId: null,
@@ -17,54 +17,44 @@ export default {
     Study() {
       return this.studyId.length === 0 ? undefined : Study(this.studyId);
     },
-    effectIsCallback() {
-      return this.Study.effectInfo.type === 'callback' ? true : false;
-    },
     effectIsQuantity() {
-      switch (this.Study.effectInfo.type) {
+      switch (this.Study.effectInfo.type[0]) {
         case 'callback': return false;
         case 'unlock': return false;
         default: return true;
       };
     },
-    formatValue() {
-      const effectInfo = this.Study.effectInfo;
-      const isActive = this.studyIsBought;
-
-      switch (effectInfo.type) {
-        case 'passiveRate':
-          return isActive
-            ? `${formatPassRate(effectInfo.value)}`
-            : `${formatPassRate(0)}`;
-        case 'multiplier':
-          return isActive
-            ? `${formatX(effectInfo.value)} ${effectInfo.target}`
-            : `${formatX(1)} ${effectInfo.target}`;
-        case 'exponent':
-          return isActive
-            ? `${formatPow(effectInfo.value)} ${effectInfo.target}`
-            : `${formatPow(1)} ${effectInfo.target}`;
-        case 'unlock':
-          return isActive
-            ? `Unlocked ${effectInfo.target}`
-            : `Unlock ${effectInfo.target}`;
-      };
-    },
+    
   },
   methods: {
     update() {
       this.studyId = player.last.hoveredStudy;
-      this.studyIsBought = this.Study.isBought;
+      this.formatValue(); // Damn it
       this.formatEffect();
 
       this.frameId = setUpdateloop(this.update);
     },
+    formatValue() {
+      const type = this.Study.effectInfo.type;
+
+      if (type.includes('passiveRate')) {
+        this.currentValue = `${formatPassRate(this.Study.effect)}`;
+      } else if (type.includes('multiplier')) {
+        this.currentValue = `${formatX(this.Study.effect, 2, 2)} Seed`;
+      } else if (type.includes('exponent')) {
+        this.currentValue = `${formatPow(this.Study.effect, 2, 2)} Seed`
+      };
+    },
     // Horrible. Can't even deny it now. I keep making unnecessary updates like this
     formatEffect() {
-      switch (this.Study.effectInfo.type) {
-        case 'passiveRate': this.globalEffect = `${formatPassRate(Seed.passiveRate)}`; break;
-        case 'multiplier': this.globalEffect = `${formatX(Seed.multipliers)} Seed`; break;
-        case 'exponent': this.globalEffect = `${formatPow(Seed.exponents)} Seed`; break;
+      const type = this.Study.effectInfo.type;
+
+      if (type.includes('passiveRate')) {
+        this.globalEffect = `${formatPassRate(Seed.passiveRate)}`;
+      } else if (type.includes('multiplier')) {
+        this.globalEffect = `${formatX(Seed.multipliers, 2, 2)} Seed`;
+      } else if (type.includes('exponent')) {
+        this.globalEffect = `${formatPow(Seed.exponents, 2, 2)} Seed`;
       };
     },
   },
@@ -106,11 +96,11 @@ export default {
         <span class="c-metapanel--study-value" v-html="Study.specify" />
       </div>
       <div
-        v-if="!effectIsCallback"
+        v-if="Study.effectInfo.type[0] !== 'callback'"
         class="l-metapanel--study_val"
       >
         <span class="c-metapanel--study-semantic">Current Value:</span>
-        <span class="c-metapanel--study-value">{{ formatValue }}</span>
+        <span class="c-metapanel--study-value">{{ currentValue }}</span>
       </div>
       <div
         v-if="effectIsQuantity"
