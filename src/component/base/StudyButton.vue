@@ -130,14 +130,6 @@ export default {
       Currency.seed.sub(this.StudyInstance.cost);
 
       this.StudyInstance.purchase();
-      if (this.StudyInstance.effectInfo.type[0] === 'callback') {
-        this.StudyInstance.effect;
-      }
-      
-      // Might be able to relgegate this to '@/core/state/study.js'
-      if (this.StudyInstance.effectInfo.type[0] === 'unlock') {
-        if ( rmRef(this.id) === rmRef([4,1]) ) player.permaStudy.respecIsUnlocked = true;
-      }
 
       this.isExposed = true;
       this.isAvailable = false;
@@ -151,7 +143,7 @@ export default {
       if ( !this.imperativeIsAvailable && !this.imperativeIsBought && !this.isExposed ) return;
       if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
 
-      player.last.hoveredStudy = this.id;
+      player.last.metapanelId = this.id;
     },
   },
   mounted() {

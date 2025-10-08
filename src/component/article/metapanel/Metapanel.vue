@@ -1,29 +1,39 @@
 <script>
 import MetapanelStudy from "./MetapanelStudy.vue";
 
-import { setUpdateloop } from "@/core/interval.js";
+
+
+import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
   name: "Metapanel",
   // Metapanel doesn't only appear on Study Hovers. Or at least I don't entirely plan to
   components: { MetapanelStudy, },
   data() { return {
-    metapanelIsShown: false,
+    name: '',
+    id: null,
+
+    frameId: null,
   }},
   methods: {
     update() {
-      this.metapanelIsShown = player.last.hoveredStudy.length === 0 ? false : true;
+      this.name = player.last.metapanelName;
+      this.id = player.last.metapanelId;
 
-      setUpdateloop(this.update);
+      this.frameId = setUpdateloop(this.update);
     },
     cancel() {
       // Different handler when there's more Metapanel types
-      player.last.hoveredStudy = []
-      this.metapanelIsShown = false
+      player.last.metapanelId = null
+      this.id = null
     }
   },
   mounted() {
     this.update()
+  },
+  beforeUnmount() {
+    clearUpdateloop(this.frameId);
+    this.frameId = null;
   },
 };
 </script>
@@ -31,7 +41,7 @@ export default {
 <template>
   <div class="o-fixed-ui o-metapanel o-metapanel--study">
     <template
-      v-if="metapanelIsShown"
+      v-show="id"
     >
       <div class="c-metapanel-relative">
         <div class="l-metapanel-cancel">
@@ -40,7 +50,9 @@ export default {
             class="c-metapanel-cancel"
           />
         </div>
-        <MetapanelStudy />
+        <MetapanelStudy 
+          v-bind:id
+        />
       </div>
     </template>
   </div>

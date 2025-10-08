@@ -14,7 +14,8 @@ window.player = {
       bought5x1: DC.BIMAX,
    },
    last: {
-      hoveredStudy: [],
+      metapanelName: '',
+      metapanelId: null,
       respeccedStudy: [],
       headerTab: 'Resources',
       screenCoord: { X: -140, Y: -80 },

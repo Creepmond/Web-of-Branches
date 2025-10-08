@@ -33,14 +33,13 @@ class StudyState extends GameMechanicState {
    }
 
    get effect() {
-      const effect = this.effectInfo;
+      if (this.effectInfo.state !== 'static') return;
 
-      switch (effect.type[0]) {
-         case 'passiveRate': return this.isBought ? effect.value : DC.D0;
-         case 'multiplier': return this.isBought ? effect.value : DC.D1;
-         case 'exponent': return this.isBought ? effect.value : DC.D1;
+      switch (this.effectInfo.type) {
+         case 'passiveRate': return this.isBought ? this.effectInfo.value : DC.D0;
+         case 'multiplier': return this.isBought ? this.effectInfo.value : DC.D1;
+         case 'exponent': return this.isBought ? this.effectInfo.value : DC.D1;
          case 'unlock': return this.isBought ? true : false;
-         case 'callback': effect.call(); return DC.D0;
       }
    }
 
@@ -53,7 +52,16 @@ class StudyState extends GameMechanicState {
       player.studyBoughtBits = player.studyBoughtBits.concat( rmRef(this.id) );
       player.studyExposedBits.add(this.id);
 
-      if (this.effectInfo.type.includes('synergy')) player.time.bought5x1 = player.time.played;
+      if (this.effectInfo.state === 'callback') 
+         this.effectInfo.call();
+
+      if (this.effectInfo.state === 'synergy') {
+         player.time.bought5x1 = player.time.played;
+      }
+      
+      if (this.effectInfo.type === 'unlock') {
+        if ( rmRef(this.id) === rmRef([4,1]) ) player.permaStudy.respecIsUnlocked = true;
+      }
 
       //// this.isExposed = true;
    }

@@ -6,48 +6,67 @@ import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
   name: "MetapanelStudy",
+  props: {
+    id: [Array, Number],
+  },
   data() { return {
-    studyId: [],
     currentValue: '',
     globalEffect: '',
 
     frameId: null,
   }},
+  watch: {
+    id(value) {
+      console.log(value)
+      if (!value) {
+        clearUpdateloop(this.frameId);
+        this.frameId = null;
+
+        return;
+      }
+      
+      this.formatValue();
+      this.formatEffect();
+
+      if (this.StudyInstance.effectInfo.state !== 'static')
+        this.update();
+    },
+  },
   computed: {
-    Study() {
-      return this.studyId.length === 0 ? undefined : Study(this.studyId);
+    StudyInstance() {
+      return this.id ? Study(this.id) : undefined;
     },
     effectIsQuantity() {
-      switch (this.Study.effectInfo.type[0]) {
-        case 'callback': return false;
-        case 'unlock': return false;
-        default: return true;
-      };
-    },
-    
+      switch (this.StudyInstance.effectInfo.type) {
+        case 'passiveRate': return true;
+        case 'multiplier': return true;
+        case 'exponent': return true;
+        default: return false;
+      }
+    }
   },
   methods: {
     update() {
-      this.studyId = player.last.hoveredStudy;
-      this.formatValue(); // Damn it
+      console.log('wahh')
+      this.formatValue();
       this.formatEffect();
 
       this.frameId = setUpdateloop(this.update);
     },
     formatValue() {
-      const type = this.Study.effectInfo.type;
+      const type = this.StudyInstance.effectInfo.type;
 
       if (type.includes('passiveRate')) {
-        this.currentValue = `${formatPassRate(this.Study.effect)}`;
+        this.currentValue = `${formatPassRate(this.StudyInstance.effect)}`;
       } else if (type.includes('multiplier')) {
-        this.currentValue = `${formatX(this.Study.effect, 2, 2)} Seed`;
+        this.currentValue = `${formatX(this.StudyInstance.effect, 2, 2)} Seed`;
       } else if (type.includes('exponent')) {
-        this.currentValue = `${formatPow(this.Study.effect, 2, 2)} Seed`
+        this.currentValue = `${formatPow(this.StudyInstance.effect, 2, 2)} Seed`
       };
     },
     // Horrible. Can't even deny it now. I keep making unnecessary updates like this
     formatEffect() {
-      const type = this.Study.effectInfo.type;
+      const type = this.StudyInstance.effectInfo.type;
 
       if (type.includes('passiveRate')) {
         this.globalEffect = `${formatPassRate(Seed.passiveRate)}`;
@@ -58,45 +77,38 @@ export default {
       };
     },
   },
-  mounted() {
-    this.update();
-  },
-  beforeUnmount() {
-    clearUpdateloop(this.frameId);
-    this.frameId = null;
-  },
 }; 
 </script>
 
 <template>
   <template
-    v-if=Study
+    v-if=StudyInstance
   >
     <div class="l-metapanel--study_id">
       <span class="c-metapanel--study_id">
-        {{ Study.id }}
+        {{ StudyInstance.id }}
       </span>
     </div>
-    <div class="l-metapanel--study_name" v-if="Study">
+    <div class="l-metapanel--study_name" v-if="StudyInstance">
       <span
         class="c-metapanel--study_name"
-        v-html="Study.name"
+        v-html="StudyInstance.name"
       />
     </div>
     <div class="l-metapanel--study-info">
       <div class="l-metapanel--study_desc">
         <span class="c-metapanel--study-semantic">Description:</span>
-        <span class="c-metapanel--study-value">{{ Study.description }}</span>
+        <span class="c-metapanel--study-value">{{ StudyInstance.description }}</span>
       </div>
       <div
-        v-if="Study.specify"
+        v-if="StudyInstance.specify"
         class="l-metapanel--study_spec"
       >
         <span class="c-metapanel--study-semantic">Specified:</span>
-        <span class="c-metapanel--study-value" v-html="Study.specify" />
+        <span class="c-metapanel--study-value" v-html="StudyInstance.specify" />
       </div>
       <div
-        v-if="Study.effectInfo.type[0] !== 'callback'"
+        v-if="StudyInstance.effectInfo.state !== 'callback'"
         class="l-metapanel--study_val"
       >
         <span class="c-metapanel--study-semantic">Current Value:</span>

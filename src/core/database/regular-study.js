@@ -11,7 +11,8 @@ export const regularStudy = [
       specify: "Reap the Seed after 8s",
       effect: {
          call() { setTimeout( () => { Currency.seed.add(199) }, 80 ) },
-         type: ['callback'],
+         state: 'callback',
+         type: 'passive',
          target: 'Seed',
       },
       cost: DC.D1,
@@ -25,7 +26,8 @@ export const regularStudy = [
       get specify() { return `Increase Seeds rate by ${formatPassRate(1)}` },
       effect: {
          value: DC.D1,
-         type: ['passiveRate'],
+         state: 'static',
+         type: 'passiveRate',
          target: 'Seed',
       },
       cost: DC.D1,
@@ -39,7 +41,8 @@ export const regularStudy = [
       get specify() { `${formatCoord(1, 0)}'s effect is boosted by ${formatX(3)}` },
       effect: {
          value: DC.D3,
-         type: ['multiplier'],
+         state: 'static',
+         type: 'multiplier',
          target: 'Seed',
       },
       cost: DC.D15,
@@ -52,7 +55,8 @@ export const regularStudy = [
       description: "Seeds multiplied by a million",
       effect: {
          value: DC.D2,
-         type: ['multiplier'],
+         state: 'static',
+         type: 'multiplier',
          target: 'Seed',
       },
       cost: DC.D700,
@@ -66,7 +70,8 @@ export const regularStudy = [
       get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(2)}` },
       effect: {
          value: DC.D2,
-         type: ['multiplier'],
+         state: 'static',
+         type: 'multiplier',
          target: 'Seed',
       },
       cost: DC.D25,
@@ -86,7 +91,8 @@ export const regularStudy = [
       description: "Return from a branched node",
       specify: `Long press, or Click a Branch with the <span class="f-hotkey">ctrl</span> or <span class="f-hotkey">cmd&#8984;</span> key to toggle respeccing`,
       effect: {
-         type: ['unlock'],
+         state: 'static',
+         type: 'unlock',
          target: 'Respec',
       },
       cost: DC.D90,
@@ -99,7 +105,8 @@ export const regularStudy = [
       description: "Compost your seeds",
       specify: `Receive a ${formatX(15)} boost to Seed production that drastically wanes over time`,
       effect: {
-         type: ['synergy', 'multiplier'],
+         state: 'synergy',
+         type: 'multiplier',
          target: 'Seed',
       },
       cost: DC.D100,
