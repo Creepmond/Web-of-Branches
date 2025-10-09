@@ -22,7 +22,7 @@ window.player = {
    },
    option: {
       parallax: 0.4,
-      tickrate: 33,
+      tickrate: 400,
       zoomLevel: 1,
    },
    physics: {

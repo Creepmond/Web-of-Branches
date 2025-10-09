@@ -33,7 +33,6 @@ export default {
   },
   beforeUnmount() {
     clearUpdateloop(this.frameId);
-    this.frameId = null;
   },
 };
 </script>
@@ -41,7 +40,7 @@ export default {
 <template>
   <div class="o-fixed-ui o-metapanel o-metapanel--study">
     <template
-      v-show="id"
+      v-if="id"
     >
       <div class="c-metapanel-relative">
         <div class="l-metapanel-cancel">

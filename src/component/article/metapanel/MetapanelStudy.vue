@@ -2,6 +2,7 @@
 import Seed from "@/core/state/seed.js";
 import Study from "@/core/state/study.js";
 
+import DC from "@/utility/constants.js";
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
@@ -10,27 +11,42 @@ export default {
     id: [Array, Number],
   },
   data() { return {
-    currentValue: '',
-    globalEffect: '',
+    currentValueFormat: '',
+    globalValueFormat: '',
 
-    frameId: null,
+    study: {
+      isBought: false,
+
+      // 'Static' Effect States (see '@/core/database/regular-study.js' at around Line 5)
+      staticValue: DC.D0,
+    },
+
+    commonFrameId: null,
+    globalFrameId: null,
   }},
   watch: {
-    id(value) {
-      console.log(value)
-      if (!value) {
-        clearUpdateloop(this.frameId);
-        this.frameId = null;
+    id() {
+      this.study.staticValue = this.StudyInstance.effect;
 
-        return;
-      }
-      
-      this.formatValue();
-      this.formatEffect();
+      this.formatStatic();
+      this.formatGlobal();
 
-      if (this.StudyInstance.effectInfo.state !== 'static')
-        this.update();
+      if (this.StudyInstance.effectInfo.state !== 'static') {
+        this.commonUpdate();
+      } else {
+        clearUpdateloop(this.commonFrameId);
+      };
     },
+    'study.isBought'(valueBoolean) {
+      valueBoolean === true
+      ? clearUpdateloop(this.commonFrameId)
+      : this.commonUpdate();
+      
+      this.study.staticValue = this.StudyInstance.effect;
+      this.formatStatic();
+
+      console.log('ts pmo', this.study.staticValue, this.StudyInstance.effect)
+    }
   },
   computed: {
     StudyInstance() {
@@ -42,41 +58,61 @@ export default {
         case 'multiplier': return true;
         case 'exponent': return true;
         default: return false;
-      }
-    }
+      };
+    },
   },
   methods: {
-    update() {
-      console.log('wahh')
-      this.formatValue();
-      this.formatEffect();
+    commonUpdate() {
+      console.log('ok')
+      this.study.isBought = this.StudyInstance.isBought;
 
-      this.frameId = setUpdateloop(this.update);
+      this.commonFrameId = setUpdateloop(this.commonUpdate);
     },
-    formatValue() {
+    globalUpdate() {
+      console.log('wow')
+      this.formatGlobal();
+
+      this.globalFrameId = setUpdateloop(this.globalUpdate);
+    },
+    formatStatic() {
       const type = this.StudyInstance.effectInfo.type;
 
-      if (type.includes('passiveRate')) {
-        this.currentValue = `${formatPassRate(this.StudyInstance.effect)}`;
-      } else if (type.includes('multiplier')) {
-        this.currentValue = `${formatX(this.StudyInstance.effect, 2, 2)} Seed`;
-      } else if (type.includes('exponent')) {
-        this.currentValue = `${formatPow(this.StudyInstance.effect, 2, 2)} Seed`
+      if (type === 'passiveRate') {
+        this.currentValueFormat = `${formatPassRate(this.study.staticValue)}`;
+      } else if (type === 'multiplier') {
+        this.currentValueFormat = `${formatX(this.study.staticValue, 2, 2)} Seed`;
+      } else if (type === 'exponent') {
+        this.currentValueFormat = `${formatPow(this.study.staticValue, 2, 2)} Seed`
       };
     },
     // Horrible. Can't even deny it now. I keep making unnecessary updates like this
-    formatEffect() {
+    formatGlobal() {
       const type = this.StudyInstance.effectInfo.type;
 
-      if (type.includes('passiveRate')) {
-        this.globalEffect = `${formatPassRate(Seed.passiveRate)}`;
-      } else if (type.includes('multiplier')) {
-        this.globalEffect = `${formatX(Seed.multipliers, 2, 2)} Seed`;
-      } else if (type.includes('exponent')) {
-        this.globalEffect = `${formatPow(Seed.exponents, 2, 2)} Seed`;
+      if (type === 'passiveRate') {
+        this.globalValueFormat = `${formatPassRate(Seed.passiveRate)}`;
+      } else if (type === 'multiplier') {
+        this.globalValueFormat = `${formatX(Seed.multipliers, 2, 2)} Seed`;
+      } else if (type === 'exponent') {
+        this.globalValueFormat = `${formatPow(Seed.exponents, 2, 2)} Seed`;
       };
     },
   },
+  mounted() {
+    this.study.staticValue = this.StudyInstance.effect;
+
+    this.formatStatic();
+    this.formatGlobal();
+    
+    this.commonUpdate();
+
+    if (this.StudyInstance.effectInfo.state !== 'static')
+      this.globalUpdate();
+  },
+  beforeUnmount() {
+    clearUpdateloop(this.commonFrameId);
+    clearUpdateloop(this.globalFrameId);
+  }
 }; 
 </script>
 
@@ -112,14 +148,14 @@ export default {
         class="l-metapanel--study_val"
       >
         <span class="c-metapanel--study-semantic">Current Value:</span>
-        <span class="c-metapanel--study-value">{{ currentValue }}</span>
+        <span class="c-metapanel--study-value">{{ currentValueFormat }}</span>
       </div>
       <div
         v-if="effectIsQuantity"
         class="l-metapanel--study_eff"
       >
         <span class="c-metapanel--study-semantic">Global Effect:</span>
-        <span class="c-metapanel--study-value">{{ globalEffect }}</span>
+        <span class="c-metapanel--study-value">{{ globalValueFormat }}</span>
       </div>
     </div>
   </template>

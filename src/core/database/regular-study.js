@@ -2,6 +2,12 @@ import Currency from "@/core/state/mechanic/currency.js";
 
 import DC from "@/utility/constants.js";
 
+//* Effect States: "Static", "Conditional", and "Synergy"; Statics are fixed values. Conditionals are
+//  applied on an external *state*—e.g., another Study is bought, or there have only been N purchased
+//  studies, usually only available at two to three values (e.g., default, in-effect, another external
+//  boost). Synergy is based on an external *variable* or a *mix of variables* via formulas—e.g.,
+//  boost based on time played, or based on another resource.
+
 export const regularStudy = [
    {
       name: "The Root",

@@ -85,7 +85,6 @@ export default {
   },
   beforeUnmount() {
     clearUpdateloop(this.frameId);
-    this.frameId = null;
   },
 };
 </script>
