@@ -18,7 +18,7 @@ const Seed = {
       return Effects.times(
          Study([2, 0]).effect,
          Study([3, 0.5]).effect,
-         Timespan.study5x1Effect
+         Timespan.study5x1Effect(),
       )
    },
 

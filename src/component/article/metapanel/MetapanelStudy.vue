@@ -14,38 +14,38 @@ export default {
     currentValueFormat: '',
     globalValueFormat: '',
 
-    study: {
-      isBought: false,
+    studyIsBought: false,
+    studyCurrentValue: DC.D0,
 
-      // 'Static' Effect States (see '@/core/database/regular-study.js' at around Line 5)
-      staticValue: DC.D0,
-    },
-
-    commonFrameId: null,
-    globalFrameId: null,
+    frameId: null,
+    nonStaticFrameId: null,
   }},
   watch: {
     id() {
-      this.study.staticValue = this.StudyInstance.effect;
+      this.studyCurrentValue = this.StudyInstance.effect;
 
-      this.formatStatic();
+      this.formatCommon();
       this.formatGlobal();
 
-      if (this.StudyInstance.effectInfo.state !== 'static') {
-        this.commonUpdate();
-      } else {
-        clearUpdateloop(this.commonFrameId);
-      };
+      clearUpdateloop(this.nonStaticFrameId);
     },
-    'study.isBought'(valueBoolean) {
-      valueBoolean === true
-      ? clearUpdateloop(this.commonFrameId)
-      : this.commonUpdate();
-      
-      this.study.staticValue = this.StudyInstance.effect;
-      this.formatStatic();
+    studyIsBought(valueBoolean) {
+      const state = this.StudyInstance.effectInfo.state;
 
-      console.log('ts pmo', this.study.staticValue, this.StudyInstance.effect)
+      /*
+      if (!valueBoolean) {
+        if (state === 'static')
+        return;
+      }
+      */
+
+      if (state === 'static') {
+        this.studyCurrentValue = this.StudyInstance.effect;
+        this.formatCommon();
+        return;
+      }
+
+      this.updateNonStaticValue();
     }
   },
   computed: {
@@ -62,30 +62,33 @@ export default {
     },
   },
   methods: {
-    commonUpdate() {
-      console.log('ok')
-      this.study.isBought = this.StudyInstance.isBought;
-
-      this.commonFrameId = setUpdateloop(this.commonUpdate);
-    },
-    globalUpdate() {
-      console.log('wow')
+    update() {
+      this.studyIsBought = this.StudyInstance.isBought;
       this.formatGlobal();
 
-      this.globalFrameId = setUpdateloop(this.globalUpdate);
+      this.frameId = setUpdateloop(this.update);
     },
-    formatStatic() {
+    updateNonStaticValue() {
+      this.studyCurrentValue = this.StudyInstance.effect;
+      this.formatCommon();
+
+      this.nonStaticFrameId = setUpdateloop(this.updateNonStaticValue);
+    },
+    formatCommon() {
       const type = this.StudyInstance.effectInfo.type;
 
       if (type === 'passiveRate') {
-        this.currentValueFormat = `${formatPassRate(this.study.staticValue)}`;
+        this.currentValueFormat = `${formatPassRate(this.studyCurrentValue)}`;
       } else if (type === 'multiplier') {
-        this.currentValueFormat = `${formatX(this.study.staticValue, 2, 2)} Seed`;
+        this.currentValueFormat = `${formatX(this.studyCurrentValue, 2, 2)} Seed`;
       } else if (type === 'exponent') {
-        this.currentValueFormat = `${formatPow(this.study.staticValue, 2, 2)} Seed`
+        this.currentValueFormat = `${formatPow(this.studyCurrentValue, 2, 2)} Seed`;
+      } else if (type === 'unlock') {
+        this.currentValueFormat = this.isBought
+          ? `Unlocked ${this.StudyInstance.effectInfo.target}`
+          : `Unlock ${this.StudyInstance.effectInfo.target}`;
       };
     },
-    // Horrible. Can't even deny it now. I keep making unnecessary updates like this
     formatGlobal() {
       const type = this.StudyInstance.effectInfo.type;
 
@@ -99,19 +102,16 @@ export default {
     },
   },
   mounted() {
-    this.study.staticValue = this.StudyInstance.effect;
+    this.studyCurrentValue = this.StudyInstance.effect;
 
-    this.formatStatic();
+    this.formatCommon();
     this.formatGlobal();
     
-    this.commonUpdate();
-
-    if (this.StudyInstance.effectInfo.state !== 'static')
-      this.globalUpdate();
+    this.update();
   },
   beforeUnmount() {
-    clearUpdateloop(this.commonFrameId);
-    clearUpdateloop(this.globalFrameId);
+    clearUpdateloop(this.frameId);
+    clearUpdateloop(this.nonStaticFrameId);
   }
 }; 
 </script>

@@ -14,6 +14,8 @@ const Studies = {
 };
 
 class StudyState extends GameMechanicState {
+   #effect = undefined; // Handled on the getter and setter pair at around Line 37
+
    constructor(data) {
       super(data)
 
@@ -25,7 +27,7 @@ class StudyState extends GameMechanicState {
       this.cost = data.cost;
       this.effectInfo = data.effect;
 
-      this.isBranchNode = false;
+      this.isBranchNode = false; // Handled based on this.derivative
 
       //// this.isExposed = false;
       this.isAvailable = false;
@@ -33,7 +35,7 @@ class StudyState extends GameMechanicState {
    }
 
    get effect() {
-      if (this.effectInfo.state !== 'static') return;
+      if (this.effectInfo.state !== 'static') return this.#effect;
 
       switch (this.effectInfo.type) {
          case 'passiveRate': return this.isBought ? this.effectInfo.value : DC.D0;
@@ -41,6 +43,11 @@ class StudyState extends GameMechanicState {
          case 'exponent': return this.isBought ? this.effectInfo.value : DC.D1;
          case 'unlock': return this.isBought ? true : false;
       }
+   }
+
+   set effect(modelValue) {
+      // console.log(`set effect: ${this.id}`)
+      this.#effect = modelValue;
    }
 
    get isBought() {
