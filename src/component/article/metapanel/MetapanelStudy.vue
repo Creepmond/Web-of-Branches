@@ -22,30 +22,19 @@ export default {
   }},
   watch: {
     id() {
+      const boughtBoolean = this.StudyInstance.isBought;
+      this.atBoughtState(boughtBoolean);
+
       this.studyCurrentValue = this.StudyInstance.effect;
 
       this.formatCommon();
       this.formatGlobal();
 
-      clearUpdateloop(this.nonStaticFrameId);
+      if (this.StudyInstance.effectInfo.state !== 'static')
+        clearUpdateloop(this.nonStaticFrameId);
     },
-    studyIsBought(valueBoolean) {
-      const state = this.StudyInstance.effectInfo.state;
-
-      /*
-      if (!valueBoolean) {
-        if (state === 'static')
-        return;
-      }
-      */
-
-      if (state === 'static') {
-        this.studyCurrentValue = this.StudyInstance.effect;
-        this.formatCommon();
-        return;
-      }
-
-      this.updateNonStaticValue();
+    studyIsBought(boughtBoolean) {
+      this.atBoughtState(boughtBoolean);
     }
   },
   computed: {
@@ -73,6 +62,22 @@ export default {
       this.formatCommon();
 
       this.nonStaticFrameId = setUpdateloop(this.updateNonStaticValue);
+    },
+    atBoughtState(boughtBoolean) {
+      if (boughtBoolean === false) return;
+
+      const state = this.StudyInstance.effectInfo.state;
+      this.studyCurrentValue = this.StudyInstance.effect;
+
+      if (state === 'static') {
+        this.studyCurrentValue = this.StudyInstance.effect;
+        this.formatCommon();
+        return;
+      }
+
+      console.log('will update non static value')
+
+      this.updateNonStaticValue();
     },
     formatCommon() {
       const type = this.StudyInstance.effectInfo.type;
@@ -108,6 +113,7 @@ export default {
     this.formatGlobal();
     
     this.update();
+    this.atBoughtState();
   },
   beforeUnmount() {
     clearUpdateloop(this.frameId);
