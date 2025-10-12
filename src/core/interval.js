@@ -46,7 +46,7 @@ setGameloop(() => {
    time.tick();
    
    if (Study([1,0]).effect) {
-      const tickrate = player.option.tickrate;
+      //// const tickrate = player.option.tickrate;
 
       Seed.tick();
    };

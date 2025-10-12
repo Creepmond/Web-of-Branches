@@ -19,6 +19,7 @@ export default {
     parallaxValue: 0,
     zoomValue: 0,
     tickrateValue: 0,
+    globalStatBoolean: false,
 
     physicsBoolean: false,
     slipperinessValue: 0,
@@ -34,6 +35,9 @@ export default {
     },
     tickrateValue(value) {
       player.option.tickrate = value;
+    },
+    globalStatBoolean(value) {
+      player.option.showGlobalStat = value;
     },
     physicsBoolean(value) {
       player.physics.isEnabled = value;
@@ -74,6 +78,7 @@ export default {
     this.parallaxValue = player.option.parallax * 100;
     this.zoomValue = player.option.zoomLevel * 100;
     this.tickrateValue = player.option.tickrate;
+    this.globalStatBoolean = player.option.showGlobalStat;
 
     this.physicsBoolean = player.physics.isEnabled;
     player.physics.screenSlipperiness === 0
@@ -135,6 +140,21 @@ export default {
     </div>
 
   </div>
+  <div class="c-header-content-option">
+
+    <span class="c-header-option-type">
+      <span class="c-header-option-type-semantic">(Metapanel)</span>
+      Show Global Effects:
+    </span>
+    <Toggle
+      class="c-header-option-toggle"
+      v-model="globalStatBoolean"
+    />
+
+  </div>
+
+
+
   <div class="l-cut l-header-content-option-cut">
     <span
       class="c-header-physics-indicator"
@@ -182,6 +202,11 @@ export default {
 
   display: flex;
   align-items: center;
+}
+
+/* Selector specificity */
+span.c-header-option-type > .c-header-option-type-semantic {
+  font-size: 12px;
 }
 
 .c-header-option-calculated {

@@ -15,6 +15,8 @@ export const regularStudy = [
       derivative: [ [1, 0] ],
       description: "Plant the first Seed",
       specify: "Reap the Seed after 8s",
+      // I think I could make the format visible using player.time.played... actually, how am I calling
+      // Currency here anyway? Isn't this a loopway dependency? Ts makes me confused
       effect: {
          call() { setTimeout( () => { Currency.seed.add(199) }, 80 ) },
          state: 'callback',
@@ -29,7 +31,7 @@ export const regularStudy = [
       id: [1, 0],
       derivative: [ [2, 0] ],
       description: "Slowly produce Seeds",
-      get specify() { return `Increase Seeds rate by ${formatPassRate(1)}` },
+      get specify() { return `Increase Seeds rate by ${formatPassRate(1, 0, 0)}` },
       effect: {
          value: DC.D1,
          state: 'static',
@@ -44,11 +46,12 @@ export const regularStudy = [
       id: [2, 0],
       derivative: [ [3, -0.5], [3, 0.5] ],
       description: "Gain multiple seeds at once",
-      get specify() { `${formatCoord(1, 0)}'s effect is boosted by ${formatX(3)}` },
+      get specify() { return `Boost Seed passive rate by ${formatX(3)}` },
       effect: {
+         // There's still problems with this... but for now, good enough
          value: DC.D3,
          state: 'static',
-         type: 'multiplier',
+         type: 'passiveRate',
          target: 'Seed',
       },
       cost: DC.D15,
@@ -72,8 +75,8 @@ export const regularStudy = [
       id: [3, 0.5],
       derivative: [ [4, 1] ],
       isBranchNode: true,
-      description: "Boost seed production",
-      get specify() { return `${formatCoord(1, 0)}'s effect is boosted by ${formatX(2)}` },
+      description: "Boost Seed production",
+      get specify() { return `Improve Seed production by ${formatX(2)}` },
       effect: {
          value: DC.D2,
          state: 'static',

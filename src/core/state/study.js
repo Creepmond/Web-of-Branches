@@ -42,11 +42,10 @@ class StudyState extends GameMechanicState {
          case 'multiplier': return this.isBought ? this.effectInfo.value : DC.D1;
          case 'exponent': return this.isBought ? this.effectInfo.value : DC.D1;
          case 'unlock': return this.isBought ? true : false;
-      }
+      };
    }
 
    set effect(modelValue) {
-      // console.log(`set effect: ${this.id}`)
       this.#effect = modelValue;
    }
 

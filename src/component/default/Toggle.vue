@@ -16,6 +16,9 @@ export default {
       this.$emit('update:modelValue', this.isEnabled);
     }
   },
+  beforeMount() {
+    this.isEnabled = this.modelValue;
+  },
 };
 </script>
 

@@ -1,4 +1,10 @@
 <script>
+//! The reason this code is terribly long is because I need to unpack the values everytime this.id changes.
+//  Every single time it does, I need to clear intervals and such so that I do not mess up with the
+//  performance. Apparently, rather than having stuff done watched on id... I could just have had this
+//  component be referred with :key="id" in <Metapanel /> to recreate an instance so I only had to work
+//  mounted() and beforeUnmounted()... took me four days to figure that one out, woo
+
 import Seed from "@/core/state/seed.js";
 import Study from "@/core/state/study.js";
 
@@ -11,31 +17,43 @@ export default {
     id: [Array, Number],
   },
   data() { return {
-    currentValueFormat: '',
+    showGlobal: false,
+
+    scopedValueFormat: '',
     globalValueFormat: '',
 
     studyIsBought: false,
-    studyCurrentValue: DC.D0,
+    studyScopedValue: DC.D0,
 
-    frameId: null,
-    nonStaticFrameId: null,
+    commonFrameId: null,
+    scopedEffectFrameId: null,
+    globalEffectFrameId: null,
   }},
   watch: {
-    id() {
-      const boughtBoolean = this.StudyInstance.isBought;
-      this.atBoughtState(boughtBoolean);
-
-      this.studyCurrentValue = this.StudyInstance.effect;
-
-      this.formatCommon();
-      this.formatGlobal();
-
-      if (this.StudyInstance.effectInfo.state !== 'static')
-        clearUpdateloop(this.nonStaticFrameId);
+    showGlobal: {
+      handler(show) {
+        show
+          ? this.updateGlobalValue()
+          : clearUpdateloop(this.globalEffectFrameId);
+      },
+      immediate: true,
     },
-    studyIsBought(boughtBoolean) {
-      this.atBoughtState(boughtBoolean);
-    }
+    studyIsBought: {
+      handler(bought) {
+        if (!bought) return;
+
+        const state = this.StudyInstance.effectInfo.state;
+        this.studyScopedValue = this.StudyInstance.effect;
+
+        this.formatScoped()
+
+        if (state === 'static') {
+          this.formatScoped();
+        } else
+          this.updateScopedValue();
+      },
+      immediate: true,
+    },
   },
   computed: {
     StudyInstance() {
@@ -51,45 +69,34 @@ export default {
     },
   },
   methods: {
-    update() {
+    updateCommon() {
       this.studyIsBought = this.StudyInstance.isBought;
+      this.showGlobal = player.option.showGlobalStat;
+
+      this.commonFrameId = setUpdateloop(this.updateCommon);
+    },
+    updateGlobalValue() {
       this.formatGlobal();
 
-      this.frameId = setUpdateloop(this.update);
+      this.globalEffectFrameId = setUpdateloop(this.updateGlobalValue);
     },
-    updateNonStaticValue() {
-      this.studyCurrentValue = this.StudyInstance.effect;
-      this.formatCommon();
+    updateScopedValue() {
+      this.studyScopedValue = this.StudyInstance.effect;
+      this.formatScoped();
 
-      this.nonStaticFrameId = setUpdateloop(this.updateNonStaticValue);
+      this.scopedEffectFrameId = setUpdateloop(this.updateScopedValue);
     },
-    atBoughtState(boughtBoolean) {
-      if (boughtBoolean === false) return;
-
-      const state = this.StudyInstance.effectInfo.state;
-      this.studyCurrentValue = this.StudyInstance.effect;
-
-      if (state === 'static') {
-        this.studyCurrentValue = this.StudyInstance.effect;
-        this.formatCommon();
-        return;
-      }
-
-      console.log('will update non static value')
-
-      this.updateNonStaticValue();
-    },
-    formatCommon() {
+    formatScoped() {
       const type = this.StudyInstance.effectInfo.type;
 
       if (type === 'passiveRate') {
-        this.currentValueFormat = `${formatPassRate(this.studyCurrentValue)}`;
+        this.scopedValueFormat = `${formatPassRate(this.studyScopedValue, 2, 2)}`;
       } else if (type === 'multiplier') {
-        this.currentValueFormat = `${formatX(this.studyCurrentValue, 2, 2)} Seed`;
+        this.scopedValueFormat = `${formatX(this.studyScopedValue, 2, 2)} Seed`;
       } else if (type === 'exponent') {
-        this.currentValueFormat = `${formatPow(this.studyCurrentValue, 2, 2)} Seed`;
+        this.scopedValueFormat = `${formatPow(this.studyScopedValue, 2, 2)} Seed`;
       } else if (type === 'unlock') {
-        this.currentValueFormat = this.isBought
+        this.scopedValueFormat = this.isBought
           ? `Unlocked ${this.StudyInstance.effectInfo.target}`
           : `Unlock ${this.StudyInstance.effectInfo.target}`;
       };
@@ -107,18 +114,16 @@ export default {
     },
   },
   mounted() {
-    this.studyCurrentValue = this.StudyInstance.effect;
+    this.studyScopedValue = this.StudyInstance.effect;
 
-    this.formatCommon();
-    this.formatGlobal();
-    
-    this.update();
-    this.atBoughtState();
+    this.formatScoped();
+    this.updateCommon();
   },
   beforeUnmount() {
-    clearUpdateloop(this.frameId);
-    clearUpdateloop(this.nonStaticFrameId);
-  }
+    clearUpdateloop(this.commonFrameId);
+    clearUpdateloop(this.scopedEffectFrameId);
+    clearUpdateloop(this.globalEffectFrameId);
+  },
 }; 
 </script>
 
@@ -154,10 +159,10 @@ export default {
         class="l-metapanel--study_val"
       >
         <span class="c-metapanel--study-semantic">Current Value:</span>
-        <span class="c-metapanel--study-value">{{ currentValueFormat }}</span>
+        <span class="c-metapanel--study-value">{{ scopedValueFormat }}</span>
       </div>
       <div
-        v-if="effectIsQuantity"
+        v-if="showGlobal && effectIsQuantity"
         class="l-metapanel--study_eff"
       >
         <span class="c-metapanel--study-semantic">Global Effect:</span>

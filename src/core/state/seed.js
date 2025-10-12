@@ -11,15 +11,24 @@ import DC from "@/utility/constants.js";
 // of course laziness) (and simply because I haven't seen AD use this kind of structure)
 const Seed = {
    get passiveRate() {
-      return Study([1,0]).effect;
+      // Will use Effect.sum() when there's more than one of these stuff
+      return Study([1, 0]).effect
+         .times(this.passiveRateFactor);
+   },
+
+   get passiveRateFactor() {
+      return Decimal.max(
+         Effects.times(
+            Study([2, 0]).effect,
+         ), 1
+      );
    },
 
    get multipliers() {
       return Effects.times(
-         Study([2, 0]).effect,
          Study([3, 0.5]).effect,
          Timespan.study5x1Effect(),
-      )
+      );
    },
 
    get exponents() {
@@ -36,7 +45,7 @@ const Seed = {
          return slowdown;
       } else {
          return DC.D1;
-      }
+      };
    },
 
    /*

@@ -2,10 +2,11 @@ import DC from "@/utility/constants.js";
 
 window.player = {
    seed: DC.D1,
-   studyBoughtBits: [], // Unfortunately, working with Sets in Vue is not supported, and with having to
-   studyExposedBits: new Set(), // deal with update(), I'll have to let go of new Set() for
-   // studyBoughtBits. However, perhaps studyExposedBits can be used like new Set()? I'm not sure, adding
-   // the though here just in case though
+   // Unfortunately, working with Sets in Vue is not supported, and with having to deal with update(),
+   // hence why studyBoughtBits is an array while studyExposedBits is a Set()
+   studyBoughtBits: [], 
+   studyExposedBits: new Set(),
+   // I don't think I need this
    permaStudy: {
       respecIsUnlocked: false,
    },
@@ -24,12 +25,12 @@ window.player = {
       parallax: 0.4,
       tickrate: 33,
       zoomLevel: 1,
+      showGlobalStat: true,
    },
    physics: {
       isEnabled: false,
       screenSlipperiness: 0.98,
    },
-   
    hidden: {
       deviceScreenType: '',
       hasEverReachedBoundary: false,

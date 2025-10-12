@@ -50,6 +50,7 @@ export default {
           />
         </div>
         <MetapanelStudy 
+          :key="id"
           v-bind:id
         />
       </div>
