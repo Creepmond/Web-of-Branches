@@ -95,59 +95,59 @@ export default {
 </script>
 
 <template>
-  <div class="c-header-content-option">
+  <div class="c-header-content--option">
 
-    <span class="c-header-option-type">BG Parallax:</span>
-    <div class="c-header-option-calculated">
+    <span class="c-header--option-type">BG Parallax:</span>
+    <div class="c-header--option-calculated">
       <Slider
-        class="c-header-option-slider"
-        id="c-header-option-parallax-value"
+        class="o-header--option-slider"
+        id="o-header--option-parallax-value"
         :rangeProperty="[0, 200, 5]"
         :modelValue="parallaxValue"
         @slide="parallaxValue = $event"
       />
-      <span class="c-header-option-value">{{ parallaxFormat }}</span>
+      <span class="c-header--option-value">{{ parallaxFormat }}</span>
     </div>
 
   </div>
-  <div class="c-header-content-option">
+  <div class="c-header-content--option">
 
-    <span class="c-header-option-type">Zoom Level:</span>
-    <div class="c-header-option-calculated">
+    <span class="c-header--option-type">Zoom Level:</span>
+    <div class="c-header--option-calculated">
       <Slider
-        class="c-header-option-slider"
-        id="c-header-option-zoom-value"
+        class="o-header--option-slider"
+        id="o-header--option-zoom-value"
         :rangeProperty="[15, 300, 5]"
         :modelValue="zoomValue"
         @slide="zoomValue = $event"
       />
-      <span class="c-header-option-value">{{ zoomValue.toFixed() }}%</span>
+      <span class="c-header--option-value">{{ zoomValue.toFixed() }}%</span>
     </div>
 
   </div>
-  <div class="c-header-content-option">
+  <div class="c-header-content--option">
 
-    <span class="c-header-option-type">Tickrate:</span>
-    <div class="c-header-option-calculated">
+    <span class="c-header--option-type">Tickrate:</span>
+    <div class="c-header--option-calculated">
       <Slider
-        class="c-header-option-slider"
-        id="c-header-option-tickrate-value"
+        class="o-header--option-slider"
+        id="o-header--option-tickrate-value"
         :rangeProperty="[33, 200, 1]"
         :modelValue="tickrateValue"
         @slide="tickrateValue = $event"
       />
-      <span class="c-header-option-value">{{ tickrateValue }}ms</span>
+      <span class="c-header--option-value">{{ tickrateValue }}ms</span>
     </div>
 
   </div>
-  <div class="c-header-content-option">
+  <div class="c-header-content--option">
 
-    <span class="c-header-option-type">
-      <span class="c-header-option-type-semantic">(Metapanel)</span>
+    <span class="c-header--option-type">
+      <span class="c-header--option-type-semantic">(Metapanel)</span>
       Show Global Effects:
     </span>
     <Toggle
-      class="c-header-option-toggle"
+      class="o-button o-header--option-toggle"
       v-model="globalStatBoolean"
     />
 
@@ -155,46 +155,52 @@ export default {
 
 
 
-  <div class="l-cut l-header-content-option-cut">
+  <div class="l-cut l-header-content--option-cut">
     <span
-      class="c-header-physics-indicator"
-      id="c-header-physics-indicator"
+      class="c-header--physics-indicator"
+      id="c-header--physics-indicator"
     >
       Physics
     </span>
   </div>
-  <div class="c-header-content-option">
+  <div class="c-header-content--option">
 
-    <span class="c-header-option-type">Is Enabled:</span>
+    <span class="c-header--option-type">Is Enabled:</span>
     <Toggle
-      class="c-header-option-toggle"
+      class="o-button o-header--option-toggle"
       v-model="physicsBoolean"
       :on="'Enabled'"
       :off="'Disabled'"
     />
 
   </div>
-  <div class="c-header-content-option">
+  <div class="c-header-content--option">
 
-    <span class="c-header-option-type">Slipperiness:</span>
-    <div class="c-header-option-calculated">
+    <span class="c-header--option-type">Slipperiness:</span>
+    <div class="c-header--option-calculated">
       <Slider
-        class="c-header-option-slider"
-        id="c-header-option-slipperiness-value"
+        class="c-header--option-slider"
+        id="c-header--option-slipperiness-value"
         :rangeProperty="[0, 100, 5]"
         :modelValue="slipperinessValue"
         @slide="slipperinessValue = $event"
         :disabled="!physicsBoolean"
       />
-      <span class="c-header-option-value">{{ slipperinessFormat }}</span>
+      <span class="c-header--option-value">{{ slipperinessFormat }}</span>
     </div>
 
   </div>
 </template>
 
 <style>
-.c-header-option-calculated,
-.c-header-option-toggle {
+.c-header-content--option {
+  margin: 0 8px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-header--option-calculated {
   padding: 0 4px;
   border-width: 1px;
   border-style: solid;
@@ -205,11 +211,11 @@ export default {
 }
 
 /* Selector specificity */
-span.c-header-option-type > .c-header-option-type-semantic {
+span.c-header--option-type > .c-header--option-type-semantic {
   font-size: 12px;
 }
 
-.c-header-option-calculated {
+.c-header--option-calculated {
   padding: 0 4px;
   border-width: 1px;
   border-style: solid;
@@ -217,24 +223,24 @@ span.c-header-option-type > .c-header-option-type-semantic {
   gap: 8px;
 }
 
-.c-header-option-slider {
+.o-header--option-slider {
   margin-left: 4px;
 }
 
-.c-header-option-value {
+.c-header--option-value {
   display: flex;
   justify-content: start;
 
   width: 3.2em;
 }
 
-.l-header-content-option-cut {
+.l-header-content--option-cut {
   margin-bottom: 8px;
 
   position: relative;
 }
 
-#c-header-physics-indicator {
+#c-header--physics-indicator {
   font-size: 20px;
 
   padding: 0 8px;
@@ -242,7 +248,7 @@ span.c-header-option-type > .c-header-option-type-semantic {
   border-bottom-style: solid;
 }
 
-#c-header-physics-indicator::before {
+#c-header--physics-indicator::before {
   content: '';
 
   border-bottom-width: 3px;

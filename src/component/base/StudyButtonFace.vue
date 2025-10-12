@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     studyCost() {
-      return format(this.cost);
+      return format(this.cost, 2, 0);
     },
   },
   methods: {

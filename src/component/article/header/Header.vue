@@ -3,6 +3,7 @@ import HeaderTabs from "./HeaderTabs.vue";
 
 import HeaderResources from "./HeaderResources.vue";
 import HeaderOptions from "./HeaderOptions.vue";
+import HeaderSaves from "./HeaderSaves.vue";
 import HeaderInformation from "./HeaderInformation.vue";
 
 
@@ -13,12 +14,14 @@ export default {
   name: "Header",
   components: {
     HeaderTabs,
+
     HeaderResources,
     HeaderOptions,
+    HeaderSaves,
     HeaderInformation,
   },
   data() { return {
-    tabList: ['Resources', 'Stats', 'Options', 'Information'],
+    tabList: [],
     tabbed: 'Resources',
   }},
   computed: {
@@ -31,6 +34,17 @@ export default {
       this.tabbed = flip;
       player.last.headerTab = flip;
     },
+  },
+  mounted() {
+    const tabComponent = this.$options.components;
+
+    // "key", because the components above is an Object. The actual properties for, say, something like
+    // HeaderResources, is {"HeaderResources": HeaderResources}
+    for (const key in tabComponent) {
+      const tabName = key.replace(/^Header/, '');
+      if (tabName === 'Tabs') continue;
+      this.tabList.push(tabName);
+    };
   },
 };
 </script>
@@ -59,7 +73,10 @@ export default {
           </text>
         </g>
       </svg>
-      <div class="l-header-content">
+      <div
+        class="l-header-content"
+        :class="`l-header-content--${tabbed.toLowerCase()}`"
+      >
         <component :is="'Header' + tabbed" />
       </div>
 
@@ -112,10 +129,12 @@ export default {
   gap: 4px;
 }
 
+/*
 .l-header-content > *:not(.l-cut) {
   margin: 0 8px;
 
   display: flex;
   justify-content: space-between;
 }
+*/
 </style>

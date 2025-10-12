@@ -79,6 +79,12 @@ text {
 
 /*# Semantic */
 
+.o-button {
+  border-color: var(--b-opaque-color-ui-acc);
+}
+
+
+
 .f-hotkey {
   background-color: var(--color-key);
   color: var(--color-key-text);
@@ -165,23 +171,22 @@ var(--opaque-color-ui-contrast), however */
 
 
 
-.c-header-currency-value {
+.c-header--currency-value {
   border-bottom: var(--color-ui);
 }
 
-.c-header-option-calculated,
-.c-header-option-toggle {
+.c-header--option-calculated {
   border-color: var(--b-opaque-color-ui-acc);
 }
 
 
 
-#c-header-physics-indicator {
+#c-header--physics-indicator {
   border-image:
     linear-gradient(90deg, transparent 0%, var(--b-opaque-color-ui-acc) 20% 80%, transparent 100%) 1;
 }
 
-#c-header-physics-indicator::before {
+#c-header--physics-indicator::before {
   border-image: linear-gradient(
     90deg,
     transparent 0%,
