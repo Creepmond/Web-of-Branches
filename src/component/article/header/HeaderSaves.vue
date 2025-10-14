@@ -1,15 +1,35 @@
 <script>
+import GameStorage from "@/core/storage.js";
+
 export default {
   name: "HeaderSaves",
-  
+  methods: {
+    saveGame() {
+      GameStorage.save();
+    },
+    loadGame() {
+      GameStorage.load();
+    },
+  },
 };
 </script>
 
 <template>
   <div class="l-header-content--save-grid">
-    <button class="o-button o-header--save">
+    <button
+      class="o-button o-header--save"
+      @click="saveGame"
+    >
       <span class="o-header--save-text_manual">
         Manual Save
+      </span>
+    </button>
+    <button
+      class="o-button o-header--save"
+      @click="loadGame"
+    >
+      <span class="o-header--save-text_manual">
+        Manual Load
       </span>
     </button>
   </div>
@@ -34,11 +54,13 @@ export default {
 .o-header--save {
   width: fit-content;
 
+  padding: 4px 8px;
+
   display: inline;
 }
 
 /* Selector specificity */
 button.o-header--save > span {
-  font-size: 18px;
+  font-size: 16px;
 }
 </style>
