@@ -4,6 +4,7 @@ import FunctionRespec from "./FunctionRespec.vue";
 
 
 
+import player from "@/core/player.js";
 import { setUpdateloop } from "@/core/interval.js";
 
 export default {

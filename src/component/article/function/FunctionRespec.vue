@@ -3,6 +3,8 @@ import Tooltip from "@/component/default/Tooltip.vue";
 
 
 
+import player from "@/core/player.js";
+
 import Study from "@/core/state/study.js";
 
 import { setUpdateloop } from "@/core/interval.js";

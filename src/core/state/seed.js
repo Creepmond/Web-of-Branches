@@ -1,3 +1,5 @@
+import player from "@/core/player.js";
+
 import Currency from "@/core/state/mechanic/currency.js";
 import Study from "./study.js";
 import Timespan from "./timespan.js";

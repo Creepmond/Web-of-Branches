@@ -18,7 +18,7 @@ export const regularStudy = [
       // I think I could make the format visible using player.time.played... actually, how am I calling
       // Currency here anyway? Isn't this a loopway dependency? Ts makes me confused
       effect: {
-         call() { setTimeout( () => { Currency.seed.add(199) }, 80 ) },
+         call() { setTimeout( () => { Currency.seed.add(1) }, 8000 ) },
          state: 'callback',
          type: 'passive',
          target: 'Seed',

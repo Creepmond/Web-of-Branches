@@ -1,3 +1,5 @@
+import player from "@/core/player.js";
+
 import GameMechanicState from "@/core/state/mechanic/gamestate.js";
 
 import DC from "@/utility/constants.js";

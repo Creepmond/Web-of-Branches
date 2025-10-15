@@ -1,6 +1,6 @@
 import DC from "@/utility/constants.js";
 
-window.player = {
+const player = {
    seed: DC.D1,
    // Unfortunately, working with Sets in Vue is not supported, and with having to deal with update(),
    // hence why studyBoughtBits is an array while studyExposedBits is a Set()
@@ -15,6 +15,7 @@ window.player = {
       bought5x1: DC.BIMAX,
    },
    last: {
+      timePlayed: null,
       metapanelName: '',
       metapanelId: null,
       respeccedStudy: [],
@@ -36,3 +37,6 @@ window.player = {
       hasEverReachedBoundary: false,
    },
 };
+
+export default player;
+//// window.player = player;

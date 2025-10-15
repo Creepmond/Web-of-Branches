@@ -1,6 +1,10 @@
 <script>
 import Tooltip from "@/component/default/Tooltip.vue";
 
+
+
+import player from "@/core/player.js";
+
 export default {
   name: "FunctionOrigin",
   components: { Tooltip, },

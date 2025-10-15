@@ -1,3 +1,5 @@
+import player from "@/core/player.js";
+
 import { isSet } from "@/utility/typecheck";
 
 function classPointer(_, value) {
@@ -26,27 +28,38 @@ function classReader(_, data) {
    };
 };
 
+function setPlayer() { return JSON.stringify(player, classPointer); }
+function getPlayer(location) { return JSON.parse(location, classReader) }
+
 
 
 const GameStorage = {
    save() {
-      localStorage.setItem("webSave", JSON.stringify(player, classPointer));
-      console.log( 
-         JSON.parse(
-            localStorage.getItem("webSave"),
-            classReader
-         )
-      );
+      localStorage.setItem("webSave", setPlayer());
    },
    load() {
-      player = JSON.parse(
-         localStorage.getItem("webSave"),
-         classReader
-      );
+      const serializedObject = getPlayer( localStorage.getItem("webSave") );
+
+      //! This doesn't extend to deeply nested keys, so modifying those things cause problems. I reckon
+      //  probably using an API that deals with these kinds of things, but for now... what works, works
+
+      //! Oh yeah, oops. If you purchase [0, 0], save, then wait out the eight seconds... I'm pretty
+      //  sure you basically softlock yourself from the game lol
+
+      const allSerializedKeys = [];
+      Object.keys(serializedObject).forEach(key => { allSerializedKeys.push(key) })
+      
+      const allPlayerKeys = [];
+      Object.keys(player).forEach(key => { allPlayerKeys.push(key) })
+
+      for (const key of allPlayerKeys) {
+         if ( !allSerializedKeys.includes(key) ) continue;
+         player[key] = serializedObject[key];
+      }
    },
    hardReset() {
 
    },
 };
 
-export default GameStorage;
+export default GameStorage; 

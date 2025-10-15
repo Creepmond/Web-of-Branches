@@ -1,9 +1,5 @@
 <script>
-//! The reason this code is terribly long is because I need to unpack the values everytime this.id changes.
-//  Every single time it does, I need to clear intervals and such so that I do not mess up with the
-//  performance. Apparently, rather than having stuff done watched on id... I could just have had this
-//  component be referred with :key="id" in <Metapanel /> to recreate an instance so I only had to work
-//  mounted() and beforeUnmounted()... took me four days to figure that one out, woo
+import player from "@/core/player.js";
 
 import Seed from "@/core/state/seed.js";
 import Study from "@/core/state/study.js";

@@ -1,4 +1,6 @@
 // OK... I have no excuse for this one. Whaddya know I've watched One Piece, piracy is in my blood
+import player from "@/core/player.js";
+
 import DC from "@/utility/constants.js";
 
 class Currency {

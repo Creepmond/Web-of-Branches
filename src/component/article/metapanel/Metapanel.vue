@@ -3,6 +3,8 @@ import MetapanelStudy from "./MetapanelStudy.vue";
 
 
 
+import player from "@/core/player.js";
+
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {

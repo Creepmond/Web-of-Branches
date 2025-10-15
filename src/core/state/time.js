@@ -1,3 +1,5 @@
+import player from "@/core/player.js";
+
 import Currency from "@/core/state/mechanic/currency.js";
 
 import DC from "@/utility/constants.js";

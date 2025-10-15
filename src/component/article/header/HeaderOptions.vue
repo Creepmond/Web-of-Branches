@@ -7,6 +7,8 @@ import Toggle from "@/component/default/Toggle.vue"
 
 
 
+import player from "@/core/player.js";
+
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {

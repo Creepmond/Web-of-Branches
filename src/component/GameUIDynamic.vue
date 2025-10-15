@@ -5,6 +5,8 @@ import Tree from "./Tree.vue";
 
 
 
+import player from "@/core/player.js";
+
 import { setUpdateloop } from "@/core/interval.js"
 
 const htmlDOM = document.querySelector('html');

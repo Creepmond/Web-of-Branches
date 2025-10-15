@@ -1,3 +1,5 @@
+import player from "./player.js";
+
 import Seed from "@/core/state/seed.js";
 import Study from "@/core/state/study.js";
 

@@ -13,7 +13,8 @@ three (3).
 Import APIs (Component)
 Import Component (Doesn't need to follow Note 2 if it's a list with a "Sort by Importance")
 ...Leave three (3) line gap for differentation. Leave five (5) if the latter case above applies
-Import Currencies
+Import player object ('@/core/player.js')
+Import Currencies (Seed, Spectre, etc.), not ('@/core/state/mechanic/currency.js'.)
 Import States (state/mechanic/*) is before (state/*)
 Import Utilities
 

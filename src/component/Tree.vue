@@ -3,6 +3,8 @@ import StudyButton from "@/component/base/StudyButton.vue";
 
 
 
+import player from "@/core/player.js";
+
 import Study, { Studies } from "@/core/state/study.js";
 
 import { setUpdateloop } from "@/core/interval";

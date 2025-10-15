@@ -4,6 +4,8 @@ import StudyLink from "./StudyLink.vue";
 
 
 
+import player from "@/core/player.js";
+
 import Currency from "@/core/state/mechanic/currency.js";
 import Study from "@/core/state/study.js";
 
