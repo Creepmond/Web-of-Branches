@@ -1,4 +1,4 @@
-import Notation from "./notation.js";
+import Notation      from "./notation.js";
 import { isDecimal } from "./typecheck.js";
 
 //# Decimal

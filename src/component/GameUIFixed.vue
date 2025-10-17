@@ -1,6 +1,6 @@
 <script>
-import Header from "@/component/article/header/Header.vue";
-import Function from "@/component/article/function/Function.vue";
+import Header    from "@/component/article/header/Header.vue";
+import Function  from "@/component/article/function/Function.vue";
 import Metapanel from "@/component/article/metapanel/Metapanel.vue";
 
 export default {

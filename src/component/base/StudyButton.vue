@@ -1,13 +1,14 @@
 <script>
 import StudyButtonFace from "./StudyButtonFace.vue";
-import StudyLink from "./StudyLink.vue";
+import StudyLink       from "./StudyLink.vue";
 
 
 
 import player from "@/core/player.js";
 
-import Currency from "@/core/state/mechanic/currency.js";
-import Study from "@/core/state/study.js";
+import EventHub, { GAME_EVENT } from "@/core/state/eventhub.js";
+import Currency                 from "@/core/state/mechanic/currency.js";
+import Study                    from "@/core/state/study.js";
 
 import { setUpdateloop } from "@/core/interval.js";
 
@@ -91,6 +92,8 @@ export default {
     },
     isAvailable(value) {
       this.StudyInstance.isAvailable = value;
+
+      EventHub.dispatch(GAME_EVENT.STUDY_AVAILABLE);
       this.$emit('available', this.id);
     },
     isRespecced(valueIsTrue) {
@@ -127,6 +130,7 @@ export default {
 
       if (!this.isAvailable || !this.imperativeIsBought) return;
 
+      EventHub.dispatch(GAME_EVENT.STUDY_PURCHASE);
       this.$emit('purchase', this.id);
 
       Currency.seed.sub(this.StudyInstance.cost);
@@ -145,6 +149,7 @@ export default {
       if ( !this.imperativeIsAvailable && !this.imperativeIsBought && !this.isExposed ) return;
       if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
 
+      EventHub.dispatch(GAME_EVENT.DELTA_METAPANEL);
       player.last.metapanelId = this.id;
     },
   },

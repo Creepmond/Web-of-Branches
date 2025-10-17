@@ -1,4 +1,4 @@
 import "./utility";
 
-import "./core/database";
+import "./database";
 import "./core";

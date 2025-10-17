@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 
-import GameUIFixed from "@/component/GameUIFixed.vue";
+import GameUIFixed   from "@/component/GameUIFixed.vue";
 import GameUIDynamic from "@/component/GameUIDynamic.vue";
 
 

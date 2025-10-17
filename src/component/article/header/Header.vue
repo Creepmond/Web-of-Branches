@@ -1,9 +1,9 @@
 <script>
 import HeaderTabs from "./HeaderTabs.vue";
 
-import HeaderResources from "./HeaderResources.vue";
-import HeaderOptions from "./HeaderOptions.vue";
-import HeaderSaves from "./HeaderSaves.vue";
+import HeaderResources   from "./HeaderResources.vue";
+import HeaderOptions     from "./HeaderOptions.vue";
+import HeaderSaves       from "./HeaderSaves.vue";
 import HeaderInformation from "./HeaderInformation.vue";
 
 

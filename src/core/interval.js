@@ -1,9 +1,10 @@
 import player from "./player.js";
 
-import Seed from "@/core/state/seed.js";
-import Study from "@/core/state/study.js";
+import EventHub, { GAME_EVENT } from "@/core/state/eventhub.js";
+import Seed                    from "@/core/state/seed.js";
+import Study                   from "@/core/state/study.js";
 
-import { time } from "./state/time.js";
+import { Time } from "./state/time.js";
 
 /*
 export function setCooldown(handler, duration) {
@@ -45,11 +46,10 @@ export function setGameloop(handler) {
 };
 
 setGameloop(() => {
-   time.tick();
+   // EventHub.dispatch(GAME_EVENT.UPDATE);
+   Time.tick();
    
-   if (Study([1,0]).effect) {
-      //// const tickrate = player.option.tickrate;
-
-      Seed.tick();
-   };
+   if (!Study([1,0]).effect) return;
+   
+   Seed.tick();
 });

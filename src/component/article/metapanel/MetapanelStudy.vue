@@ -1,10 +1,10 @@
 <script>
 import player from "@/core/player.js";
 
-import Seed from "@/core/state/seed.js";
+import Seed  from "@/core/state/seed.js";
 import Study from "@/core/state/study.js";
 
-import DC from "@/utility/constants.js";
+import DC                                 from "@/utility/constants.js";
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
