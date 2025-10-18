@@ -7,9 +7,6 @@ const player = {
    studyBoughtBits: [], 
    studyExposedBits: new Set(),
    // I don't think I need this
-   permaStudy: {
-      respecIsUnlocked: false,
-   },
    time: {
       played: DC.D0,
       bought5x1: DC.BIMAX,

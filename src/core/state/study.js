@@ -13,6 +13,11 @@ const Studies = {
       
       return all_id
    },
+
+   get canRespec() {
+      const readableExposed = [...player.studyExposedBits].map(study => rmRef(study));
+      return readableExposed.includes( rmRef([4,1]) );
+   },
 };
 
 class StudyState extends GameMechanicState {
@@ -65,10 +70,6 @@ class StudyState extends GameMechanicState {
 
       if (this.effectInfo.state === 'synergy') {
          player.time.bought5x1 = player.time.played;
-      }
-      
-      if (this.effectInfo.type === 'unlock') {
-        if ( rmRef(this.id) === rmRef([4,1]) ) player.permaStudy.respecIsUnlocked = true;
       }
 
       //// this.isExposed = true;

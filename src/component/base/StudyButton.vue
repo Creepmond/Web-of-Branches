@@ -6,9 +6,9 @@ import StudyLink       from "./StudyLink.vue";
 
 import player from "@/core/player.js";
 
-import EventHub, { GAME_EVENT } from "@/core/state/eventhub.js";
-import Currency                 from "@/core/state/mechanic/currency.js";
-import Study                    from "@/core/state/study.js";
+import EventHub, { GameEvent } from "@/core/state/eventhub.js";
+import Currency                from "@/core/state/mechanic/currency.js";
+import Study, { Studies }      from "@/core/state/study.js";
 
 import { setUpdateloop } from "@/core/interval.js";
 
@@ -93,7 +93,7 @@ export default {
     isAvailable(value) {
       this.StudyInstance.isAvailable = value;
 
-      EventHub.dispatch(GAME_EVENT.STUDY_AVAILABLE);
+      EventHub.dispatch(GameEvent.STUDY_AVAILABLE);
       this.$emit('available', this.id);
     },
     isRespecced(valueIsTrue) {
@@ -130,26 +130,25 @@ export default {
 
       if (!this.isAvailable || !this.imperativeIsBought) return;
 
-      EventHub.dispatch(GAME_EVENT.STUDY_PURCHASE);
+      this.StudyInstance.purchase();
+
+      EventHub.dispatch(GameEvent.STUDY_PURCHASE);
       this.$emit('purchase', this.id);
 
       Currency.seed.sub(this.StudyInstance.cost);
-
-      this.StudyInstance.purchase();
 
       this.isExposed = true;
       this.isAvailable = false;
     },
     tryRespec() {
-      if (!this.isBought || !this.isBranchNode || !player.permaStudy.respecIsUnlocked) return;
-
+      if (!this.isBought || !this.isBranchNode || !Studies.canRespec) return;
       this.isRespecced = !this.isRespecced;
     },
     changeLastHoveredStudy() {
       if ( !this.imperativeIsAvailable && !this.imperativeIsBought && !this.isExposed ) return;
       if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
 
-      EventHub.dispatch(GAME_EVENT.DELTA_METAPANEL);
+      EventHub.dispatch(GameEvent.DELTA_METAPANEL);
       player.last.metapanelId = this.id;
     },
   },

@@ -7,6 +7,8 @@ import Tree from "./Tree.vue";
 
 import player from "@/core/player.js";
 
+import EventHub, { GameEvent} from "@/core/state/eventhub";
+
 import { setUpdateloop } from "@/core/interval.js"
 
 const htmlDOM = document.querySelector('html');
@@ -104,6 +106,7 @@ export default {
     handleEnd(e) {
       this.endMoveHandling(e);
 
+      EventHub.dispatch(GameEvent.AFTER_MOVE_SCREEN, this.screenCoord);
       player.last.screenCoord = this.screenCoord;
 
       if (!this.physicsIsActive || this.mouseCoordHist.length < 2) return;

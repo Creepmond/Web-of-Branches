@@ -4,8 +4,10 @@ import FunctionRespec from "./FunctionRespec.vue";
 
 
 
-import player            from "@/core/player.js";
-import { setUpdateloop } from "@/core/interval.js";
+import player from "@/core/player.js";
+
+import EventHub, { GameEvent } from "@/core/state/eventhub.js";
+import { Studies }             from "@/core/state/study.js";
 
 export default {
   name: "Function",
@@ -14,22 +16,18 @@ export default {
     FunctionRespec,
   },
   data() { return {
-    isVisible: {
-      origin: false,
-      respec: false
-    },
+    originIsVisible: false,
+    respecIsVisible: false,
   }},
-  methods: {
-    update() {
-      this.isVisible.origin = rmRef(player.last.screenCoord) !== rmRef({ X: -140, Y: -80 });
-      this.isVisible.respec = player.permaStudy.respecIsUnlocked;
-
-      setUpdateloop(this.update);
-    },
-  },
   mounted() {
-    this.update();
-  },
+    EventHub.on(GameEvent.AFTER_MOVE_SCREEN, (coord) => {
+      this.originIsVisible = rmRef(coord) !== rmRef({ X: -140, Y: -80 })
+    })
+
+    EventHub.on(GameEvent.STUDY_PURCHASE, () => {
+      this.respecIsVisible = Studies.canRespec;
+    });
+  }
 };
 </script>
 
@@ -42,10 +40,10 @@ export default {
     </div>
     <Transition name="a-function-button">
       <!-- v-show here because for the most part, it *is* in fact visible, just not displayed in some cases -->
-      <FunctionOrigin v-show="isVisible.origin" />
+      <FunctionOrigin v-show="originIsVisible" />
     </Transition>
     <Transition name="a-function-button">
-      <FunctionRespec v-if="isVisible.respec" />
+      <FunctionRespec v-if="respecIsVisible" />
     </Transition>
   </div>
 </template>

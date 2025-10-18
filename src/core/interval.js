@@ -1,6 +1,6 @@
 import player from "./player.js";
 
-import EventHub, { GAME_EVENT } from "@/core/state/eventhub.js";
+import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 import Seed                    from "@/core/state/seed.js";
 import Study                   from "@/core/state/study.js";
 
@@ -46,7 +46,7 @@ export function setGameloop(handler) {
 };
 
 setGameloop(() => {
-   // EventHub.dispatch(GAME_EVENT.UPDATE);
+   // EventHub.dispatch(GameEvent.UPDATE);
    Time.tick();
    
    if (!Study([1,0]).effect) return;

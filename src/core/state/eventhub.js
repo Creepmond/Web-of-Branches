@@ -33,13 +33,16 @@ const EventHub = {
 
 export default EventHub;
 
-export const GAME_EVENT = {
+export const GameEvent = {
    UPDATE: "UPDATE",
 
    // Fixed UI
    DELTA_METAPANEL: "DELTA_METAPANEL",
 
-   // Tree UI
+   // Dynamic UI
+   AFTER_MOVE_SCREEN: "MOVE_SCREEN",
+
+   // Game
    STUDY_PURCHASE: "STUDY_PURCHASE",
    STUDY_AVAILABLE: "STUDY_AVAILALE",
 }
