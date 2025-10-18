@@ -5,18 +5,13 @@ import StudyButton from "@/component/base/StudyButton.vue";
 
 import player from "@/core/player.js";
 
-import Study, { Studies } from "@/core/state/study.js";
-
-import { setUpdateloop } from "@/core/interval";
+import EventHub, { GameEvent } from "@/core/state/eventhub.js";
+import Study, { Studies }      from "@/core/state/study.js";
 
 export default {
   name: "Tree",
   components: { StudyButton, },
   data() { return {
-    // This one is for handling when respec happens... I might be able to improve it later, but for now
-    // as long as it works, it's fine
-    studyBoughtBits: [],
-
     studyBoughtObject: {},
     imperativeAvailableObject: {},
   }},
@@ -27,21 +22,7 @@ export default {
       return Studies.allId;
     },
   },
-  watch: {
-    studyBoughtBits(diff, init) {
-      const couplaDelta = new Set(diff).symmetricDifference(new Set(init));
-
-      couplaDelta.forEach(delta => {
-        this.studyBoughtObject[delta] = Study( addRef(delta) ).isBought;
-      });
-    },
-  },
   methods: {
-    update() {
-      this.studyBoughtBits = player.studyBoughtBits;
-
-      setUpdateloop(this.update);
-    },
     checkStudyState(id) {
       if (!id) {
         // Should have special handler for when Storage is implemented, I think
@@ -80,7 +61,14 @@ export default {
     this.checkStudyState();
   },
   mounted() {
-    this.update();
+    EventHub.on(GameEvent.STUDY_RESPEC_COMMIT, (diff, init) => {
+      const couplaDelta = new Set(diff).symmetricDifference(new Set(init));
+
+      console.log(couplaDelta);
+      couplaDelta.forEach(delta => {
+        this.studyBoughtObject[delta] = false;
+      });
+    })
   },
 };
 </script>

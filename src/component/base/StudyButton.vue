@@ -142,6 +142,8 @@ export default {
     },
     tryRespec() {
       if (!this.isBought || !this.isBranchNode || !Studies.canRespec) return;
+
+      EventHub.dispatch(GameEvent.STUDY_RESPEC_TOGGLE, this.id)
       this.isRespecced = !this.isRespecced;
     },
     changeLastHoveredStudy() {

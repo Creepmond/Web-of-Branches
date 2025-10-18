@@ -21,12 +21,12 @@ const EventHub = {
       }
    },
 
-   dispatch(event, arg) {
+   dispatch(event, ...args) {
       const handlers = this._handlers[event];
       if (!handlers) return;
 
       handlers.forEach(handler => {
-         handler.func(arg);
+         handler.func(...args);
       })
    },
 };
@@ -45,4 +45,6 @@ export const GameEvent = {
    // Game
    STUDY_PURCHASE: "STUDY_PURCHASE",
    STUDY_AVAILABLE: "STUDY_AVAILALE",
+   STUDY_RESPEC_TOGGLE: "STUDY_RESPEC_TOGGLE",
+   STUDY_RESPEC_COMMIT: "STUDY_RESPEC_COMMIT",
 }

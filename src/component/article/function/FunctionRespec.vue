@@ -5,9 +5,8 @@ import Tooltip from "@/component/default/Tooltip.vue";
 
 import player from "@/core/player.js";
 
-import Study from "@/core/state/study.js";
-
-import { setUpdateloop } from "@/core/interval.js";
+import EventHub, { GameEvent } from "@/core/state/eventhub";
+import Study                   from "@/core/state/study.js";
 
 export default {
   name: "FunctionOrigin",
@@ -28,11 +27,6 @@ export default {
     },
   },
   methods: {
-    update() {
-      this.respeccedStudy = player.last.respeccedStudy;
-
-      setUpdateloop(this.update);
-    },
     respec() {
       if (!this.canRespec) return;
 
@@ -53,15 +47,20 @@ export default {
       } while ((targetId = Study(targetId[0]).derivative) && targetId[0]);
 
       const newBoughtBits = new Set(player.studyBoughtBits).difference(diffBoughtBits);
+
+      EventHub.dispatch(GameEvent.STUDY_RESPEC_COMMIT, [...newBoughtBits], player.studyBoughtBits);
       player.studyBoughtBits = [...newBoughtBits];
 
+      this.respeccedStudy = [];
       player.last.respeccedStudy = [];
     },
   },
   mounted() {
-    //! Needs handler for (or rather, if) when this is stop being called
-    this.update();
-  },
+    EventHub.on(GameEvent.STUDY_RESPEC_TOGGLE, (respecced) => {
+      console.log('hi', respecced)
+      this.respeccedStudy = respecced;
+    })
+  }
 };
 </script>
 
