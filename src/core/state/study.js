@@ -1,24 +1,9 @@
 import player from "@/core/player.js";
 
-import GameMechanicState from "@/core/state/mechanic/gamestate.js";
+import GameMechanicState from       "@/core/state/mechanic/gamestate.js";
+import EventHub, { GameEvent } from "./eventhub.js";
 
 import DC from "@/utility/constants.js";
-
-const Studies = {
-   get allId() {
-      const all_id = [];
-      GameData.regularStudy.forEach(study => {
-         all_id.push(study.id);
-      });
-      
-      return all_id
-   },
-
-   get canRespec() {
-      const readableExposed = [...player.studyExposedBits].map(study => rmRef(study));
-      return readableExposed.includes( rmRef([4,1]) );
-   },
-};
 
 class StudyState extends GameMechanicState {
    #effect = undefined; // Handled on the getter and setter pair at around Line 37
@@ -85,6 +70,49 @@ class StudyState extends GameMechanicState {
  */
 const Study = StudyState.createAccessor(GameData.regularStudy);
 
+const Studies = {
+   get allId() {
+      const all_id = [];
+      GameData.regularStudy.forEach(study => {
+         all_id.push(study.id);
+      });
+      
+      return all_id
+   },
+
+   get canRespec() {
+      const readableExposed = [...player.studyExposedBits].map(study => rmRef(study));
+      return readableExposed.includes( rmRef([4,1]) );
+   },
+
+   respec(study) {
+      const initBought = player.studyBoughtBits;
+      const diffBought = new Set();
+
+      // This is intenetionally inside an Array, similar to how Study().derivatives are formatted
+      // (e.g., [ [3, -0.5], [3, 0.5] ]; or [ [4, 1] ]; or simply just [  ]; if it doesn't have any
+      // derivatives
+      let targetDerivatives = [ Object.values(study) ];
+
+      do {
+        //// if (targetDerivative.length > 1) throw "dude make a special handling for this"
+        if (!Study(targetDerivatives[0]).isBought) break;
+
+        diffBought.addArray(targetDerivatives[0]);
+
+        // Reassign targetDerivative into *its* derivatives
+      } while ((targetDerivatives = Study(targetDerivatives[0]).derivative) && targetDerivatives[0]);
+
+      const deltaBought = new Set(initBought).difference(diffBought);
+
+      EventHub.dispatch(GameEvent.STUDY_RESPEC_COMMIT, [...deltaBought], initBought);
+      // I don't entirely remember if Sets (or any other non-primitive in general) are also based on
+      // reference, so I'll directly be calling player here rather than initBought
+      player.studyBoughtBits = [...deltaBought];
+      player.last.respeccedStudy = [];
+   },
+};
+
 Studies.allId.forEach(index => {
    const studyDerivatives = Study(index).derivative;
 
@@ -94,7 +122,8 @@ Studies.allId.forEach(index => {
    })
 });
 
-// I wonder if there's a better method for this
+//* Sets up for Storage. I wonder if there's a better method for this. Perhaps via Vue, but the thing
+//  is quite fat in file size already
 const exposedStudies = [...player.studyExposedBits];
 exposedStudies.forEach(shownStudy => {
    Study(shownStudy).isExposed = true;
