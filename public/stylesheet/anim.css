@@ -1,16 +1,14 @@
 :root {
   --anim-over-in-and-out: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  --anim-expo-in: cubic-bezier(1, 0, 1, 1);
+  --anim-expo-out: cubic-bezier(0, 1, 1, 1);
 }
 
 
 
 @keyframes wipe-up {
-  0% {
-    transform: translateY(50%) scaleY(0);
-  }
-  100% {
-    transform: translateY(0) scaleY(1);
-  }
+  0% { transform: translateY(50%) scaleY(0); }
+  100% { transform: translateY(0) scaleY(1); }
 }
 
 /*# Semantic */
@@ -33,18 +31,10 @@
 
 /* From Vue, I'll improve the animation later */
 @keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  33% {
-    transform: scale(0.67, 0.33);
-  }
-  67% {
-    transform: scale(1.33, 0.67);
-  }
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(0); }
+  33% { transform: scale(0.67, 0.33); }
+  67% { transform: scale(1.33, 0.67); }
+  100% { transform: scale(1); }
 }
 
 /*# Fixeds */
@@ -188,12 +178,9 @@
 
 
 
-
+/* This is the negative of stroke-dasharray's sum (60px + 20px) */
 @keyframes loop-dash-array {
-  100% {
-    /* This is the negative of stroke-dasharray's sum (60px + 20px) */
-    stroke-dashoffset: -80px;
-  }
+  100% { stroke-dashoffset: -80px; }
 }
 
 /*# Study Links */
@@ -204,7 +191,9 @@
 }
 
 .c-study-link_ray-dashing--animated {
-  animation: loop-dash-array 1s linear infinite;
+  animation: 
+    loop-dash-array 1s cubic-bezier(0.33, 0, 1, 1),
+    loop-dash-array 1s 1s linear infinite;
 }
 
 /*# END - Study Links */
