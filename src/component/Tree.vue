@@ -3,8 +3,6 @@ import StudyButton from "@/component/base/StudyButton.vue";
 
 
 
-import player from "@/core/player.js";
-
 import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 import Study, { Studies }      from "@/core/state/study.js";
 

@@ -3,7 +3,7 @@ import { isDecimal } from "./typecheck.js";
 
 //# Decimal
 
-window.format = function(value, places = 2, placesUnder1000 = 2) {
+const format = function(value, places = 2, placesUnder1000 = 2) {
    if (!isDecimal(value)) value = new Decimal(value);
 
    // Problem with this, this still causes formatting errors when it reaches the point where the
@@ -19,21 +19,28 @@ window.format = function(value, places = 2, placesUnder1000 = 2) {
    return Notation.mixedScientific.format(value, places, placesUnder1000, 3);
 };
 
-window.formatPassRate = function(value, places, placesUnder1000) {
+format.percent = function(value, places, placesUnder1000) {
+   isDecimal(value) ? value.div(100) : value / 100;
+   return `${format(value, places, placesUnder1000)}%`
+};
+
+format.passRate = function(value, places, placesUnder1000) {
    return `+${format(value, places, placesUnder1000)} /s`
 };
 
-window.formatX = function(value, places, placesUnder1000) {
+format.mult = function(value, places, placesUnder1000) {
    return `×${format(value, places, placesUnder1000)}`;
 };
 
-window.formatPow = function(value, places, placesUnder1000) {
+format.pow = function(value, places, placesUnder1000) {
    return `^${format(value, places, placesUnder1000)}`;
 };
 
-window.formatCoord = function(value, value2) {
+format.coord = function(value, value2) {
    return `[${value}, ${value2}]`;
 };
+
+export default format;
 
 //# END - Decimal
 

@@ -1,4 +1,6 @@
 <script>
+import format from "@/utility/format.js";
+
 // Reads for <span class="f-sup">, <span class="f-sub">, and </span>, if a Study ever uses it.
 const rawTextRegex = /<\/?span( class)?(="f-su[pb]")?>/g;
 

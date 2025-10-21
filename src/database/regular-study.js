@@ -1,6 +1,7 @@
 import Currency from "@/core/state/mechanic/currency.js";
 
 import DC from "@/utility/constants.js";
+import format from "@/utility/format.js"
 
 //* Effect States: "Static", "Conditional", and "Synergy"; Statics are fixed values. Conditionals are
 //  applied on an external *state*—e.g., another Study is bought, or there have only been N purchased
@@ -31,7 +32,7 @@ export const regularStudy = [
       id: [1, 0],
       derivative: [ [2, 0] ],
       description: "Slowly produce Seeds",
-      get specify() { return `Increase Seeds rate by ${formatPassRate(1, 0, 0)}` },
+      get specify() { return `Increase Seeds rate by ${format.passRate(1, 0, 0)}` },
       effect: {
          value: DC.D1,
          state: 'static',
@@ -46,7 +47,7 @@ export const regularStudy = [
       id: [2, 0],
       derivative: [ [3, -0.5], [3, 0.5] ],
       description: "Gain multiple seeds at once",
-      get specify() { return `Boost Seed passive rate by ${formatX(3)}` },
+      get specify() { return `Boost Seed passive rate by ${format.mult(3)}` },
       effect: {
          // There's still problems with this... but for now, good enough
          value: DC.D3,
@@ -76,7 +77,7 @@ export const regularStudy = [
       derivative: [ [4, 1] ],
       isBranchNode: true,
       description: "Boost Seed production",
-      get specify() { return `Improve Seed production by ${formatX(2)}` },
+      get specify() { return `Improve Seed production by ${format.mult(2)}` },
       effect: {
          value: DC.D2,
          state: 'static',
@@ -98,8 +99,9 @@ export const regularStudy = [
       id: [4, 1],
       derivative: [ [5, 1] ],
       description: "Return from a branched node",
-      specify: `Long press, or Click a Branch with the <span class="f-hotkey">ctrl</span> or <span class="f-hotkey">cmd&#8984;</span> key to toggle respeccing`,
+      get specify() { return `Long press, or Click a Branch with the <span class="f-hotkey">ctrl</span> or <span class="f-hotkey">cmd&#8984;</span> key to toggle respeccing. Returns ${format.percent(0.1)} ` },
       effect: {
+         value: DC.D0_1,
          state: 'static',
          type: 'unlock',
          target: 'Respec',
@@ -112,7 +114,7 @@ export const regularStudy = [
       id: [5, 1],
       derivative: [],
       description: "Compost your seeds",
-      specify: `Receive a ${formatX(15)} boost to Seed production that drastically wanes over time`,
+      specify: `Receive a ${format.mult(15)} boost to Seed production that drastically wanes over time`,
       effect: {
          state: 'synergy',
          type: 'multiplier',

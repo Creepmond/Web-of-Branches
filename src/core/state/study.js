@@ -1,6 +1,8 @@
 import player from "@/core/player.js";
 
-import GameMechanicState from       "@/core/state/mechanic/gamestate.js";
+import Currency                from "@/core/state/mechanic/currency.js";
+import Effects                 from "@/core/state/mechanic/effects.js";
+import GameMechanicState       from "@/core/state/mechanic/gamestate.js";
 import EventHub, { GameEvent } from "./eventhub.js";
 
 import DC from "@/utility/constants.js";
@@ -33,7 +35,7 @@ class StudyState extends GameMechanicState {
          case 'passiveRate': return this.isBought ? this.effectInfo.value : DC.D0;
          case 'multiplier': return this.isBought ? this.effectInfo.value : DC.D1;
          case 'exponent': return this.isBought ? this.effectInfo.value : DC.D1;
-         case 'unlock': return this.isBought ? true : false;
+         case 'unlock': return this.isBought ? this.effectInfo.value : DC.D0;
       };
    }
 
@@ -85,6 +87,12 @@ const Studies = {
       return readableExposed.includes( rmRef([4,1]) );
    },
 
+   get refundFactor() {
+      return Effects.sum(
+         Study([4, 1]).effect,
+      );
+   },
+
    respec(study) {
       const initBought = player.studyBoughtBits;
       const diffBought = new Set();
@@ -99,6 +107,7 @@ const Studies = {
         if (!Study(targetDerivatives[0]).isBought) break;
 
         diffBought.addArray(targetDerivatives[0]);
+        this.refund(targetDerivatives[0]);
 
         // Reassign targetDerivative into *its* derivatives
       } while ((targetDerivatives = Study(targetDerivatives[0]).derivative) && targetDerivatives[0]);
@@ -110,6 +119,16 @@ const Studies = {
       // reference, so I'll directly be calling player here rather than initBought
       player.studyBoughtBits = [...deltaBought];
       player.last.respeccedStudy = [];
+   },
+
+   refund(id) {
+      const currencyToRefund = Study(id).effectInfo.target.toLowerCase();
+      const currencyAmount = Study(id).cost
+         .times(this.refundFactor);
+
+         console.log(Currency[currencyToRefund])
+
+      Currency[currencyToRefund].add(currencyAmount);
    },
 };
 

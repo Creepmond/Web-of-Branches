@@ -5,7 +5,9 @@ import Seed  from "@/core/state/seed.js";
 import Study from "@/core/state/study.js";
 
 import DC                                 from "@/utility/constants.js";
+import format                             from "@/utility/format.js";
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
+
 
 export default {
   name: "MetapanelStudy",
@@ -86,11 +88,11 @@ export default {
       const type = this.StudyInstance.effectInfo.type;
 
       if (type === 'passiveRate') {
-        this.scopedValueFormat = `${formatPassRate(this.studyScopedValue, 2, 2)}`;
+        this.scopedValueFormat = `${format.passRate(this.studyScopedValue, 2, 2)}`;
       } else if (type === 'multiplier') {
-        this.scopedValueFormat = `${formatX(this.studyScopedValue, 2, 2)} Seed`;
+        this.scopedValueFormat = `${format.mult(this.studyScopedValue, 2, 2)} Seed`;
       } else if (type === 'exponent') {
-        this.scopedValueFormat = `${formatPow(this.studyScopedValue, 2, 2)} Seed`;
+        this.scopedValueFormat = `${format.pow(this.studyScopedValue, 2, 2)} Seed`;
       } else if (type === 'unlock') {
         this.scopedValueFormat = this.isBought
           ? `Unlocked ${this.StudyInstance.effectInfo.target}`
@@ -101,11 +103,11 @@ export default {
       const type = this.StudyInstance.effectInfo.type;
 
       if (type === 'passiveRate') {
-        this.globalValueFormat = `${formatPassRate(Seed.passiveRate)}`;
+        this.globalValueFormat = `${format.passRate(Seed.passiveRate)}`;
       } else if (type === 'multiplier') {
-        this.globalValueFormat = `${formatX(Seed.multipliers, 2, 2)} Seed`;
+        this.globalValueFormat = `${format.mult(Seed.multipliers, 2, 2)} Seed`;
       } else if (type === 'exponent') {
-        this.globalValueFormat = `${formatPow(Seed.exponents, 2, 2)} Seed`;
+        this.globalValueFormat = `${format.pow(Seed.exponents, 2, 2)} Seed`;
       };
     },
   },

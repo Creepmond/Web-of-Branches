@@ -18,7 +18,7 @@ export default {
   <div class="l-header-content--save-grid">
     <button
       class="o-button o-header--save"
-      @click="saveGame"
+      @click.exact="saveGame"
     >
       <span class="o-header--save-text_manual">
         Manual Save
@@ -26,7 +26,7 @@ export default {
     </button>
     <button
       class="o-button o-header--save"
-      @click="loadGame"
+      @click.exact="loadGame"
     >
       <span class="o-header--save-text_manual">
         Manual Load

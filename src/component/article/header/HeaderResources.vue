@@ -3,6 +3,8 @@ import player from "@/core/player.js";
 
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
+import format from "@/utility/format.js";
+
 export default {
   name: "HeaderResources",
   data() { return {
