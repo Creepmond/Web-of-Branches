@@ -59,14 +59,14 @@ export default {
     this.checkStudyState();
   },
   mounted() {
-    EventHub.on(GameEvent.STUDY_RESPEC_COMMIT, (diff, init) => {
+    EventHub.on(GameEvent.STUDY_RESPEC_COMMIT, (_, diff, init) => {
+      console.log(_)
       const couplaDelta = new Set(diff).symmetricDifference(new Set(init));
 
-      console.log(couplaDelta);
       couplaDelta.forEach(delta => {
         this.studyBoughtObject[delta] = false;
       });
-    })
+    });
   },
 };
 </script>

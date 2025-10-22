@@ -95,7 +95,7 @@ const Studies = {
 
    respec(study) {
       const initBought = player.studyBoughtBits;
-      const diffBought = new Set();
+      const noLongerBought = new Set();
 
       // This is intenetionally inside an Array, similar to how Study().derivatives are formatted
       // (e.g., [ [3, -0.5], [3, 0.5] ]; or [ [4, 1] ]; or simply just [  ]; if it doesn't have any
@@ -106,29 +106,34 @@ const Studies = {
         //// if (targetDerivative.length > 1) throw "dude make a special handling for this"
         if (!Study(targetDerivatives[0]).isBought) break;
 
-        diffBought.addArray(targetDerivatives[0]);
-        this.refund(targetDerivatives[0]);
+        noLongerBought.addArray(targetDerivatives[0]);
 
         // Reassign targetDerivative into *its* derivatives
       } while ((targetDerivatives = Study(targetDerivatives[0]).derivative) && targetDerivatives[0]);
 
-      const deltaBought = new Set(initBought).difference(diffBought);
+      const diffBought = new Set(initBought).difference ( noLongerBought );
+      const refundedAmount = this.refund( noLongerBought );
 
-      EventHub.dispatch(GameEvent.STUDY_RESPEC_COMMIT, [...deltaBought], initBought);
+      EventHub.dispatch(GameEvent.STUDY_RESPEC_COMMIT, refundedAmount, [...diffBought], initBought);
       // I don't entirely remember if Sets (or any other non-primitive in general) are also based on
       // reference, so I'll directly be calling player here rather than initBought
-      player.studyBoughtBits = [...deltaBought];
+      player.studyBoughtBits = [...diffBought];
       player.last.respeccedStudy = [];
    },
 
-   refund(id) {
-      const currencyToRefund = Study(id).effectInfo.target.toLowerCase();
-      const currencyAmount = Study(id).cost
-         .times(this.refundFactor);
+   refund(studyArray) {
+      console.log(studyArray)
+      //! Needs handler for other Currencies
+      //// const currencyToRefund = Study(id).effectInfo.target.toLowerCase();
+      let currencyAmount = DC.D0;
 
-         console.log(Currency[currencyToRefund])
+      for (const id of studyArray) {
+         currencyAmount = currencyAmount.add(Study( JSON.parse(id) ).cost
+            .times(this.refundFactor));
+      }
 
-      Currency[currencyToRefund].add(currencyAmount);
+      Currency['seed'].add(currencyAmount);
+      return currencyAmount;
    },
 };
 
