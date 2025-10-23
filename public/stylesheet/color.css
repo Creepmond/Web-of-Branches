@@ -282,7 +282,21 @@ var(--opaque-color-ui-contrast), however */
 
 
 
+/*# Notification */
 
+.o-notification {
+  background-color: var(--opaque-color-ui);
+
+  border-color: var(--b-opaque-color-ui-acc);
+}
+
+.o-notification:hover {
+  background-color: var(--color-ui);
+
+  border-color: var(--color-ui-acc);
+}
+
+/*# END - Notification */
 
 
 

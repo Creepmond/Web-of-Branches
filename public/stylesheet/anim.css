@@ -1,4 +1,8 @@
 :root {
+  --duration-speed-fast: 0.2s;
+  --duration-speed-mod: 0.3s;
+  --duration-speed-slow: 1s;
+
   --anim-over-in-and-out: cubic-bezier(0.68, -0.55, 0.27, 1.55);
   --anim-expo-in: cubic-bezier(1, 0, 1, 1);
   --anim-expo-out: cubic-bezier(0, 1, 1, 1);
@@ -15,11 +19,11 @@
 
 /** Vue <Transition> */
 .a-tooltip-enter-active {
-  animation: wipe-up 0.2s var(--anim-over-in-and-out);
+  animation: wipe-up var(--duration-speed-fast) var(--anim-over-in-and-out);
 }
 
 .a-tooltip-leave-active {
-  animation: wipe-up 0.2s ease-out reverse;
+  animation: wipe-up var(--duration-speed-fast) ease-out reverse;
 }
 /** END - Vue <Transition> */
 
@@ -40,11 +44,13 @@
 /*# Fixeds */
 
 .c-header-tab-button {
-  transition: background-color 0.2s, outline-color 0.3s;
+  transition:
+    background-color var(--duration-speed-fast),
+    outline-color var(--duration-speed-mod);
 }
 
 .l-header-indicator-tabs {
-  transition: transform 0.3s ease-in-out;
+  transition: transform var(--duration-speed-mod) ease-in-out;
 }
 
 
@@ -52,7 +58,7 @@
 
 
 .c-metapanel-cancel {
-  transition: background-color 0.2s;
+  transition: background-color var(--duration-speed-fast);
 }
 
 
@@ -60,31 +66,38 @@
 
 
 .o-function {
-  transition: outline-color 0.2s;
+  transition: outline-color var(--duration-speed-fast);
 }
 
 .l-function-indicator {
-  transition: opacity 0.2s;
+  transition: opacity var(--duration-speed-fast);
 }
 
 .o-function-button {
-  transition: background-color 0.2s, opacity 0.2s;
+  transition:
+    background-color var(--duration-speed-fast),
+    opacity var(--duration-speed-fast);
 }
 
 /** Vue <Transition> */
 .a-function-button-enter-active {
-  animation: bounce-in 0.3s ease-in-out;
+  animation: bounce-in var(--duration-speed-mod) ease-in-out;
 }
 
 .a-function-button-leave-active {
-  animation: bounce-in 0.3s ease-in-out reverse;
+  animation: bounce-in var(--duration-speed-mod) ease-in-out reverse;
 }
 /** END - Vue <Transition> */
 
-
-
+/*-> Transition to */
 .l-function-indicator:has(+ .o-function-button:hover) {
-  opacity: 0.75
+  opacity: 0.75 
+}
+
+
+
+.o-notification {
+  transition: background-color var(--duration-speed-fast);
 }
 
 /*# END - Fixeds */
@@ -124,30 +137,33 @@
 /*# Studies */
 
 .o-prim-study {
-  transition: box-shadow 0.2s;
+  transition: box-shadow var(--duration-speed-fast);
 }
 .o-prim-study span {
-  transition: color 0.2s;
+  transition: color var(--duration-speed-fast);
 }
 
 .o-prim-study::before {
-  transition: background-color 0.2s;
+  transition: background-color var(--duration-speed-fast);
 }
 
 .o-prim-study--bought::before {
-  transition: inset 0.3s var(--anim-over-in-and-out), outline-width 0.2s
+  transition:
+    inset var(--duration-speed-mod) var(--anim-over-in-and-out),
+    outline-width var(--duration-speed-fast);
 }
 
 .c-prim-study-name .f-sup {
-  animation: raise-sup 1s var(--anim-over-in-and-out) forwards;
+  animation: raise-sup var(--duration-speed-slow) var(--anim-over-in-and-out) forwards;
 }
 .c-prim-study-name .f-sub {
-  animation: lay-sub 1s var(--anim-over-in-and-out) forwards;
+  animation: lay-sub var(--duration-speed-slow) var(--anim-over-in-and-out) forwards;
 }
 
 
 
 
+/*-> Transition to */
 .o-prim-study--obfuscated::before {
   inset: 2px;
 }
@@ -187,13 +203,13 @@
 
 .c-study-link_segment,
 .c-study-link_ray-dashing {
-  transition: stroke 0.2s ease-in-out;
+  transition: stroke var(--duration-speed-fast) ease-in-out;
 }
 
 .c-study-link_ray-dashing--animated {
   animation: 
-    loop-dash-array 1s cubic-bezier(0.33, 0, 1, 1),
-    loop-dash-array 1s 1s linear infinite;
+    loop-dash-array var(--duration-speed-slow) cubic-bezier(0.33, 0, 1, 1),
+    loop-dash-array var(--duration-speed-slow) var(--duration-speed-slow) linear infinite;
 }
 
 /*# END - Study Links */
