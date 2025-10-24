@@ -6,6 +6,8 @@ import HeaderOptions     from "./HeaderOptions.vue";
 import HeaderSaves       from "./HeaderSaves.vue";
 import HeaderInformation from "./HeaderInformation.vue";
 
+import Notification from "@/component/article/Notification.vue";
+
 
 
 import player from "@/core/player.js";
@@ -21,6 +23,8 @@ export default {
     HeaderOptions,
     HeaderSaves,
     HeaderInformation,
+
+    Notification,
   },
   data() { return {
     tabList: [],
@@ -83,6 +87,8 @@ export default {
       </div>
 
     </div>
+
+    <Notification />
   </div>
 </template>
 

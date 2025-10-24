@@ -14,6 +14,7 @@
 
 /** Monochromatic hell... */
 :root {
+  /* Probably need to make --color-shadow somewhere */
   --color-text-weak:   hsl(from var(--color-text) h s calc(0.5 * l + 25));
   --color-text-weaker: hsl(from var(--color-text-weak) h s calc(0.1 * l + 30));
 
@@ -24,8 +25,6 @@
 
 /** General variables that use relative color syntax */
 :root {
-  --opaque-color-bg-contrast: hsl(from var(--color-bg-contrast) h s l / 0.25);
-
   --color-text-good: hsl(from var(--color-good) h calc(s * 0.3) l);
   --color-text-bad: hsl(from var(--color-bad)   h calc(s * 0.3) l);
 
@@ -49,6 +48,7 @@ text {
   --color-bg-contrast: hsl(from var(--color-bg) h s calc(100 - l));
 
   --opaque-color-bg: hsl(from var(--color-bg) h s l / 0.5);
+  --opaque-color-bg-contrast: hsl(from var(--color-bg-contrast) h s l / 0.25);
 }
 
 /*# Background */
@@ -294,6 +294,18 @@ var(--opaque-color-ui-contrast), however */
   background-color: var(--color-ui);
 
   border-color: var(--color-ui-acc);
+}
+
+.o-notification::after {
+  background-color: var(--color-ui);
+}
+
+.c-notification-flare::after {
+  background-image: linear-gradient(
+    90deg,
+    var(--opaque-color-bg) 0%,
+    transparent 100%
+  );
 }
 
 /*# END - Notification */
