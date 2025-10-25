@@ -4,38 +4,74 @@
 export default {
   name: "Notification",
   data() { return {
-    message: '',
+    slottedId: 0,
+
+    queue: [
+      {
+        id: -2,
+        text: 'Respecced, gained: 136 Seeds',
+        colorInfluence: 'study',
+      },
+      {
+        id: -1,
+        text: 'Bite me',
+        colorInfluence: 'good',
+      },
+    ],
   }},
   methods: {
     notify() {
       //// this.highlightFlare();
     },
-    highlightFlare() {
+    highlightFlare(id) {
       
     },
-    cancel() {
+    cancel(flareId) {
+      this.queue = this.queue.filter(message => message.id !== flareId);
+    },
+  },
+  mounted() {
+    console.log(this.queue)
 
-    }
+    /*
+    setInterval(() => {
+      this.queue.push({
+        id: this.slottedId++,
+        text: 'Foo',
+        colorInfluence: 'bad'
+      });
+
+      console.log(this.queue)
+    }, 6 * 1000)
+    */
   },
 };
 </script>
 
 <template>
-  <button
-    @click=""
-    @mouseover="1 + 1"
-    class="o-notification"
-  >
-    <div
-      class="c-notification-flare"
-      style="
-        background-color: var(--color-ui);
-        transform: translateX( calc( -0% + 53px ) ) scaleX(1);
-      "
-    > <!-- See note .c-notification-flare's styles below. Refer to translateX(54px). -->
-      <span class="c-notification-message">Respecced, gained: 136 Seeds</span>
-    </div>
-  </button>
+  <TransitionGroup name="a-notification">
+    <button
+      v-for="message in queue"
+      :key="message.id"
+      @click="cancel(message.id)"
+      @mouseover="1 + 1"
+      class="o-notification"
+    >
+      <div
+        class="c-notification-flare"
+        :style="`
+          background-color: color-mix(
+            in srgb,
+            var(--color-ui) 85%,
+            var(--color-${message.colorInfluence})
+          );
+          transform: translateX( calc( -0% + 53px ) ) scaleX(1);
+        `"
+      > <!-- See note .c-notification-flare's styles below. Refer to translateX(54px). -->
+        <span class="c-notification-message">{{ message.text }}</span>
+      </div>
+    </button>
+  </TransitionGroup>
 </template>
 
 <style>
