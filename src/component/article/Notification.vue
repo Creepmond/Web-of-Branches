@@ -29,6 +29,14 @@ export default {
     cancel(flareId) {
       this.queue = this.queue.filter(message => message.id !== flareId);
     },
+
+    notificationPosition(id) {
+      const visible = this.queue.length === 0;
+      return `transform: translateX( ${-128 * visible}px );`
+    },
+    flarePosition(id) {
+      return `transform: translateX( calc( -0% + 53px ) ) scaleX(1);`
+    }
   },
   mounted() {
     console.log(this.queue)
@@ -42,36 +50,35 @@ export default {
       });
 
       console.log(this.queue)
-    }, 6 * 1000)
+    }, 20 * 1000)
     */
   },
 };
 </script>
 
 <template>
-  <TransitionGroup name="a-notification">
-    <button
-      v-for="message in queue"
-      :key="message.id"
-      @click="cancel(message.id)"
-      @mouseover="1 + 1"
-      class="o-notification"
-    >
-      <div
-        class="c-notification-flare"
-        :style="`
-          background-color: color-mix(
-            in srgb,
-            var(--color-ui) 85%,
-            var(--color-${message.colorInfluence})
-          );
-          transform: translateX( calc( -0% + 53px ) ) scaleX(1);
-        `"
-      > <!-- See note .c-notification-flare's styles below. Refer to translateX(54px). -->
-        <span class="c-notification-message">{{ message.text }}</span>
-      </div>
-    </button>
-  </TransitionGroup>
+  <button
+    v-for="message in queue"
+    :key="message.id"
+    @click="cancel(message.id)"
+    @mouseover="1 + 1"
+    class="o-notification"
+    :style="notificationPosition(message.id)"
+  >
+    <div
+      class="c-notification-flare"
+      :style="[
+        flarePosition(message.id),
+        `background-color: color-mix(
+          in srgb,
+          var(--color-ui) 85%,
+          var(--color-${message.colorInfluence})
+        )`]
+      "
+    > <!-- See note .c-notification-flare's styles below. Refer to translateX(54px). -->
+      <span class="c-notification-message">{{ message.text }}</span>
+    </div>
+  </button>
 </template>
 
 <style>

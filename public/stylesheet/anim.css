@@ -97,12 +97,10 @@
 
 
 .o-notification {
-  transition: background-color var(--duration-speed-fast);
+  transition:
+    background-color var(--duration-speed-fast),
+    transform var(--duration-speed-slow);
 }
-
-/** Vue <Transition> */
-
-/** END - Vue <Transition> */
 
 /*# END - Fixeds */
 
