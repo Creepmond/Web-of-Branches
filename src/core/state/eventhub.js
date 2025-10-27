@@ -38,6 +38,7 @@ export const GameEvent = {
 
    // Fixed UI
    DELTA_METAPANEL: "DELTA_METAPANEL",
+   BEFORE_NOTIFY: "BEFORE_NOTIFY",
 
    // Dynamic UI
    AFTER_MOVE_SCREEN: "MOVE_SCREEN",

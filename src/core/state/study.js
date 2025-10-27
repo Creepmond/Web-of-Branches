@@ -3,9 +3,11 @@ import player from "@/core/player.js";
 import Currency                from "@/core/state/mechanic/currency.js";
 import Effects                 from "@/core/state/mechanic/effects.js";
 import GameMechanicState       from "@/core/state/mechanic/gamestate.js";
+import GameNotify              from "@/core/notification.js";
 import EventHub, { GameEvent } from "./eventhub.js";
 
-import DC from "@/utility/constants.js";
+import DC     from "@/utility/constants.js";
+import format from "@/utility/format.js";
 
 class StudyState extends GameMechanicState {
    #effect = undefined; // Handled on the getter and setter pair at around Line 37
@@ -132,6 +134,8 @@ const Studies = {
             .times(this.refundFactor));
       }
 
+      // Uh... I'm pretty sure this nets extra currencies. Oops.
+      GameNotify.success(`Respecced, gained: ${ format(currencyAmount) } Seeds`);
       Currency['seed'].add(currencyAmount);
       return currencyAmount;
    },

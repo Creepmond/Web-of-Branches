@@ -14,7 +14,7 @@ export default {
   }},
   computed: {
     seedAmount() {
-      return format(this.seed, 2, 0);
+      return format(this.seed);
     },
   },
   methods: {

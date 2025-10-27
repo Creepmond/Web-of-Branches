@@ -3,7 +3,8 @@ import { isDecimal } from "./typecheck.js";
 
 //# Decimal
 
-const format = function(value, places = 2, placesUnder1000 = 2) {
+// The default format is in Integers
+const format = function(value, places = 2, placesUnder1000 = 0) {
    if (!isDecimal(value)) value = new Decimal(value);
 
    // Problem with this, this still causes formatting errors when it reaches the point where the

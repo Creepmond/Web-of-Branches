@@ -1,10 +1,13 @@
+/* TODO: Migrate all variables here to './vars.css' */
+
 :root {
   --color-ui: #2f2d39;
   --color-ui-acc: #4dc3fe;
 
   --color-text: #e4e4e4;
-  --color-good: #5ac466;
-  --color-bad: #efbf8f;
+  --color-success: #5ac466;
+  --color-warning: #efbf8f;
+  --color-distress: #d75b5b;
 
   --color-grey: #2e3440;
   --color-rich-black: #202527;
@@ -25,11 +28,11 @@
 
 /** General variables that use relative color syntax */
 :root {
-  --color-text-good: hsl(from var(--color-good) h calc(s * 0.3) l);
-  --color-text-bad: hsl(from var(--color-bad)   h calc(s * 0.3) l);
+  --color-text-good: hsl(from var(--color-success) h calc(s * 0.3) l);
+  --color-text-bad: hsl(from var(--color-warning)   h calc(s * 0.3) l);
 
-  --opaque-color-good: hsl(from var(--color-good) h s l / 0.5);
-  --opaque-color-bad: hsl(from var(--color-bad)   h s l / 0.5);
+  --opaque-color-good: hsl(from var(--color-success) h s l / 0.5);
+  --opaque-color-bad: hsl(from var(--color-warning)   h s l / 0.5);
 }
 
 span {
@@ -271,11 +274,11 @@ var(--opaque-color-ui-contrast), however */
 
 .o-function-button--inactive > .o-tooltip,
 .o-function-button--inactive:hover {
-  outline-color: var(--color-bad);
+  outline-color: var(--color-warning);
 }
 
 .o-function-button--inactive > .o-tooltip::before {
-  border-top-color: var(--color-bad);
+  border-top-color: var(--color-warning);
 }
 
 /*# END - Function  */
@@ -318,7 +321,7 @@ var(--opaque-color-ui-contrast), however */
   --color-study-bg: hsl(from var(--color-study) calc(h - 5) calc(s * 0.65) calc(l * 0.5));
   --color-study-acc: hsl(from var(--color-study) h calc(s - 5) calc(l - 15));
 
-  --color-study-focus: color-mix(in oklch, var(--color-study), var(--color-good) 5%);
+  --color-study-focus: color-mix(in oklch, var(--color-study), var(--color-success) 5%);
   --color-study-bg-focus: hsl(from var(--color-study-focus) calc(h - 5) calc(s * 0.65) calc(l * 0.6));
   --color-study-acc-focus: hsl(from var(--color-study-focus) h calc(s - 5) calc(l - 5));
 
@@ -385,7 +388,7 @@ var(--opaque-color-ui-contrast), however */
 }
 
 .o-prim-study--unavailable:hover::before {
-  background-color: var(--color-bad);
+  background-color: var(--color-warning);
 }
 
 .o-prim-study--available {

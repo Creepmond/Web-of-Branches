@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     studyCost() {
-      return format(this.cost, 2, 0);
+      return format(this.cost);
     },
   },
   methods: {

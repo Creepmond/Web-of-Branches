@@ -1,13 +1,18 @@
 :root {
+  /** Interface */
+  --color-text: #e4e4e4;
   --color-ui: #2f2d39;
   --color-ui-acc: #4dc3fe;
 
-  --color-text: #e4e4e4;
-  --color-good: #5ac466;
-  --color-bad: #efbf8f;
-
-  --color-grey: #2e3440;
-  --color-rich-black: #202527;
+  /** Influence */
+  --color-succeed: #5ac466;
+  --color-warning: #efbf8f;
+  --color-distress: #d75b5b;
   
-  --color-study: #f8300d;
+  /** Studies */
+  --color-root-study: #f8300d;
+  --color-vague-study: #a572d5;
+  --color-split-study: #A7CCE7;
+  --color-memoir-study: #C1F589;
+  --color-allay-study: #FFDF64;
 }

@@ -1,6 +1,8 @@
 <script>
 //! Appears below the Header tabs, you can see this component imported there!
 
+import EventHub, { GameEvent } from "@/core/state/eventhub.js";
+
 export default {
   name: "Notification",
   data() { return {
@@ -20,16 +22,19 @@ export default {
         text: 'Respecced, gained: 136 Seeds',
         colorInfluence: 'study',
         isShown: true,
+        duration: 5000,
       },
       '-2': {
         text: 'Bite me',
-        colorInfluence: 'good',
+        colorInfluence: 'success',
         isShown: true,
+        duration: 5000,
       },
       '-1': {
         text: 'I couldn\'t ever without you',
-        colorInfluence: 'good',
+        colorInfluence: 'success',
         isShown: true,
+        duration: 5000,
       },
     },
   }},
@@ -41,29 +46,22 @@ export default {
           if (initMap[0] === diffMap[0]) continue outerloop;
         }
 
-        // I *know* this one can just be done if deltaMap was a let... but hey, this looks
-        // fancier. I like color-coding
         deltaDurationMap = initMap;
       }
       
       const index = deltaDurationMap[0];
       const duration = deltaDurationMap[1];
 
+      // Remember, this.maintainedQueue is an Object with keys as the index
       this.maintainedQueue[index].isShown = false;
 
       setTimeout(() => {
-        delete this.maintainedQueue[index];
-        console.log(duration)
+        // 400 is the value of '--anim-speed-mod' in '/stylesheet/anim.css'.
+        //// setTimeout(() => { delete this.maintainedQueue[index]; }, 400);
       }, duration);
     },
   },
   methods: {
-    notify() {
-      //// this.highlightFlare();
-    },
-    highlightFlare(id) {
-      
-    },
     cancel(flareId) {
       this.queueDurationMap = this.queueDurationMap.filter(
         durationMap => durationMap[0] !== flareId
@@ -71,19 +69,31 @@ export default {
     },
   },
   mounted() {
-    // console.log(this.queueDurationMap)
+    const animSpeedMod = 400;
 
-    /*
-    setInterval(() => {
-      this.queue.push({
-        id: this.slottedId++,
-        text: 'Foo',
-        colorInfluence: 'bad'
-      });
+    EventHub.on(GameEvent.BEFORE_NOTIFY, (text, duration, colorInfluence) => {
+      const index = this.slottedId++;
+      const key = index.toString();
 
-      console.log(this.queue)
-    }, 2 * 1000)
-    */
+      this.maintainedQueue[key] = {
+        text,
+        duration,
+        colorInfluence,
+        isShown: false,
+      };
+
+      setTimeout(() => {
+        this.maintainedQueue[index].isShown = true;
+      }, animSpeedMod);
+
+      setTimeout(() => {
+        this.maintainedQueue[index].isShown = false;
+      }, duration);
+
+      setTimeout(() => {
+        delete this.maintainedQueue[key]
+      }, animSpeedMod + duration);
+    })
   },
 };
 </script>
