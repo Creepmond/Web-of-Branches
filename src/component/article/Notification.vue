@@ -6,19 +6,57 @@ export default {
   data() { return {
     slottedId: 0,
 
-    queue: [
-      {
-        id: -2,
+    queueDurationMap: [
+      ['-3', 5000],
+      ['-2', 5000],
+      ['-1', 5000],
+    ],
+
+    // This Object is actually a lot dumber than you might think. They contain a key-value pair,
+    // where the key is a stringed number. So it's like an Array, but a little easier to find an
+    // item instance. I would have used a new Map(), but those aren't reactive
+    maintainedQueue: {
+      '-3': {
         text: 'Respecced, gained: 136 Seeds',
         colorInfluence: 'study',
+        isShown: true,
       },
-      {
-        id: -1,
+      '-2': {
         text: 'Bite me',
         colorInfluence: 'good',
+        isShown: true,
       },
-    ],
+      '-1': {
+        text: 'I couldn\'t ever without you',
+        colorInfluence: 'good',
+        isShown: true,
+      },
+    },
   }},
+  watch: {
+    queueDurationMap(diff, init) {
+      let deltaDurationMap = [];
+      outerloop: for (const initMap of init) {
+        for (const diffMap of diff) {
+          if (initMap[0] === diffMap[0]) continue outerloop;
+        }
+
+        // I *know* this one can just be done if deltaMap was a let... but hey, this looks
+        // fancier. I like color-coding
+        deltaDurationMap = initMap;
+      }
+      
+      const index = deltaDurationMap[0];
+      const duration = deltaDurationMap[1];
+
+      this.maintainedQueue[index].isShown = false;
+
+      setTimeout(() => {
+        delete this.maintainedQueue[index];
+        console.log(duration)
+      }, duration);
+    },
+  },
   methods: {
     notify() {
       //// this.highlightFlare();
@@ -27,19 +65,13 @@ export default {
       
     },
     cancel(flareId) {
-      this.queue = this.queue.filter(message => message.id !== flareId);
+      this.queueDurationMap = this.queueDurationMap.filter(
+        durationMap => durationMap[0] !== flareId
+      );
     },
-
-    notificationPosition(id) {
-      const visible = this.queue.length === 0;
-      return `transform: translateX( ${-128 * visible}px );`
-    },
-    flarePosition(id) {
-      return `transform: translateX( calc( -0% + 53px ) ) scaleX(1);`
-    }
   },
   mounted() {
-    console.log(this.queue)
+    // console.log(this.queueDurationMap)
 
     /*
     setInterval(() => {
@@ -50,7 +82,7 @@ export default {
       });
 
       console.log(this.queue)
-    }, 20 * 1000)
+    }, 2 * 1000)
     */
   },
 };
@@ -58,22 +90,24 @@ export default {
 
 <template>
   <button
-    v-for="message in queue"
-    :key="message.id"
-    @click="cancel(message.id)"
+    v-for="(message, id) in maintainedQueue"
+    :key="id"
+    @click="cancel(id)"
     @mouseover="1 + 1"
     class="o-notification"
-    :style="notificationPosition(message.id)"
+    :style="`transform: translateX( ${-128 * 0}px );`"
   >
     <div
       class="c-notification-flare"
-      :style="[
-        flarePosition(message.id),
-        `background-color: color-mix(
+      :style="`
+        transform:
+          translateX( calc( ${message.isShown ? 0 : -50}% + 53px ) )
+          scaleX(${message.isShown ? 1 : 0});
+        background-color: color-mix(
           in srgb,
           var(--color-ui) 85%,
           var(--color-${message.colorInfluence})
-        )`]
+        );`
       "
     > <!-- See note .c-notification-flare's styles below. Refer to translateX(54px). -->
       <span class="c-notification-message">{{ message.text }}</span>

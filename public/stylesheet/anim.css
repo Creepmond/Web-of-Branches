@@ -1,6 +1,6 @@
 :root {
   --duration-speed-fast: 0.2s;
-  --duration-speed-mod: 0.3s;
+  --duration-speed-mod: 0.4s;
   --duration-speed-slow: 1s;
 
   --anim-over-in-and-out: cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -100,6 +100,10 @@
   transition:
     background-color var(--duration-speed-fast),
     transform var(--duration-speed-slow);
+}
+
+.c-notification-flare {
+  transition: transform var(--duration-speed-mod) var(--anim-over-in-and-out);
 }
 
 /*# END - Fixeds */
