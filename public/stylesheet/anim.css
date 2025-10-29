@@ -1,24 +1,19 @@
-:root {
-  --duration-speed-fast: 0.2s;
-  /*! Changing mod means to change '@/component/article/Notification.vue's animSpeedMod constant */
-  --duration-speed-mod: 0.4s; 
-  --duration-speed-slow: 1s;
+/* *******************************************************************************************************
+* ***************************************     Default Elements     ***************************************
+* *******************************************************************************************************/
 
-  --anim-over-in-and-out: cubic-bezier(0.5, -0.5, 0.5, 1.5);
-  --anim-expo-in: cubic-bezier(1, 0, 1, 1);
-  --anim-expo-out: cubic-bezier(0, 1, 1, 1);
-}
-
-
+/* ###################
+* Start: Semantics *
+* ******************/
 
 @keyframes wipe-up {
   0% { transform: translateY(50%) scaleY(0); }
   100% { transform: translateY(0) scaleY(1); }
 }
 
-/*# Semantic */
 
-/** Vue <Transition> */
+
+/* Start: Vue <Transition> */
 .a-tooltip-enter-active {
   animation: wipe-up var(--duration-speed-fast) var(--anim-over-in-and-out);
 }
@@ -26,9 +21,11 @@
 .a-tooltip-leave-active {
   animation: wipe-up var(--duration-speed-fast) ease-out reverse;
 }
-/** END - Vue <Transition> */
+/* Close: Vue <Transition> */
 
-/*# END - Semantic */
+/* ************************
+* Close: Simple Constants *
+############################*/
 
 
 
@@ -90,7 +87,7 @@
 }
 /** END - Vue <Transition> */
 
-/*-> Transition to */
+/**> Transition to */
 .l-function-indicator:has(+ .o-function-button:hover) {
   opacity: 0.75 
 }
@@ -170,7 +167,7 @@
 
 
 
-/*-> Transition to */
+/**> Transition to */
 .o-prim-study--obfuscated::before {
   inset: 2px;
 }

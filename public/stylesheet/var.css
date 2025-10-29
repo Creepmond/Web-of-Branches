@@ -1,18 +1,83 @@
+/* *******************************************************************************************************
+* ***************************************     Global Variables     ***************************************
+* *******************************************************************************************************/
+
+/* ##########################
+* Start: Simple Constants *
+* *************************/
+
 :root {
-  /** Interface */
+  --size-text-mod: 15px;
+
+  --alpha-hazy: 60%;
+  --alpha-opaque: 30%;
+  --alpha-subtle: 15%;
+}
+
+/* ************************
+* Close: Simple Constants *
+############################*/
+
+
+
+
+
+/* ####################
+* Start: Animations *
+* *******************/
+
+:root {
+  /*? Changing '-mod' means to change '@/component/article/Notification.vue's animSpeedMod constant */
+  --duration-speed-fast: 0.2s;
+  --duration-speed-mod: 0.4s; 
+  --duration-speed-slow: 1s;
+
+  --anim-exaggerate: cubic-bezier(0.5, -0.5, 0.5, 1.5);
+  --anim-expo-in: cubic-bezier(1, 0, 1, 1);
+  --anim-expo-out: cubic-bezier(0, 1, 1, 1);
+}
+
+/* ******************
+* Close: Animations *
+######################*/
+
+
+
+
+
+/* #######################
+* Start: Basic Theming *
+* **********************/
+
+:root {
+  /* Interface */
   --color-text: #e4e4e4;
   --color-ui: #2f2d39;
   --color-ui-acc: #4dc3fe;
 
-  /** Influence */
-  --color-succeed: #5ac466;
-  --color-warning: #efbf8f;
-  --color-distress: #d75b5b;
+  /* Influence */
+  --color-influ-succeed: #5ac466;
+  --color-influ-warning: #efbf8f;
+  --color-influ-distress: #d75b5b;
   
-  /** Studies */
-  --color-root-study: #f8300d;
-  --color-vague-study: #a572d5;
-  --color-split-study: #A7CCE7;
-  --color-memoir-study: #C1F589;
-  --color-allay-study: #FFDF64;
+  /* Studies */
+  --color-study--root: #f8300d;
+  --color-study--vague: #a572d5;
+  --color-study--split: #A7CCE7;
+  --color-study--memoir: #C1F589;
+  --color-study--allay: #FFDF64;
 }
+
+/* *********************
+* Close: Basic Theming *
+#########################*/
+
+
+
+
+
+
+
+/* *******************************************************************************************************
+* ***************************************     Compound Colors     ****************************************
+* *******************************************************************************************************/

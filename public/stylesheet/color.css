@@ -1,39 +1,6 @@
-/* TODO: Migrate all variables here to './vars.css' */
-
-:root {
-  --color-ui: #2f2d39;
-  --color-ui-acc: #4dc3fe;
-
-  --color-text: #e4e4e4;
-  --color-success: #5ac466;
-  --color-warning: #efbf8f;
-  --color-distress: #d75b5b;
-
-  --color-grey: #2e3440;
-  --color-rich-black: #202527;
-  
-  --color-study: #f8300d;
-}
-
-/** Monochromatic hell... */
-:root {
-  /* Probably need to make --color-shadow somewhere */
-  --color-text-weak:   hsl(from var(--color-text) h s calc(0.5 * l + 25));
-  --color-text-weaker: hsl(from var(--color-text-weak) h s calc(0.1 * l + 30));
-
-  /* ...Ew. I think I might want to use color-mix for these */
-  --color-grey-acc: hsl(from var(--color-grey) h s calc(l * 0.75));
-  --color-rich-black-acc: lch(from var(--color-rich-black) calc(l * 0.8) calc(c - 0.5) calc(h + 15));
-}
-
-/** General variables that use relative color syntax */
-:root {
-  --color-text-good: hsl(from var(--color-success) h calc(s * 0.3) l);
-  --color-text-bad: hsl(from var(--color-warning)   h calc(s * 0.3) l);
-
-  --opaque-color-good: hsl(from var(--color-success) h s l / 0.5);
-  --opaque-color-bad: hsl(from var(--color-warning)   h s l / 0.5);
-}
+/* *******************************************************************************************************
+* ***************************************     Default Elements     ***************************************
+* *******************************************************************************************************/
 
 span {
   color: var(--color-text);
@@ -45,42 +12,38 @@ text {
 
 
 
-:root {
-  --color-bg:          hsl(from var(--color-ui) h calc(s / 2) calc(l / 4));
-  --color-bg-stripes:  hsl(from var(--color-ui-acc) h calc(s * 0.2) calc(l * 0.1));
-  --color-bg-contrast: hsl(from var(--color-bg) h s calc(100 - l));
-
-  --opaque-color-bg: hsl(from var(--color-bg) h s l / 0.5);
-  --opaque-color-bg-contrast: hsl(from var(--color-bg-contrast) h s l / 0.25);
-}
-
-/*# Background */
+/* ####################
+* Start: Background *
+* *******************/
 
 #background {
   background:
-    repeating-linear-gradient(transparent 0 190px, var(--color-bg-stripes) 195px, transparent 200px),
-    repeating-linear-gradient(90deg, var(--color-bg) 0 190px, var(--color-bg-stripes) 195px, var(--color-bg) 200px);
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 190px,
+      var(--color-bg-stripes) 195px,
+      transparent 200px
+    ),
+
+    repeating-linear-gradient(
+      90deg,
+      var(--color-bg) 0 190px,
+      var(--color-bg-stripes) 195px,
+      var(--color-bg) 200px
+    );
 }
 
-#c-modal::backdrop {
-  background: 
-    linear-gradient(170deg, transparent 20%, #5d576b20);
-}
-
-/*# END - Background */
+/* ******************
+* Close: Background *
+######################*/
 
 
 
 
 
-:root {
-  --color-key: #f8f8ff;
-
-  --color-key-acc: hsl(from var(--color-key) h calc(s * 0.5) l);
-  --color-key-text: hsl(from var(--color-key) h s calc(100 - l));
-}
-
-/*# Semantic */
+/* ##################
+* Start: Semantic *
+* *****************/
 
 .o-button {
   border-color: var(--b-opaque-color-ui-acc);
@@ -107,29 +70,23 @@ text {
   border-color: var(--color-ui-acc);
 }
 
-/*# END - Semantic */
+/* ****************
+* Close: Semantic *
+####################*/
 
 
 
 
 
-:root {
-  --color-ui-contrast: hsl(from var(--color-ui) h s calc(100 - l));
-  --opaque-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / 0.3);
-
-  --color-focus-ui: hsl(from var(--color-ui) h s calc(0.8 * l + 10));
-
-  --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
-  --opaque-color-focus-ui: hsl(from var(--color-focus-ui) h s l / 0.6);
-
-  /* I'll need to make a wiki for this lol, b stands for "base" when there are "fainter" opaque colors */
-  --b-opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.3); 
-  --f1-opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.2);
-}
 
 
+/* *******************************************************************************************************
+* **************************************     Fixed Interface     *****************************************
+* *******************************************************************************************************/
 
-/*# Header */
+/* ################
+* Start: Header *
+* ***************/
 
 /* See './src/component/base/DefaultSlider.vue'. Unfortunately, this is one of the elements that I cannot
 directly modify the background-color of, as its bound to the component itself. I based the value on
@@ -200,11 +157,17 @@ var(--opaque-color-ui-contrast), however */
   ) 1;
 }
 
-/*# END - Header */
+/* **************
+* Close: Header *
+##################*/
 
 
 
-/*# Metapanel */
+
+
+/* ###################
+* Start: Metapanel *
+* ******************/
 
 .o-metapanel {
   background-color: var(--opaque-color-ui);
@@ -237,11 +200,17 @@ var(--opaque-color-ui-contrast), however */
   ) 1;
 }
 
-/*# END - Metapanel */
+/* *****************
+* Close: Metapanel *
+#####################*/
 
 
 
-/*# Function */
+
+
+/* ##################
+* Start: Function *
+* *****************/
 
 .o-function {
   background-color: var(--opaque-color-ui);
@@ -281,11 +250,17 @@ var(--opaque-color-ui-contrast), however */
   border-top-color: var(--color-warning);
 }
 
-/*# END - Function  */
+/* ****************
+* Close: Function *
+####################*/
 
 
 
-/*# Notification */
+
+
+/* ######################
+* Start: Notification *
+* *********************/
 
 .o-notification {
   background-color: var(--opaque-color-ui);
@@ -311,29 +286,23 @@ var(--opaque-color-ui-contrast), however */
   );
 }
 
-/*# END - Notification */
+/* ********************
+* Close: Notification *
+########################*/
 
 
 
 
 
-:root {
-  --color-study-bg: hsl(from var(--color-study) calc(h - 5) calc(s * 0.65) calc(l * 0.5));
-  --color-study-acc: hsl(from var(--color-study) h calc(s - 5) calc(l - 15));
-
-  --color-study-focus: color-mix(in oklch, var(--color-study), var(--color-success) 5%);
-  --color-study-bg-focus: hsl(from var(--color-study-focus) calc(h - 5) calc(s * 0.65) calc(l * 0.6));
-  --color-study-acc-focus: hsl(from var(--color-study-focus) h calc(s - 5) calc(l - 5));
-
-  --color-study-grey: #3d3d3d;
-  --color-study-grey-acc: #262626;
-
-  --color-study-bg-available: #140c0d;
-}
 
 
+/* *******************************************************************************************************
+* **********************************     Tree-related Elements     ***************************************
+* *******************************************************************************************************/
 
-/*# Studies */
+/* #################
+* Start: Studies *
+* ****************/
 
 .c-prim-study-id {
   text-shadow: 0 0 5px var(--color-text);
@@ -444,13 +413,17 @@ var(--opaque-color-ui-contrast), however */
   outline-color: var(--color-study-focus);
 }
 
-/*# END - Studies */
+/* ***************
+* Close: Studies *
+###################*/
 
 
 
 
 
-/*# Study Links */
+/* #####################
+* Start: Study Links *
+* ********************/
 
 .c-study-link {
   stroke: var(--color-study-acc);
@@ -464,4 +437,6 @@ var(--opaque-color-ui-contrast), however */
   stroke: var(--color-grey-acc);
 }
 
-/*# END - Study Links */
+/* *******************
+* Close: Study Links *
+#############@#########*/

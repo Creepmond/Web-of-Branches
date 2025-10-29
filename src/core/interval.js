@@ -45,6 +45,7 @@ export function setGameloop(handler) {
    };
 };
 
+/*
 setGameloop(() => {
    // EventHub.dispatch(GameEvent.UPDATE);
    Time.tick();
@@ -53,3 +54,4 @@ setGameloop(() => {
    
    Seed.tick();
 });
+*/
