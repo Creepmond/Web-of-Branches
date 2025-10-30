@@ -7,11 +7,21 @@
 * *************************/
 
 :root {
-  --size-text-mod: 15px;
+  --meas-border: 1px;
+  --meas-border-bg_pattern: 5px;
+  --meas-grid-bg_pattern: 200px;
 
-  --alpha-hazy: 60%;
-  --alpha-opaque: 30%;
-  --alpha-subtle: 15%;
+  --size-text-mod: 20px;
+
+  --alpha-vivid: 90%;
+  --alpha-opaque: 60%;
+  --alpha-hinted: 30%;
+  --alpha-subtle: 10%;
+
+  --ratio-block: 0.9;
+  --ratio-chunk: 0.6;
+  --ratio-fair: 0.3;
+  --ratio-bit: 0.1;
 }
 
 /* ************************
@@ -51,9 +61,10 @@
 
 :root {
   /* Interface */
-  --color-text: #e4e4e4;
-  --color-ui: #2f2d39;
-  --color-ui-acc: #4dc3fe;
+  --color-text: #effbf7; /* This and below should have sufficiently contrasting colors */
+  --color-bg-prim: #0e0311;
+  --color-bg-sec: #3f355a;
+  --color-bg-accent: #4dc3fe; /* For UI, at least. Studies themselves are accentful by nature */
 
   /* Influence */
   --color-influ-succeed: #5ac466;
@@ -81,3 +92,39 @@
 /* *******************************************************************************************************
 * ***************************************     Compound Colors     ****************************************
 * *******************************************************************************************************/
+
+/* ###############################
+* Start: Dimensional Constants *
+* ******************************/
+
+:root {
+  --meas-bg_pattern-2diff: calc(var(--meas-grid-bg_pattern) - 2 * var(--meas-border-bg_pattern));
+  --meas-bg_pattern-diff: calc(var(--meas-grid-bg_pattern) - var(--meas-border-bg_pattern));
+
+  --size-text-low: calc(var(--size-text-mod) * 0.75);
+  --size-text-big: calc(var(--size-text-mod) * 1.15);
+  --size-text-xlow: calc(var(--size-text-low) * 0.95);
+  --size-text-xbig: calc(var(--size-text-big) * 1.15);
+}
+
+/* *****************************
+* Close: Dimensional Constants *
+#################################*/
+
+
+
+
+
+/* ######################
+* Start: Color Mixing *
+* *********************/
+
+:root {
+  --color-bg_pattern: hsl(from var(--color-bg-prim) h calc(s * var(--ratio-chunk)) l);
+  --color-bg_stripes:
+    color-mix(in oklab, var(--color-bg-prim) var(--alpha-vivid), var(--color-bg-accent));
+}
+
+/* ********************
+* Close: Color Mixing *
+########################*/

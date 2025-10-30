@@ -20,16 +20,16 @@ text {
   background:
     repeating-linear-gradient(
       0deg,
-      transparent 0 190px,
-      var(--color-bg-stripes) 195px,
-      transparent 200px
+      transparent             0 var(--meas-bg_pattern-2diff),
+      var(--color-bg_stripes) var(--meas-bg_pattern-diff),
+      transparent             var(--meas-grid-bg_pattern)
     ),
 
     repeating-linear-gradient(
       90deg,
-      var(--color-bg) 0 190px,
-      var(--color-bg-stripes) 195px,
-      var(--color-bg) 200px
+      var(--color-bg_pattern) 0 var(--meas-bg_pattern-2diff),
+      var(--color-bg_stripes) var(--meas-bg_pattern-diff),
+      var(--color-bg_pattern) var(--meas-grid-bg_pattern)
     );
 }
 
