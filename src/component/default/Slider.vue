@@ -37,7 +37,6 @@ export default {
     @change="updateModelValue"
     @dragging="updateModelValue"
     :duration="0"
-    :railStyle="{backgroundColor: '#c8c6d24d'}"
     :dotSize="12"
   >
     <template #dot>

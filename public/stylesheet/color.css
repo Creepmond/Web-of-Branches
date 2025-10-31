@@ -46,16 +46,16 @@ text {
 * *****************/
 
 .o-button {
-  border-color: var(--b-opaque-color-ui-acc);
+  border-color: var(--hinted-color-ui-acc);
 }
 
 
 
 .f-hotkey {
   background-color: var(--color-key);
-  color: var(--color-key-text);
+  color:            var(--color-key-text);
 
-  border-color: var(--color-key-acc);
+  border-color:     var(--color-key-acc);
 }
 
 
@@ -63,7 +63,7 @@ text {
 .o-tooltip {
   background-color: var(--color-ui);
 
-  outline-color: var(--color-ui-acc);
+  outline-color:    var(--color-ui-acc);
 }
 
 .o-tooltip::before {
@@ -73,6 +73,30 @@ text {
 /* ****************
 * Close: Semantic *
 ####################*/
+
+
+
+
+/* #############
+* Start: API *
+* ************/
+
+/* Bad practice yes, but the styles are inline */
+.vue-slider-rail {
+  background-color: var(--hinted-color-ui-contrast) !important;
+}
+
+.vue-slider-point {
+  background-color: var(--color-ui-contrast) !important;
+}
+
+.vue-slider-bar {
+  background-color: var(--color-ui-acc) !important;
+}
+
+/* ***********
+* Close: API *
+###############/
 
 
 
@@ -88,71 +112,52 @@ text {
 * Start: Header *
 * ***************/
 
-/* See './src/component/base/DefaultSlider.vue'. Unfortunately, this is one of the elements that I cannot
-directly modify the background-color of, as its bound to the component itself. I based the value on
-var(--opaque-color-ui-contrast), however */
-.vue-slider-rail {
-  background-color: var(--opaque-color-ui-contrast);
-}
-
-.vue-slider-point {
-  background-color: var(--color-ui-contrast);
-}
-
-.vue-slider-bar {
-  background-color: var(--color-ui-acc);
-}
-
-.c-header-subject {
-  background-color: var(--opaque-color-ui);
-}
-
-
-
 .c-header-tab-button {
-  background-color: var(--opaque-color-ui);
-  color: var(--color-text);
+  background-color: var(--hinted-color-ui);
+  color:            var(--color-text);
 
   outline-color: transparent;
 }
 
 .c-header-tab-button:hover {
-  background-color: var(--opaque-color-focus-ui);
+  background-color: var(--hinted-color-ui-acc);
 }
 
 .c-header-tab-button--flipped {
-  outline-color: var(--b-opaque-color-ui-acc);
+  outline-color: var(--opaque-color-ui-acc);
 }
 
 .l-header-indicator {
-  border-image:
-    linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 40% 60%, transparent 100%) 1;
+  border-image: var(--gradient-symmetrical-ui_acc) 1;
 }
 
 
+
+.c-header-subject {
+  background-color: var(--hinted-color-ui);
+}
 
 .c-header--currency-value {
   border-bottom: var(--color-ui);
 }
 
 .c-header--option-calculated {
-  border-color: var(--b-opaque-color-ui-acc);
+  border-color: var(--hinted-color-ui-acc);
 }
 
 
 
 #c-header--physics-indicator {
-  border-image:
-    linear-gradient(90deg, transparent 0%, var(--b-opaque-color-ui-acc) 20% 80%, transparent 100%) 1;
+  border-image: var(--gradient-symmetrical-ui_acc) 1;
 }
 
 #c-header--physics-indicator::before {
   border-image: linear-gradient(
     90deg,
     transparent 0%,
-    var(--b-opaque-color-ui-acc) 30% 36%,
+    var(--opaque-color-ui-acc) 30% 36%,
     transparent 36% 64%,
-    var(--b-opaque-color-ui-acc) 64% 70%,
+    var(--opaque-color-ui-acc) 64% 70%,
     transparent 100%
   ) 1;
 }
@@ -170,7 +175,7 @@ var(--opaque-color-ui-contrast), however */
 * ******************/
 
 .o-metapanel {
-  background-color: var(--opaque-color-ui);
+  background-color: var(--hinted-color-ui);
 }
 
 .c-metapanel-cancel {
@@ -192,12 +197,7 @@ var(--opaque-color-ui-contrast), however */
 }
 
 .l-metapanel--study_name {
-  border-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-ui-acc) 20% 80%,
-    transparent 100%
-  ) 1;
+  border-image: var(--gradient-symmetrical-ui_acc) 1;
 }
 
 /* *****************
@@ -213,7 +213,7 @@ var(--opaque-color-ui-contrast), however */
 * *****************/
 
 .o-function {
-  background-color: var(--opaque-color-ui);
+  background-color: var(--hinted-color-ui);
 
   outline-color: var(--b-opaque-color-ui-acc);
 }
@@ -263,7 +263,7 @@ var(--opaque-color-ui-contrast), however */
 * *********************/
 
 .o-notification {
-  background-color: var(--opaque-color-ui);
+  background-color: var(--hinted-color-ui);
 
   border-color: var(--b-opaque-color-ui-acc);
 }
