@@ -91,9 +91,9 @@ export default {
           translateX( calc( ${message.isShown ? 0 : -50}% + 47px ) )
           scaleX(${message.isShown ? 1 : 0});
         background-color: color-mix(
-          in srgb,
-          var(--color-ui) 85%,
-          var(--color-${message.colorInfluence})
+          in oklab,
+          var(--color-ui),
+          var(--color-${message.colorInfluence}) var(--alpha-hinted)
         );`
       "
     > <!-- See note .c-notification-flare's styles below. Refer to translateX(47px). -->

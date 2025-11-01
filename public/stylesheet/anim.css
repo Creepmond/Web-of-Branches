@@ -15,7 +15,7 @@
 
 /* Start: Vue <Transition> */
 .a-tooltip-enter-active {
-  animation: wipe-up var(--duration-speed-fast) var(--anim-over-in-and-out);
+  animation: wipe-up var(--duration-speed-fast) var(--anim-exaggerate);
 }
 
 .a-tooltip-leave-active {
@@ -101,7 +101,7 @@
 }
 
 .c-notification-flare {
-  transition: transform var(--duration-speed-mod) var(--anim-over-in-and-out);
+  transition: transform var(--duration-speed-mod) var(--anim-exaggerate);
 }
 
 /*# END - Fixeds */
@@ -153,15 +153,15 @@
 
 .o-prim-study--bought::before {
   transition:
-    inset var(--duration-speed-mod) var(--anim-over-in-and-out),
+    inset var(--duration-speed-mod) var(--anim-exaggerate),
     outline-width var(--duration-speed-fast);
 }
 
 .c-prim-study-name .f-sup {
-  animation: raise-sup var(--duration-speed-slow) var(--anim-over-in-and-out) forwards;
+  animation: raise-sup var(--duration-speed-slow) var(--anim-exaggerate) forwards;
 }
 .c-prim-study-name .f-sub {
-  animation: lay-sub var(--duration-speed-slow) var(--anim-over-in-and-out) forwards;
+  animation: lay-sub var(--duration-speed-slow) var(--anim-exaggerate) forwards;
 }
 
 

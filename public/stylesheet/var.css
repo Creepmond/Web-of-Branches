@@ -13,15 +13,17 @@
 
   --size-text-mod: 20px;
 
+  /* This combination allows for: */
+  /* 10 15 30 40 60 70 85 90 */
   --alpha-vivid:  90%;
   --alpha-opaque: 60%;
   --alpha-hinted: 30%;
-  --alpha-subtle: 10%;
+  --alpha-subtle: 15%;
 
-  --ratio-block: 0.9;
-  --ratio-chunk: 0.6;
-  --ratio-fair:  0.3;
-  --ratio-bit:   0.1;
+  --ratio-block: 0.90;
+  --ratio-chunk: 0.60;
+  --ratio-fair:  0.30;
+  --ratio-bit:   0.15;
 }
 
 /* ************************
@@ -142,6 +144,10 @@
 :root {
   --color-bg-contrast: hsl(from var(--color-bg-prim) h s calc(100 - l));
 
+  --hinted-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-hinted));
+  --opaque-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-opaque));
+  --subtle-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-subtle));
+
   --color-ui:          var(--color-bg-sec);
   --color-ui-acc:      var(--color-bg-acc);
   --color-ui-contrast: var(--color-bg-contrast);
@@ -153,8 +159,19 @@
   --opaque-color-ui:     hsl(from var(--color-ui) h s l / var(--alpha-opaque));
   --opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / var(--alpha-opaque));
 
+  --subtle-color-ui:     hsl(from var(--color-ui) h s l / var(--alpha-subtle));
+  --subtle-color-ui-acc: hsl(from var(--color-ui-acc) h s l / var(--alpha-subtle));
+
   --gradient-symmetrical-ui_acc:
     linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 20% 80%, transparent 100%);
+
+}
+
+/** Colors that indicate interaction */
+:root {
+  --color-dynamic: var(--color-bg-contrast);
+
+  --color-ui--focus: color-mix(in oklab, var(--color-ui) var(--alpha-vivid), var(--color-dynamic));
 }
 
 /* **************************************

@@ -54,7 +54,7 @@ class StudyState extends GameMechanicState {
       player.studyBoughtBits = player.studyBoughtBits.concat( rmRef(this.id) );
       player.studyExposedBits.add(this.id);
 
-      GameNotify.success('hi all the less i know the better')
+      GameNotify.success('hi all the less i know the better');
 
       if (this.effectInfo.state === 'callback') 
          this.effectInfo.call();

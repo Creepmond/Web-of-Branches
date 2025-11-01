@@ -185,7 +185,7 @@ text {
 }
 
 .c-metapanel-cancel:hover {
-  background-color: var(--color-focus-ui);
+  background-color: var(--color-ui--focus);
 }
 
 
@@ -213,30 +213,30 @@ text {
 * *****************/
 
 .o-function {
-  background-color: var(--hinted-color-ui);
+  background-color: var(--opaque-color-ui);
 
-  outline-color: var(--b-opaque-color-ui-acc);
+  outline-color: var(--opaque-color-ui-acc);
 }
 
 .o-function:has(.o-function-button:hover) {
-  outline-color: var(--f1-opaque-color-ui-acc);
+  outline-color: var(--hinted-color-ui-acc);
 }
 
 .l-function-indicator {
   background-color: var(--color-ui);
 
-  outline-color: var(--b-opaque-color-ui-acc);
+  outline-color: var(--opaque-color-ui-acc);
 }
 
 .o-function-button {
   background-color: var(--color-ui);
   
-  box-shadow: 4px 4px 4px var(--opaque-color-bg);
+  box-shadow: 4px 4px 4px var(--opaque-color-bg-prim);
   outline-color: transparent;
 }
 
 .o-function-button:hover {
-  background-color: var(--color-focus-ui);
+  background-color: var(--color-ui--focus);
 
   outline-color: var(--color-ui-acc);
 }
@@ -265,11 +265,11 @@ text {
 .o-notification {
   background-color: var(--hinted-color-ui);
 
-  border-color: var(--b-opaque-color-ui-acc);
+  border-color: var(--hinted-color-ui-acc);
 }
 
 .o-notification:hover {
-  background-color: var(--color-ui);
+  background-color: var(--opaque-color-ui);
 
   border-color: var(--color-ui-acc);
 }
@@ -281,7 +281,7 @@ text {
 .c-notification-flare::after {
   background-image: linear-gradient(
     90deg,
-    var(--opaque-color-bg) 0%,
+    var(--hinted-color-bg-prim) 0%,
     transparent 100%
   );
 }

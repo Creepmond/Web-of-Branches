@@ -47,6 +47,7 @@ export default {
     // "key", because the components above is an Object. The actual properties for, say, something like
     // HeaderResources, is {"HeaderResources": HeaderResources}
     for (const key in tabComponent) {
+      if ( !key.includes('Header') ) continue;
       const tabName = key.replace(/^Header/, '');
       if (tabName === 'Tabs') continue;
       this.tabList.push(tabName);
