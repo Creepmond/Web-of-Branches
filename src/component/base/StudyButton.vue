@@ -166,7 +166,7 @@ export default {
       {{ id }}
     </span>
     <button
-      class="o-prim-study"
+      class="o-prim-study o-prim-study_root"
       :class="[availabilityClass, respecClass]"
       @pointerdown.exact="setPointerdown"
       @pointerup.exact="tryPurchase"

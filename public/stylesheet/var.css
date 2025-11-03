@@ -72,13 +72,16 @@
   --color-influ-succeed:  #5ac466;
   --color-influ-warning:  #efbf8f;
   --color-influ-distress: #d75b5b;
-  
+  --color-influ-monochrome: #2e3440;
+
   /* Studies */
-  --color-study--root:   #f8300d;
-  --color-study--vague:  #a572d5;
-  --color-study--split:  #A7CCE7;
-  --color-study--memoir: #C1F589;
-  --color-study--allay:  #FFDF64;
+  --color-study_root:   #f8300d;
+  --color-study_vague:  #a572d5;
+  --color-study_split:  #a7cce7;
+  --color-study_memoir: #c1f589;
+  --color-study_allay:  #ffdf64;
+
+  --color-study--obfuscated-prim: #202527; /* State '--unavailable' is depedendent on this  */
 }
 
 /* *********************
@@ -92,8 +95,53 @@
 
 
 /* *******************************************************************************************************
-* ***************************************     Compound Colors     ****************************************
+* *********************************     Variable Dependencies     ****************************************
 * *******************************************************************************************************/
+
+/* #################
+* Start: Studies *
+* ****************/
+
+.o-prim-study_root {
+  --color-study-prim: var(--color-study_root);
+}
+
+.o-prim-study_vague {
+  --color-study-prim: var(--color-study_vague);
+}
+
+.o-prim-study_split {
+  --color-study-prim: var(--color-study_split);
+}
+
+.o-prim-study_memoir {
+  --color-study-prim: var(--color-study_memoir)
+}
+
+.o-prim-study_allay {
+  --color-study-prim: var(--color-study_allay);
+}
+
+
+/* ***************
+* Close: Studies *
+###################*/
+
+
+
+
+
+
+
+/* *******************************************************************************************************
+* ************************************     Compound Variables     ****************************************
+* *******************************************************************************************************/
+
+/*
+  When working with relative color variables (compounds), you'll encounter the uses of color syntax.
+  More particularly, not just when changing the alpha opacity, but rather when modifying the saturation or
+  luminosity...
+*/
 
 /* ###############################
 * Start: Dimensional Constants *
@@ -144,6 +192,8 @@
 :root {
   --color-bg-contrast: hsl(from var(--color-bg-prim) h s calc(100 - l));
 
+  --color-text-sec: hsl(from var(--color-text) h calc(0.1 * s) calc(0.04 * l + 48));
+
   --hinted-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-hinted));
   --opaque-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-opaque));
   --subtle-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-subtle));
@@ -187,7 +237,10 @@
 * ************************************/
 
 :root {
-  
+  --color-study--unavailable-prim:
+    hsl(from var(--color-study--obfuscated-prim) h s clamp(0, calc(2 * l - 50), 100));
+
+  --color-study--obfuscated-sec: hsl(from var(--color-study--obfuscated-prim) h s calc(0.6 * l + 20))
 }
 
 /* ***********************************

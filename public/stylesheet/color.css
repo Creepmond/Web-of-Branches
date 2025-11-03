@@ -304,35 +304,44 @@ text {
 * Start: Studies *
 * ****************/
 
+/* Default */
 .c-prim-study-id {
   text-shadow: 0 0 5px var(--color-text);
 }
 
 .o-prim-study {
-  text-shadow: 0 0 3px #000;
-  box-shadow: inset 0px 0px 25px -3px #000a;
+  text-shadow: 0 0 3px var(--color-bg-prim);
+  box-shadow: inset 0px 0px 25px -3px var(--color-bg-prim);
 }
 
 .o-prim-study::before {
-  background-image: radial-gradient(transparent 0 90%, #0006 99% 100%);
+  background-image: radial-gradient(transparent 0 90%, var(--hinted-color-bg-prim) 99% 100%);
 
   box-shadow: 0 0 20px #000a;
-  outline: 2px solid var(--color-study);
+  outline: 2px solid var(--color-study-prim);
 }
 
+
+
+/* Obfuscated */
 .o-prim-study--obfuscated {
-  background-color: var(--color-rich-black);
+  background-color: var(--color-study--obfuscated-prim);
 }
 .o-prim-study--obfuscated span {
-  color: var(--color-text-weaker);
+  color: var(--color-text-sec);
 }
 
 .o-prim-study--obfuscated::before {
-  background-color: var(--color-rich-black);
+  /* This isn't actually seen, but in case some pixels overlap, there aren't some strong color */
+  /* contrast with the primary study color */
+  background-color: var(--color-study--obfuscated-prim);
 
-  outline: var(--color-rich-black-acc);
+  outline-color: var(--color-study--obfuscated-prim);
 }
 
+
+
+/* Unavailable */
 .o-prim-study--unavailable {
   background-color: var(--color-study-grey);
 }
@@ -360,19 +369,22 @@ text {
   background-color: var(--color-warning);
 }
 
+
+
+/* Available */
 .o-prim-study--available {
   background-color: var(--color-study-bg-available);
   background-image:
     linear-gradient(var(--opaque-color-bg-contrast) -50%, transparent);
 
-  box-shadow: inset 0px 0px 25px -3px var(--color-study);
+  box-shadow: inset 0px 0px 25px -3px var(--color-study-prim);
 }
 .o-prim-study--available span {
-  color: var(--color-study);
+  color: var(--color-study-prim);
 }
 
 .o-prim-study--available .l-prim-study-header span {
-  text-shadow: 0 0 15px var(--color-study);
+  text-shadow: 0 0 15px var(--color-study-prim);
 }
 
 .o-prim-study--available:hover {
@@ -386,6 +398,9 @@ text {
   color: var(--color-text);
 }
 
+
+
+/* Bought */
 .o-prim-study--bought {
   background-color: var(--color-study-bg);
 }
@@ -403,6 +418,7 @@ text {
 
 
 
+/* Respecced */
 .o-prim-study--respecced {
   background-color: var(--color-study-bg-focus);
 }
@@ -429,12 +445,9 @@ text {
   stroke: var(--color-study-acc);
 }
 
-.c-study-link_segment--obfuscated {
-  stroke: var(--color-grey);
-}
-
+.c-study-link_segment--obfuscated,
 .c-study-link_ray-dashing--obfuscated {
-  stroke: var(--color-grey-acc);
+  stroke: var(--color-study--obfuscated-prim);
 }
 
 /* *******************
