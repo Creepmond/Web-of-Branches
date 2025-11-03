@@ -5,7 +5,7 @@ const GameNotify = {
       EventHub.dispatch(GameEvent.BEFORE_NOTIFY, text, duration, colorInfluence);
    },
    success(text, dur) {
-      this._notify(text, dur, 'influ-succeed')
+      this._notify(text, dur, 'influ-success')
    },
 
    warning(text, dur) {

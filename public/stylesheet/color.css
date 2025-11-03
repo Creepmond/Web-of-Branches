@@ -343,39 +343,38 @@ text {
 
 /* Unavailable */
 .o-prim-study--unavailable {
-  background-color: var(--color-study-grey);
+  background-color: var(--color-study--unavailable-prim);
 }
 .o-prim-study--unavailable span {
-  color: var(--color-text-weak);
+  color: var(--color-text-sec);
 }
 
 .o-prim-study--unavailable .l-prim-study-header span {
-  text-shadow: 0 0 15px var(--color-study-grey-acc);
+  text-shadow: 0 0 15px var(--color-study--unavailable-sec);
 }
 
 .o-prim-study--unavailable::before {
-  background-color: var(--color-study-grey-acc);
+  background-color: var(--color-study--unavailable-sec);
 }
 
 .o-prim-study--unavailable:hover {
-  background-image:
-    linear-gradient(transparent, var(--opaque-color-bad));
+  background-image: linear-gradient(transparent, var(--opaque-color-warning));
 }
 .o-prim-study--unavailable:hover span {
-  color: var(--color-text-bad);
+  color: var(--color-text-warning);
 }
 
 .o-prim-study--unavailable:hover::before {
-  background-color: var(--color-warning);
+  background-color: var(--color-influ-warning);
 }
 
 
 
 /* Available */
 .o-prim-study--available {
-  background-color: var(--color-study-bg-available);
+  background-color: var(--color-bg-prim);
   background-image:
-    linear-gradient(var(--opaque-color-bg-contrast) -50%, transparent);
+    linear-gradient(var(--subtle-color-ui-contrast), transparent);
 
   box-shadow: inset 0px 0px 25px -3px var(--color-study-prim);
 }
@@ -389,8 +388,8 @@ text {
 
 .o-prim-study--available:hover {
   background-image:
-    linear-gradient(var(--opaque-color-bg-contrast) -50%, transparent),
-    linear-gradient(transparent 10%, var(--color-study-acc) 120%);
+    linear-gradient(var(--subtle-color-ui-contrast) -50%, transparent),
+    linear-gradient(transparent 10%, var(--color-study-sec) 120%);
 
   box-shadow: inset 0px 0px 25px -3px var(--color-bg-contrast);
 }
@@ -402,7 +401,7 @@ text {
 
 /* Bought */
 .o-prim-study--bought {
-  background-color: var(--color-study-bg);
+  background-color: var(--color-study-ter);
 }
 .o-prim-study--bought span {
   color: var(--color-text);
@@ -413,7 +412,7 @@ text {
 }
 
 .o-prim-study--bought::before {
-  background-color: var(--color-study-acc);
+  background-color: var(--color-study-sec);
 }
 
 
@@ -442,7 +441,7 @@ text {
 * ********************/
 
 .c-study-link {
-  stroke: var(--color-study-acc);
+  stroke: var(--color-study-prim);
 }
 
 .c-study-link_segment--obfuscated,

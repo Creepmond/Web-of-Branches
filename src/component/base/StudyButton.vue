@@ -161,12 +161,12 @@ export default {
 </script>
 
 <template>
-  <div class="l-prim-study__positioning" :style="position">
+  <div class="l-prim-study__positioning o-prim-study_root" :style="position">
     <span class="c-prim-study-id">
       {{ id }}
     </span>
     <button
-      class="o-prim-study o-prim-study_root"
+      class="o-prim-study"
       :class="[availabilityClass, respecClass]"
       @pointerdown.exact="setPointerdown"
       @pointerup.exact="tryPurchase"
@@ -204,7 +204,7 @@ export default {
 }
 
 .o-prim-study {
-  cursor: default;
+  cursor: default; /*! Why is this default? I forgot */
 
   height: 160px;
   width: 280px;
