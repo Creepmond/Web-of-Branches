@@ -1,13 +1,12 @@
 <script>
-//! Appears below the Header tabs, you can see this component imported there!
-
 import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 
 export default {
   name: "Notification",
   data() { return {
+    topInset: 0,
+  
     slottedId: 0,
-
     queueDurationMap: [],
 
     // This Object is actually a lot dumber than you might think. They contain a key-value pair,
@@ -70,45 +69,53 @@ export default {
       setTimeout(() => {
         delete this.maintainedQueue[key]
       }, animSpeedMod + duration);
+    });
+
+    // The end style of this (topInset + 8px) is accounting for the gap of 8px of the Header height
+    EventHub.on(GameEvent.DELTA_HEADER, (headerHeight) => {
+      this.topInset = headerHeight;
     })
   },
 };
 </script>
 
 <template>
-  <button
-    v-for="(message, id) in maintainedQueue"
-    :key="id"
-    @click="cancel(id)"
-    @mouseover="1 + 1"
-    class="o-notification"
-    :style="`transform: translateX( ${-128 * 0}px );`"
+  <div
+    class="o-fixed-ui l-notification__position"
+    :style="`top: ${topInset + 8}px`"
   >
-    <div
-      class="c-notification-flare"
-      :style="`
-        transform:
-          translateX( calc( ${message.isShown ? 0 : -50}% + 47px ) )
-          scaleX(${message.isShown ? 1 : 0});
-        background-color: color-mix(
-          in oklab,
-          var(--color-ui),
-          var(--color-${message.colorInfluence}) var(--alpha-hinted)
-        );`
-      "
-    > <!-- See note .c-notification-flare's styles below. Refer to translateX(47px). -->
-      <span class="c-notification-message">{{ message.text }}</span>
-    </div>
-  </button>
+    <button
+      v-for="(message, id) in maintainedQueue"
+      :key="id"
+      @click="cancel(id)"
+      @mouseover="1 + 1"
+      class="o-notification"
+      :style="`transform: translateX( ${-128 * 0}px );`"
+    >
+      <div
+        class="c-notification-flare"
+        :style="`
+          transform:
+            translateX( calc( ${message.isShown ? 0 : -50}% + 47px ) )
+            scaleX(${message.isShown ? 1 : 0});
+          background-color: color-mix(
+            in oklab,
+            var(--color-ui),
+            var(--color-${message.colorInfluence}) var(--alpha-hinted)
+          );`
+        "
+      > <!-- See note .c-notification-flare's styles below. Refer to translateX(47px). -->
+        <span class="c-notification-message">{{ message.text }}</span>
+      </div>
+    </button>
+  </div>
 </template>
 
 <style>
-/*# Pesky CSS selector specificity */
-.o-header > .o-notification {
-  pointer-events: auto;
-}
-.o-header > .o-notification * {
-  pointer-events: none;
+.l-notification__position {
+  position: absolute;
+
+  left: 8px;
 }
 
 .o-notification {

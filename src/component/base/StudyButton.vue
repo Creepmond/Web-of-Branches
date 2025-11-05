@@ -161,20 +161,19 @@ export default {
 </script>
 
 <template>
-  <div class="l-prim-study__positioning o-prim-study_root" :style="position">
+  <div class="l-prim-study__positioning" :style="position">
     <span class="c-prim-study-id">
       {{ id }}
     </span>
     <button
-      class="o-prim-study"
+      class="o-prim-study o-prim-study_root"
       :class="[availabilityClass, respecClass]"
       @pointerdown.exact="setPointerdown"
       @pointerup.exact="tryPurchase"
       @click.ctrl.exact="tryRespec"
       @click.meta.exact="tryRespec"
       @mouseenter="changeLastHoveredStudy"
-    > <!-- Warning: No mobile support here! actually... this mechanic is a no mobile-support,
-    anyway so idk -->
+    >
       <StudyButtonFace
         :isObfuscated="!imperativeIsAvailable && !imperativeIsBought"
         :rawName="StudyInstance.name"

@@ -6,11 +6,11 @@ import HeaderOptions     from "./HeaderOptions.vue";
 import HeaderSaves       from "./HeaderSaves.vue";
 import HeaderInformation from "./HeaderInformation.vue";
 
-import Notification from "@/component/article/Notification.vue";
-
 
 
 import player from "@/core/player.js";
+
+import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 
 //// import { setUpdateloop } from "@/core/interval.js";
 
@@ -23,13 +23,16 @@ export default {
     HeaderOptions,
     HeaderSaves,
     HeaderInformation,
-
-    Notification,
   },
   data() { return {
     tabList: [],
     tabbed: 'Resources',
   }},
+  watch: {
+    tabbed() {
+      this.setupNotifs();
+    },
+  },
   computed: {
     headerIndicatorPosition() {
       return this.tabList.indexOf(this.tabbed) * -200;
@@ -40,14 +43,27 @@ export default {
       this.tabbed = flip;
       player.last.headerTab = flip;
     },
+    setupNotifs() {
+      //! When Firefox gets anchor-positioning, use that instead of JavaScript
+      // Uses async because it reads the height of the previous tab height for some reason
+
+      setTimeout(() => {
+        const headerData = this.$refs.header.getBoundingClientRect();
+        const headerHeight =
+          headerData.left === 8 ? headerData.height + 8 : 0;
+
+        EventHub.dispatch(GameEvent.DELTA_HEADER, headerHeight);
+      }, 50)
+    },
   },
   mounted() {
+    this.setupNotifs();
+
     const tabComponent = this.$options.components;
 
     // "key", because the components above is an Object. The actual properties for, say, something like
     // HeaderResources, is {"HeaderResources": HeaderResources}
     for (const key in tabComponent) {
-      if ( !key.includes('Header') ) continue;
       const tabName = key.replace(/^Header/, '');
       if (tabName === 'Tabs') continue;
       this.tabList.push(tabName);
@@ -57,7 +73,7 @@ export default {
 </script>
 
 <template>
-  <div class="o-fixed-ui o-header">
+  <div class="o-fixed-ui o-header" ref="header">
     <HeaderTabs
       v-bind:tabList
       v-bind:tabbed
@@ -88,8 +104,6 @@ export default {
       </div>
 
     </div>
-
-    <Notification />
   </div>
 </template>
 
@@ -100,6 +114,14 @@ export default {
   gap: 8px;
 
   inset: 8px auto auto 8px;
+}
+
+@media screen and (min-width: 1700px) {
+  .o-header {
+    align-items: center;
+
+    inset: 8px 0 auto;
+  }
 }
 
 .o-header > * {

@@ -317,7 +317,7 @@ text {
 .o-prim-study::before {
   background-image: radial-gradient(transparent 0 90%, var(--hinted-color-bg-prim) 99% 100%);
 
-  box-shadow: 0 0 20px #000a;
+  box-shadow: 0 0 20px var(--color-bg-prim);
   outline: 2px solid var(--color-study-prim);
 }
 
@@ -419,13 +419,15 @@ text {
 
 /* Respecced */
 .o-prim-study--respecced {
-  background-color: var(--color-study-bg-focus);
+  background-color: var(--color-study-ter--focus);
+
+  box-shadow: inset 0px 0px 25px -3px var(--color-study-prim--focus);
 }
 
 .o-prim-study--respecced::before {
-  background-color: var(--color-study-acc-focus);
+  background-color: var(--color-study-sec--focus);
 
-  outline-color: var(--color-study-focus);
+  outline-color: var(--color-study-prim--focus);
 }
 
 /* ***************

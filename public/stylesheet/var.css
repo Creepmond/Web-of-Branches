@@ -102,22 +102,27 @@
 * Start: Studies *
 * ****************/
 
+.o-prim-study_root ~ .l-study-link,
 .o-prim-study_root {
   --color-study-prim: var(--color-study_root);
 }
 
+.o-prim-study_vague ~ .l-study-link,
 .o-prim-study_vague {
   --color-study-prim: var(--color-study_vague);
 }
 
+.o-prim-study_plit ~ .l-study-link,
 .o-prim-study_split {
   --color-study-prim: var(--color-study_split);
 }
 
+.o-prim-study_memoir ~ .l-study-link,
 .o-prim-study_memoir {
   --color-study-prim: var(--color-study_memoir)
 }
 
+.o-prim-study_allay ~ .l-study-link,
 .o-prim-study_allay {
   --color-study-prim: var(--color-study_allay);
 }
@@ -264,7 +269,15 @@
 
 .o-prim-study {
   --color-study-sec: hsl(from var(--color-study-prim) h s calc(1.2 * (l - 12) - 10));
-  --color-study-ter: hsl(from var(--color-study-prim) h s calc(2 * (l - 12) - 50));
+  --color-study-ter:
+    color-mix(in oklab, var(--color-study-sec), var(--color-bg-prim) var(--alpha-subtle));
+
+  --color-study-prim--focus:
+    color-mix(in oklab, var(--color-study-prim), var(--color-influ-success) var(--alpha-opaque));
+  --color-study-sec--focus:
+    color-mix(in oklab, var(--color-study-sec), var(--color-influ-success) var(--alpha-opaque));
+  --color-study-ter--focus:
+    color-mix(in oklab, var(--color-study-ter), var(--color-influ-success) var(--alpha-subtle));
 }
 
 /* ***********************************

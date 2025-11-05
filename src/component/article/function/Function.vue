@@ -52,7 +52,7 @@ export default {
 /* Selector specifity */
 .o-fixed-ui.o-function {
   cursor: move;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .o-function {

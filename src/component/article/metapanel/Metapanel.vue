@@ -70,7 +70,7 @@ export default {
 }
 
 .c-metapanel-relative {
-  max-width: 50vw;
+  max-width: 500px;
 
   padding: 12px 16px 20px;
 
