@@ -1,4 +1,57 @@
 /* *******************************************************************************************************
+* **************************************     Common Animations     ***************************************
+* *******************************************************************************************************/
+
+@keyframes raise-sup {
+  0% {
+    margin-right: 0;
+    transform: scale(1) translate(0);
+  }
+  20% {
+    /* Acts as a delay */
+  }
+  100% {
+    margin-right: -0.4em;
+    transform: scale(0.65) translate(-0.3em, -0.35em);
+  }
+}
+
+@keyframes lay-sub {
+  0% {
+    margin-right: 0;
+    transform: scale(1) translate(0);
+  }
+  20% {
+    /* Acts as a delay */
+  }
+  100% {
+    margin-right: -0.4em;
+    transform: scale(0.65) translate(-0.3em, 0.35em);
+  }
+}
+
+.c-prim-study-name .f-sup {
+  animation: raise-sup var(--duration-speed-slow) var(--anim-exaggerate) forwards;
+}
+.c-prim-study-name .f-sub {
+  animation: lay-sub var(--duration-speed-slow) var(--anim-exaggerate) forwards;
+}
+
+/* From Vue, I'll improve the animation later */
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  33% { transform: scale(0.67, 0.33); }
+  67% { transform: scale(1.33, 0.67); }
+  100% { transform: scale(1); }
+}
+
+
+
+
+
+
+
+/* *******************************************************************************************************
 * ***************************************     Default Elements     ***************************************
 * *******************************************************************************************************/
 
@@ -31,15 +84,9 @@
 
 
 
-/* From Vue, I'll improve the animation later */
-@keyframes bounce-in {
-  0% { transform: scale(0); }
-  33% { transform: scale(0.67, 0.33); }
-  67% { transform: scale(1.33, 0.67); }
-  100% { transform: scale(1); }
-}
-
-/*# Fixeds */
+/* ################
+* Start: Header *
+* ***************/
 
 .c-header-tab-button {
   transition:
@@ -51,17 +98,33 @@
   transition: transform var(--duration-speed-mod) ease-in-out;
 }
 
+/* **************
+* Close: Header *
+##################*/
 
 
 
+
+
+/* ###################
+* Start: Metapanel *
+* ******************/
 
 .c-metapanel-cancel {
   transition: background-color var(--duration-speed-fast);
 }
 
+/* *****************
+* Close: Metapanel *
+#####################*/
 
 
 
+
+
+/* ###################
+* Start: Notifications *
+* ******************/
 
 .o-function {
   transition: outline-color var(--duration-speed-fast);
@@ -104,41 +167,22 @@
   transition: transform var(--duration-speed-mod) var(--anim-exaggerate);
 }
 
-/*# END - Fixeds */
+/* **************
+* Close: Notification *
+##################*/
 
 
 
 
 
-@keyframes raise-sup {
-  0% {
-    margin-right: 0;
-    transform: scale(1) translate(0);
-  }
-  20% {
-    /* Acts as a delay */
-  }
-  100% {
-    margin-right: -0.4em;
-    transform: scale(0.65) translate(-0.3em, -0.35em);
-  }
-}
 
-@keyframes lay-sub {
-  0% {
-    margin-right: 0;
-    transform: scale(1) translate(0);
-  }
-  20% {
-    /* Acts as a delay */
-  }
-  100% {
-    margin-right: -0.4em;
-    transform: scale(0.65) translate(-0.3em, 0.35em);
-  }
-}
 
-/*# Studies */
+
+
+
+/* *******************************************************************************************************
+* ************************************     Tree-related Elements     *************************************
+* *******************************************************************************************************/
 
 .o-prim-study {
   transition: box-shadow var(--duration-speed-fast);
@@ -156,14 +200,6 @@
     inset var(--duration-speed-mod) var(--anim-exaggerate),
     outline-width var(--duration-speed-fast);
 }
-
-.c-prim-study-name .f-sup {
-  animation: raise-sup var(--duration-speed-slow) var(--anim-exaggerate) forwards;
-}
-.c-prim-study-name .f-sub {
-  animation: lay-sub var(--duration-speed-slow) var(--anim-exaggerate) forwards;
-}
-
 
 
 

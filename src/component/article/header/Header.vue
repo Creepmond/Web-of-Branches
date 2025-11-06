@@ -68,6 +68,10 @@ export default {
       if (tabName === 'Tabs') continue;
       this.tabList.push(tabName);
     };
+
+    EventHub.on(GameEvent.AFTER_MOVE_SCREEN, () => {
+      this.setupNotifs();
+    });
   },
 };
 </script>

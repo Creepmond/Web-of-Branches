@@ -234,10 +234,11 @@ export default {
         : htmlDOM.removeEventListener('pointermove', this.handleMove);
     },
 
-    // Do I need to make it a method? Nah. Did I do it anyway? Hell yes.
     setScreenDims() {
       this.screenDims.W = window.innerWidth;
       this.screenDims.H = window.innerHeight;
+
+      EventHub.dispatch(GameEvent.AFTER_MOVE_SCREEN);
     },
   },
   watch: {
@@ -279,7 +280,7 @@ export default {
       width: ${101 / zoomLevel}vw;
       height: ${101 / zoomLevel}vh;
       transform: scale(${zoomLevel});
-      background-position: ${bgPos.X}px ${bgPos.Y}px;
+      background-position: ${bgPos.X - 100 / zoomLevel}px ${bgPos.Y - 100 / zoomLevel}px;
     `"
   />
   <!--Viewports here are 101 rather than 100 because of fractional pixels causing the very

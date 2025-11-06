@@ -92,21 +92,23 @@ export default {
       class="o-notification"
       :style="`transform: translateX( ${-128 * 0}px );`"
     >
-      <div
-        class="c-notification-flare"
-        :style="`
-          transform:
-            translateX( calc( ${message.isShown ? 0 : -50}% + 47px ) )
-            scaleX(${message.isShown ? 1 : 0});
-          background-color: color-mix(
-            in oklab,
-            var(--color-ui),
-            var(--color-${message.colorInfluence}) var(--alpha-hinted)
-          );`
-        "
-      > <!-- See note .c-notification-flare's styles below. Refer to translateX(47px). -->
-        <span class="c-notification-message">{{ message.text }}</span>
-      </div>
+      <Transition name="">
+        <div
+          class="c-notification-flare"
+          :style="`
+            transform:
+              translateX( calc( ${message.isShown ? 0 : -50}% + 47px ) )
+              scaleX(${message.isShown ? 1 : 0});
+            background-color: color-mix(
+              in oklab,
+              var(--color-ui),
+              var(--color-${message.colorInfluence}) var(--alpha-hinted)
+            );`
+          "
+        > <!-- See note .c-notification-flare's styles below. Refer to translateX(47px). -->
+          <span class="c-notification-message">{{ message.text }}</span>
+        </div>
+      </Transition>
     </button>
   </div>
 </template>
@@ -115,10 +117,15 @@ export default {
 .l-notification__position {
   position: absolute;
 
+  display: flex;
+  flex-direction: column-reverse;
+
   left: 8px;
 }
 
 .o-notification {
+  pointer-events: auto;
+
   width: 56px;
   height: 56px;
 
@@ -127,6 +134,10 @@ export default {
   border-radius: 50%;
 
   position: relative;
+}
+
+.o-notification *{
+  pointer-events: none;
 }
 
 .o-notification::after {
@@ -171,6 +182,8 @@ export default {
 
 /* Selector angryness */
 .c-notification-flare > span.c-notification-message {
+  pointer-events: none;
+
   line-height: 32px; /* .notification-flare's width */
 }
 </style>
