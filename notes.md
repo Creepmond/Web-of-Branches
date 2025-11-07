@@ -15,7 +15,7 @@ Import Component (Doesn't need to follow Note 2 if it's a list with a "Sort by I
 ...Leave three (3) line gap for differentation. Leave five (5) if the latter case above applies
 Import player object ('@/core/player.js')
 Import Currencies (Seed, Spectre, etc.), not ('@/core/state/mechanic/currency.js'.)
-Import States (state/mechanic/*) is before (state/*)
+Import States (core/mechanic/*) is before (core/state/*)
 Import Utilities
 
 
@@ -32,4 +32,5 @@ Create effect caculations
 Create Storage System
 Add handler for duplicate IDs (Game State)
 Add handler for confirming derivative and imperative accuracy (Study State)
+Reorganize some Files to utility
 Create a lotta stuff you gotta cry

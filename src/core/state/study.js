@@ -1,8 +1,8 @@
 import player from "@/core/player.js";
 
-import Currency                from "@/core/state/mechanic/currency.js";
-import Effects                 from "@/core/state/mechanic/effects.js";
-import GameMechanicState       from "@/core/state/mechanic/gamestate.js";
+import Currency                from "@/core/mechanic/currency.js";
+import Effects                 from "@/core/mechanic/effects.js";
+import GameMechanicState       from "@/core/mechanic/game-mechanic.js";
 import GameNotify              from "@/core/notification.js";
 import EventHub, { GameEvent } from "./eventhub.js";
 
@@ -37,7 +37,6 @@ class StudyState extends GameMechanicState {
          case 'passiveRate': return this.isBought ? this.effectInfo.value : DC.D0;
          case 'multiplier': return this.isBought ? this.effectInfo.value : DC.D1;
          case 'exponent': return this.isBought ? this.effectInfo.value : DC.D1;
-         case 'unlock': return this.isBought ? this.effectInfo.value : DC.D0;
       };
    }
 
@@ -53,8 +52,6 @@ class StudyState extends GameMechanicState {
       // Reassignment (for Vue; see '@/component/Tree.vue')
       player.studyBoughtBits = player.studyBoughtBits.concat( rmRef(this.id) );
       player.studyExposedBits.add(this.id);
-
-      GameNotify.success('hi all the less i know the better', 1000000);
 
       if (this.effectInfo.state === 'callback') 
          this.effectInfo.call();
@@ -93,7 +90,7 @@ const Studies = {
 
    get refundFactor() {
       return Effects.sum(
-         Study([4, 1]).effect,
+         this.canRespec ? DC.D0_1 : DC.D0,
       );
    },
 
@@ -132,8 +129,9 @@ const Studies = {
       let currencyAmount = DC.D0;
 
       for (const id of studyArray) {
-         currencyAmount = currencyAmount.add(Study( JSON.parse(id) ).cost
-            .times(this.refundFactor));
+         const studyCost = Study( JSON.parse(id) ).cost;
+         console.log(format(studyCost.times(this.refundFactor)), format(this.refundFactor) );
+         currencyAmount = currencyAmount.add(studyCost.times(this.refundFactor));
       }
 
       // Uh... I'm pretty sure this nets extra currencies. Oops.

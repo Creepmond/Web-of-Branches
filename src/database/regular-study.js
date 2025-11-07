@@ -1,4 +1,4 @@
-import Currency from "@/core/state/mechanic/currency.js";
+import Currency from "@/core/mechanic/currency.js";
 
 import DC from "@/utility/constants.js";
 import format from "@/utility/format.js"

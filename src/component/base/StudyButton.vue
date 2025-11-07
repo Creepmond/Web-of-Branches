@@ -7,7 +7,7 @@ import StudyLink       from "./StudyLink.vue";
 import player from "@/core/player.js";
 
 import EventHub, { GameEvent } from "@/core/state/eventhub.js";
-import Currency                from "@/core/state/mechanic/currency.js";
+import Currency                from "@/core/mechanic/currency.js";
 import Study, { Studies }      from "@/core/state/study.js";
 
 import { setUpdateloop } from "@/core/interval.js";
