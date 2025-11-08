@@ -11,6 +11,10 @@ const player = {
       played: DC.D0,
       bought5x1: DC.BIMAX,
    },
+   hidden: {
+      deviceScreenType: '',
+      hasEverReachedBoundary: false,
+   },
    last: {
       timePlayed: null,
       metapanelName: '',
@@ -28,10 +32,6 @@ const player = {
    physics: {
       isEnabled: false,
       screenSlipperiness: 0.98,
-   },
-   hidden: {
-      deviceScreenType: '',
-      hasEverReachedBoundary: false,
    },
 };
 

@@ -10,10 +10,8 @@ import DC     from "@/utility/constants.js";
 import format from "@/utility/format.js";
 
 class StudyState extends GameMechanicState {
-   #effect = undefined; // Handled on the getter and setter pair at around Line 37
-
    constructor(data) {
-      super(data)
+      super(data);
 
       this.name = data.name;
       this.derivative = data.derivative;
@@ -21,31 +19,22 @@ class StudyState extends GameMechanicState {
       this.description = data.description;
       this.specify = data.specify || "";
       this.cost = data.cost;
-      this.effectInfo = data.effect;
 
       this.isBranchNode = false; // Handled based on this.derivative
 
       //// this.isExposed = false;
       this.isAvailable = false;
       this.imperativeIsBought = false;
-   }
 
-   get effect() {
-      if (this.effectInfo.state !== 'static') return this.#effect;
-
-      switch (this.effectInfo.type) {
-         case 'passiveRate': return this.isBought ? this.effectInfo.value : DC.D0;
-         case 'multiplier': return this.isBought ? this.effectInfo.value : DC.D1;
-         case 'exponent': return this.isBought ? this.effectInfo.value : DC.D1;
-      };
-   }
-
-   set effect(modelValue) {
-      this.#effect = modelValue;
+      console.log(this)
    }
 
    get isBought() {
       return player.studyBoughtBits.includes( rmRef(this.id) );
+   }
+
+   get isEffectActive() {
+      return this.isBought;
    }
 
    purchase() {
@@ -84,13 +73,13 @@ const Studies = {
    },
 
    get canRespec() {
-      const readableExposed = [...player.studyExposedBits].map(study => rmRef(study));
-      return readableExposed.includes( rmRef([4,1]) );
+      const readableExposed = [...player.studyExposedBits].map(study => JSON.stringify(study));
+      return readableExposed.includes( JSON.stringify([4,1]) );
    },
 
    get refundFactor() {
       return Effects.sum(
-         this.canRespec ? DC.D0_1 : DC.D0,
+         Study([4,1])
       );
    },
 

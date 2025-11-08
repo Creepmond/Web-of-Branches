@@ -2,7 +2,6 @@ import player from "@/core/player.js";
 
 import Currency from "@/core/mechanic/currency.js";
 import Study    from "./study.js";
-import Timespan from "./timespan.js";
 
 import Effects from "@/core/mechanic/effects.js";
 import DC      from "@/utility/constants.js";
@@ -13,23 +12,15 @@ import DC      from "@/utility/constants.js";
 // of course laziness) (and simply because I haven't seen AD use this kind of structure)
 const Seed = {
    get passiveRate() {
-      // Will use Effect.sum() when there's more than one of these stuff
-      return Study([1, 0]).effect
-         .times(this.passiveRateFactor);
-   },
-
-   get passiveRateFactor() {
-      return Decimal.max(
-         Effects.times(
-            Study([2, 0]).effect,
-         ), 1
+      return Effects.sum(
+         Study([1, 0])
       );
    },
 
    get multipliers() {
       return Effects.times(
-         Study([3, 0.5]).effect,
-         Timespan.study5x1Effect(),
+         Study([3, 0.5]),
+         Study([4, 1]),
       );
    },
 
@@ -50,22 +41,19 @@ const Seed = {
       };
    },
 
-   /*
    get gainPerSec() {
       return this.passiveRate
          .times(this.multipliers)
          .pow(this.exponents)
          .div(this.boundarySlowdown)
    },
-   */
 
-   tick() {
-      Currency.seed.add(
-         this.passiveRate.div(1000 / player.option.tickrate)
-         .times(this.multipliers)
-         .pow(this.exponents)
-         .div(this.boundarySlowdown)
-      );
+   gainRateAccountDiff(diff) {
+      return this.gainPerSec.times(diff / 1000);
+   },
+
+   tick(diff) {
+      Currency.seed.add(this.gainRateAccountDiff(diff));
    },
 };
 

@@ -46,10 +46,12 @@ export function setGameloop(handler) {
 };
 
 setGameloop(() => {
+   const diff = player.option.tickrate;
+
    // EventHub.dispatch(GameEvent.UPDATE);
-   Time.tick();
+   Time.tick(diff);
    
    if (!Study([1,0]).effect) return;
    
-   Seed.tick();
+   Seed.tick(diff);
 });

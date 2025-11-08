@@ -1,9 +1,9 @@
 export function isFunction(value) {
-   return typeof v === "function";
+   return typeof value === "function";
 }
 
 export function isNumber(value) {
-   return typeof v === "number";
+   return typeof value === "number";
 }
 
 export function isDecimal(value) {
@@ -11,7 +11,7 @@ export function isDecimal(value) {
 }
 
 export function isConstant(value) {
-   return isNumber(v) || isDecimal(v);
+   return isNumber(value) || isDecimal(value);
 }
 
 export function isSet(value) {

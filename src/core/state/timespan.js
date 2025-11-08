@@ -6,6 +6,7 @@ import Study from "./study.js";
 
 import DC from "@/utility/constants.js";
 
+/*
 export default class Timespan {
    // I have a bad feeling with what I'm doing lol... this seems very terrible
    static study5x1Effect() {
@@ -17,3 +18,4 @@ export default class Timespan {
       return value;
    }
 };
+*/

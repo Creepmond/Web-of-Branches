@@ -1,8 +1,9 @@
 import { isFunction, isNumber, isDecimal, isConstant } from "@/utility/typecheck.js";
 
 // Directly copy-pasted from Antimatter Dimensions this time lol
+// See 'https://github.com/IvarK/AntimatterDimensionsSourceCode/blob/master/src/core/game-mechanics/effect.js';
 
-export default class Effect {
+export default class EffectState {
    constructor(effect, cap, condition) {
       if (effect === undefined || this.isCustomEffect) return;
 

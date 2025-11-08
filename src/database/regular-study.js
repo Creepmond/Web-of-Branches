@@ -3,11 +3,8 @@ import Currency from "@/core/mechanic/currency.js";
 import DC from "@/utility/constants.js";
 import format from "@/utility/format.js"
 
-//* Effect States: "Static", "Conditional", and "Synergy"; Statics are fixed values. Conditionals are
-//  applied on an external *state*—e.g., another Study is bought, or there have only been N purchased
-//  studies, usually only available at two to three values (e.g., default, in-effect, another external
-//  boost). Synergy is based on an external *variable* or a *mix of variables* via formulas—e.g.,
-//  boost based on time played, or based on another resource.
+// The derivative is an Array containing the IDs (also an Array) of the Studies it unlocks. I.e., its
+// children Studies
 
 export const regularStudy = [
    {
@@ -18,11 +15,8 @@ export const regularStudy = [
       specify: "Reap the Seed after 8s",
       // I think I could make the format visible using player.time.played... actually, how am I calling
       // Currency here anyway? Isn't this a loopway dependency? Ts makes me confused
-      effect: {
-         call() { setTimeout( () => { Currency.seed.add(299) }, 80 ) },
-         state: 'callback',
-         type: 'passive',
-         target: 'Seed',
+      effect() {
+         setTimeout( () => { Currency.seed.add(299) }, 80 )
       },
       cost: DC.D1,
    },
@@ -33,12 +27,7 @@ export const regularStudy = [
       derivative: [ [2, 0] ],
       description: "Slowly produce Seeds",
       get specify() { return `Increase Seeds rate by ${format.passRate(1, 0, 0)}` },
-      effect: {
-         value: DC.D1,
-         state: 'static',
-         type: 'passiveRate',
-         target: 'Seed',
-      },
+      effect: DC.D1,
       cost: DC.D1,
    },
 
@@ -48,13 +37,7 @@ export const regularStudy = [
       derivative: [ [3, -0.5], [3, 0.5] ],
       description: "Gain multiple seeds at once",
       get specify() { return `Boost Seed passive rate by ${format.mult(3)}` },
-      effect: {
-         // There's still problems with this... but for now, good enough
-         value: DC.D3,
-         state: 'static',
-         type: 'passiveRate',
-         target: 'Seed',
-      },
+      effect: DC.D3,
       cost: DC.D15,
    },
 
@@ -63,12 +46,7 @@ export const regularStudy = [
       id: [3, -0.5],
       derivative: [ [4, -1] ],
       description: "Seeds multiplied by a million",
-      effect: {
-         value: DC.D2,
-         state: 'static',
-         type: 'multiplier',
-         target: 'Seed',
-      },
+      effect: DC.E6,
       cost: DC.D700,
    },
    {
@@ -78,12 +56,7 @@ export const regularStudy = [
       isBranchNode: true,
       description: "Boost Seed production",
       get specify() { return `Improve Seed production by ${format.mult(2)}` },
-      effect: {
-         value: DC.D2,
-         state: 'static',
-         type: 'multiplier',
-         target: 'Seed',
-      },
+      effect: DC.D2,
       cost: DC.D25,
    },
 
@@ -100,12 +73,7 @@ export const regularStudy = [
       derivative: [ [5, 1] ],
       description: "Return from a branched node",
       get specify() { return `Long press, or Click a Branch with the <span class="f-hotkey">ctrl</span> or <span class="f-hotkey">cmd&#8984;</span> key to toggle respeccing. Returns ${format.percent(0.1)} ` },
-      effect: {
-         value: DC.D0_1,
-         state: 'static',
-         type: 'unlock',
-         target: 'Respec',
-      },
+      effect: DC.D0_1,
       cost: DC.D90,
    },
    
@@ -115,10 +83,13 @@ export const regularStudy = [
       derivative: [],
       description: "Compost your seeds",
       specify: `Receive a ${format.mult(15)} boost to Seed production that drastically wanes over time`,
-      effect: {
-         state: 'synergy',
-         type: 'multiplier',
-         target: 'Seed',
+      effect() {
+         const delta = Currency.time.sub(player.time.bought5x1);
+         const root = DC.D10.div(delta.add(10));
+         const value = DC.D15.pow(root);
+         
+         Study([5,1]).effectOrDefault(1) = value;
+         return value;
       },
       cost: DC.D100,
    },
