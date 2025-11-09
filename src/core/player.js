@@ -25,7 +25,7 @@ const player = {
    },
    option: {
       parallax: 0.4,
-      tickrate: 200,
+      tickrate: 33,
       zoomLevel: 1,
       showGlobalStat: true,
    },

@@ -2,20 +2,11 @@
 //  I don't think what AD was doing was good practice, anyway
 import player from "@/core/player.js";
 
-import Study from "./study.js";
-
-import DC from "@/utility/constants.js";
-
-/*
-export default class Timespan {
+const Timespan = {
    // I have a bad feeling with what I'm doing lol... this seems very terrible
-   static study5x1Effect() {
-      const delta = player.time.played.sub(player.time.bought5x1);
-      const root = DC.D10.div(delta.add(10));
-      const value = DC.D15.pow(root);
-      
-      Study([5,1]).effect = value;
-      return value;
+   get boughtStudy5x1() {
+      return player.time.played.sub(player.time.bought5x1);
    }
 };
-*/
+
+export default Timespan;

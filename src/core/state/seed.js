@@ -22,7 +22,8 @@ const Seed = {
    get multipliers() {
       return Effects.product(
          Study([3, 0.5]),
-         Study([4, 1]),
+         Study([5, 1  ]),
+         Study([3, -0.5]),
       );
    },
 
@@ -55,7 +56,6 @@ const Seed = {
    },
 
    tick(diff) {
-      console.log(this.multipliers)
       Currency.seed.add(this.gainRateAccountDiff(diff));
    },
 };

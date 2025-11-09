@@ -1,4 +1,5 @@
 import Currency from "@/core/mechanic/currency.js";
+import Timespan from "@/core/state/timespan";
 
 import DC from "@/utility/constants.js";
 import format from "@/utility/format.js"
@@ -84,14 +85,8 @@ export const regularStudy = [
       derivative: [],
       description: "Compost your seeds",
       specify: `Receive a ${format.mult(15)} boost to Seed production that drastically wanes over time`,
-      effect() {
-         const delta = Currency.time.sub(player.time.bought5x1);
-         const root = DC.D10.div(delta.add(10));
-         const value = DC.D15.pow(root);
-         
-         Study([5,1]).effectOrDefault(1) = value;
-         return value;
-      },
+      onPurchased: () => { player.time.bought5x1 = player.time.played },
+      effect: () => { return DC.D15.pow(10 / Timespan.boughtStudy5x1.add(10)); },
       cost: DC.D100,
    },
 ];
