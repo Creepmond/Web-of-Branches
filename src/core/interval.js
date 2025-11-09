@@ -51,7 +51,7 @@ setGameloop(() => {
    // EventHub.dispatch(GameEvent.UPDATE);
    Time.tick(diff);
    
-   if (!Study([1,0]).effect) return;
+   if (!Study([1,0]).isBought) return;
    
    Seed.tick(diff);
 });

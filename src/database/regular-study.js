@@ -15,9 +15,10 @@ export const regularStudy = [
       specify: "Reap the Seed after 8s",
       // I think I could make the format visible using player.time.played... actually, how am I calling
       // Currency here anyway? Isn't this a loopway dependency? Ts makes me confused
-      effect() {
-         setTimeout( () => { Currency.seed.add(299) }, 80 )
+      onPurchased() {
+         setTimeout( () => { Currency.seed.add(this.effectValue) }, 80 )
       },
+      effect: DC.D299,
       cost: DC.D1,
    },
 

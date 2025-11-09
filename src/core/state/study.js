@@ -6,8 +6,9 @@ import GameMechanicState       from "@/core/mechanic/game-mechanic.js";
 import GameNotify              from "@/core/notification.js";
 import EventHub, { GameEvent } from "./eventhub.js";
 
-import DC     from "@/utility/constants.js";
-import format from "@/utility/format.js";
+import DC             from "@/utility/constants.js";
+import format         from "@/utility/format.js";
+import { isFunction } from "@/utility/typecheck.js";
 
 class StudyState extends GameMechanicState {
    constructor(data) {
@@ -20,13 +21,18 @@ class StudyState extends GameMechanicState {
       this.specify = data.specify || "";
       this.cost = data.cost;
 
+      this.onPurchased = data.onPurchased ?? null;
       this.isBranchNode = false; // Handled based on this.derivative
 
+      // Handled on Vue
       //// this.isExposed = false;
       this.isAvailable = false;
       this.imperativeIsBought = false;
+   }
 
-      console.log(this)
+   // This is assuming we have different StudyStates. For now, this suffices well
+   get currency() {
+      return Currency.seed;
    }
 
    get isBought() {
@@ -38,20 +44,20 @@ class StudyState extends GameMechanicState {
    }
 
    purchase() {
+      this.currency.purchase(this.cost);
+
       // Reassignment (for Vue; see '@/component/Tree.vue')
       player.studyBoughtBits = player.studyBoughtBits.concat( rmRef(this.id) );
       player.studyExposedBits.add(this.id);
 
-      if (this.effectInfo.state === 'callback') 
-         this.effectInfo.call();
+      if (isFunction(this.onPurchased)) this.onPurchased();
 
-      if (this.effectInfo.state === 'synergy') {
-         player.time.bought5x1 = player.time.played;
-      }
-
+      EventHub.dispatch(GameEvent.STUDY_PURCHASE);
       //// this.isExposed = true;
    }
 }
+
+const gameDataOfAllStudies = GameData.regularStudy;
 
 /**
  * See src/core/database/regular-study.js for the standard formatting.
@@ -60,12 +66,12 @@ class StudyState extends GameMechanicState {
  * @param offset - rational, is the x-offset of the tree. Integers are to the width of a Study.
  * @returns the study state.
  */
-const Study = StudyState.createAccessor(GameData.regularStudy);
+const Study = StudyState.createAccessor(gameDataOfAllStudies);
 
 const Studies = {
    get allId() {
       const all_id = [];
-      GameData.regularStudy.forEach(study => {
+      gameDataOfAllStudies.forEach(study => {
          all_id.push(study.id);
       });
       

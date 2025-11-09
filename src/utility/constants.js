@@ -42,6 +42,7 @@ const DC = Object.freeze({
 	D95:                  new Decimal("95"),
 	D100:                 new Decimal("100"),
 
+	D299:                 new Decimal("299"),
 	D700:                 new Decimal("700"),
 
 	E1:                   new Decimal("1e1"),

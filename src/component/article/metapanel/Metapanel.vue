@@ -40,6 +40,7 @@ export default {
 </script>
 
 <template>
+  <!--
   <div class="o-fixed-ui o-metapanel o-metapanel--study">
     <template
       v-if="id"
@@ -58,6 +59,7 @@ export default {
       </div>
     </template>
   </div>
+  -->
 </template>
 
 <style>

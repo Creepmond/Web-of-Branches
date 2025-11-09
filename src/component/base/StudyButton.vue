@@ -131,11 +131,7 @@ export default {
       if (!this.isAvailable || !this.imperativeIsBought) return;
 
       this.StudyInstance.purchase();
-
-      EventHub.dispatch(GameEvent.STUDY_PURCHASE);
       this.$emit('purchase', this.id);
-
-      Currency.seed.sub(this.StudyInstance.cost);
 
       this.isExposed = true;
       this.isAvailable = false;

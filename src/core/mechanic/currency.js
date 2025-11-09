@@ -53,6 +53,10 @@ class Currency {
       return this.value = this.value.lt(amount);
    }
 
+   purchase(cost) {
+      if (this.value.gte(cost)) this.value = this.value.sub(cost);
+   }
+
    bumpTo(value) {
       this.value = Decimal.max(this.value, value);
    }

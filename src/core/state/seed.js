@@ -14,11 +14,13 @@ const Seed = {
    get passiveRate() {
       return Effects.sum(
          Study([1, 0])
-      );
+      ).times(Effects.product(
+         Study([2, 0])
+      ));
    },
 
    get multipliers() {
-      return Effects.times(
+      return Effects.product(
          Study([3, 0.5]),
          Study([4, 1]),
       );
@@ -53,6 +55,7 @@ const Seed = {
    },
 
    tick(diff) {
+      console.log(this.multipliers)
       Currency.seed.add(this.gainRateAccountDiff(diff));
    },
 };

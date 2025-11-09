@@ -10,7 +10,9 @@ export default class GameMechanicState extends EffectState {
    constructor(config) {
       if (!config) throw new Error("Must specify config for GameMechanicState");
       super(config.effect, config.cap, config.effectCondition);
+      
       this._config = config;
+      this.id = config.id;
 
       if (config.effects === undefined) return;
 
@@ -37,7 +39,7 @@ export default class GameMechanicState extends EffectState {
    static createAccessor(gameData) {
       const index = mapGameData(gameData, config => new this(config));
       const accessor = id => index.get(JSON.stringify(id));
-      accessor.index = index;
+      //// .index = index;
       return accessor;
    }
 }
