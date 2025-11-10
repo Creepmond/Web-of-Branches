@@ -25,15 +25,18 @@ format.percent = function(value, places, placesUnder1000) {
    return `${format(value, places, placesUnder1000)}%`
 };
 
-format.passRate = function(value, places, placesUnder1000) {
+// Float by default
+format.passRate = function(value, places, placesUnder1000 = 2) {
    return `+${format(value, places, placesUnder1000)} /s`
 };
 
-format.mult = function(value, places, placesUnder1000) {
+// Float by default
+format.mult = function(value, places, placesUnder1000 = 2) {
    return `×${format(value, places, placesUnder1000)}`;
 };
 
-format.pow = function(value, places, placesUnder1000) {
+// Float by default
+format.pow = function(value, places, placesUnder1000 = 2) {
    return `^${format(value, places, placesUnder1000)}`;
 };
 

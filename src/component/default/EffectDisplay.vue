@@ -39,27 +39,18 @@ export default {
       frameId: null,
     };
   },
-  computed: {
-    reachedCap() {
-      return this.hasCap && this.reachedCapFunction();
-    },
-    labelDisplay() {
-      if (this.config.noLabel) return "";
-      return `${this.reachedCap && !this.ignoreCapped ? "Capped:" : this.label} `;
-    },
-    effectDisplay() {
-      return this.formatEffect?.(this.reachedCap ? this.cap : this.effectValue);
-    }
-  },
   watch: {
     config: {
       immediate: true,
       handler(config) {
+        /*
         this.updateEffect = () => { };
         this.updateCap = () => { };
-        const effect = config?.effect;
-        const formatEffect = config?.formatEffect;
-        this.isVisible = effect !== undefined && formatEffect !== undefined;
+        */
+        const effect = config.effect;
+        const formatEffect = config.formatEffect;
+
+        this.isVisible = effect !== undefined && formatEffect !== null;
         if (!this.isVisible) return;
         this.formatEffect = formatEffect;
 
@@ -69,7 +60,6 @@ export default {
         }
 
         if (isDecimal(effect)) {
-          //! What is this?
           this.effectValue = Decimal.fromDecimal(effect);
           return;
         }
@@ -136,20 +126,28 @@ export default {
       }
     },
   },
+  computed: {
+    reachedCap() {
+      return this.hasCap && this.reachedCapFunction();
+    },
+    labelDisplay() {
+      if (this.config.noLabel) return "";
+      return `${this.reachedCap && !this.ignoreCapped ? "Capped:" : this.label} `;
+    },
+    effectDisplay() {
+      return this.formatEffect?.(this.reachedCap ? this.cap : this.effectValue);
+    }
+  },
   methods: {
     update() {
-      this.updateEffect?.();
-      this.updateCap?.();
+      this.updateEffect();
+      // this.updateCap();
 
       this.frameId = setUpdateloop(this.update);
     }
   },
-  beforeMount() {
-    this.updateEffect = () => { };
-    this.updateCap = () => { };
-  },
   mounted() {
-    this.frameId = setUpdateloop(this.update);
+    if (this.updateEffect !== undefined) this.frameId = setUpdateloop(this.update);
   },
   beforeUnmount() {
     clearUpdateloop(this.frameId);

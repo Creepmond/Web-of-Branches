@@ -175,7 +175,7 @@ export default {
         <span class="c-metapanel--study-semantic">Current Value:</span>
         <EffectDisplay
           class="c-metapanel--study-value"
-          :config="StudyInstance"
+          :config="StudyInstance._config"
           :label="''"
         />
       </div>
