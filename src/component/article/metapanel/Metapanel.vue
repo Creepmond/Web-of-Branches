@@ -3,9 +3,7 @@ import MetapanelStudy from "./MetapanelStudy.vue";
 
 
 
-import player from "@/core/player.js";
-
-import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
+import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 
 export default {
   name: "Metapanel",
@@ -14,37 +12,24 @@ export default {
   data() { return {
     name: '',
     id: null,
-
-    frameId: null,
   }},
   methods: {
-    update() {
-      this.name = player.last.metapanelName;
-      this.id = player.last.metapanelId;
-
-      this.frameId = setUpdateloop(this.update);
-    },
     cancel() {
-      // Different handler when there's more Metapanel types
-      player.last.metapanelId = null
-      this.id = null
-    }
+      this.id = null;
+    },
   },
   mounted() {
-    this.update()
-  },
-  beforeUnmount() {
-    clearUpdateloop(this.frameId);
+    EventHub.on(GameEvent.DELTA_METAPANEL, (name, id) => {
+      this.name = name;
+      this.id = id;
+    });
   },
 };
 </script>
 
 <template>
-  <!--
   <div class="o-fixed-ui o-metapanel o-metapanel--study">
-    <template
-      v-if="id"
-    >
+    <template v-if="id">
       <div class="c-metapanel-relative">
         <div class="l-metapanel-cancel">
           <button
@@ -59,7 +44,6 @@ export default {
       </div>
     </template>
   </div>
-  -->
 </template>
 
 <style>

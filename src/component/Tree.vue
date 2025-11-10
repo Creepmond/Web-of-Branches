@@ -60,7 +60,6 @@ export default {
   },
   mounted() {
     EventHub.on(GameEvent.STUDY_RESPEC_COMMIT, (_, diff, init) => {
-      console.log(_)
       const couplaDelta = new Set(diff).symmetricDifference(new Set(init));
 
       couplaDelta.forEach(delta => {

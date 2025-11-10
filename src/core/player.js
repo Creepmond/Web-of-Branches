@@ -17,8 +17,10 @@ const player = {
    },
    last: {
       timePlayed: null,
+      /*
       metapanelName: '',
       metapanelId: null,
+      */
       respeccedStudy: [],
       headerTab: 'Resources',
       screenCoord: { X: -140, Y: -80 },

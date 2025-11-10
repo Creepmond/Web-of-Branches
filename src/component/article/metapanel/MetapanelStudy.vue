@@ -1,4 +1,8 @@
 <script>
+import EffectDisplay from "@/component/default/EffectDisplay.vue";
+
+
+
 import player from "@/core/player.js";
 
 import Seed  from "@/core/state/seed.js";
@@ -8,13 +12,14 @@ import DC                                 from "@/utility/constants.js";
 import format                             from "@/utility/format.js";
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
-
 export default {
   name: "MetapanelStudy",
   props: {
     id: [Array, Number],
   },
+  components: { EffectDisplay, },
   data() { return {
+    /*
     showGlobal: false,
 
     scopedValueFormat: '',
@@ -26,7 +31,9 @@ export default {
     commonFrameId: null,
     scopedEffectFrameId: null,
     globalEffectFrameId: null,
+    */
   }},
+  /*
   watch: {
     showGlobal: {
       handler(show) {
@@ -53,10 +60,15 @@ export default {
       immediate: true,
     },
   },
+  */
   computed: {
     StudyInstance() {
-      return this.id ? Study(this.id) : undefined;
+      return this.id ? Study(this.id) : null;
     },
+    currentEffect() {
+      return this.StudyInstance.effectValue
+    }
+    /*
     effectIsQuantity() {
       switch (this.StudyInstance.effectInfo.type) {
         case 'passiveRate': return true;
@@ -65,8 +77,10 @@ export default {
         default: return false;
       };
     },
+    */
   },
   methods: {
+    /*
     updateCommon() {
       this.studyIsBought = this.StudyInstance.isBought;
       this.showGlobal = player.option.showGlobalStat;
@@ -110,17 +124,22 @@ export default {
         this.globalValueFormat = `${format.pow(Seed.exponents, 2, 2)} Seed`;
       };
     },
+    */
   },
   mounted() {
+    /*
     this.studyScopedValue = this.StudyInstance.effect;
 
     this.formatScoped();
     this.updateCommon();
+    */
   },
   beforeUnmount() {
+    /*
     clearUpdateloop(this.commonFrameId);
     clearUpdateloop(this.scopedEffectFrameId);
     clearUpdateloop(this.globalEffectFrameId);
+    */
   },
 }; 
 </script>
@@ -152,20 +171,23 @@ export default {
         <span class="c-metapanel--study-semantic">Specified:</span>
         <span class="c-metapanel--study-value" v-html="StudyInstance.specify" />
       </div>
-      <div
-        v-if="StudyInstance.effectInfo.state !== 'callback'"
-        class="l-metapanel--study_val"
-      >
+      <div class="l-metapanel--study_val">
         <span class="c-metapanel--study-semantic">Current Value:</span>
-        <span class="c-metapanel--study-value">{{ scopedValueFormat }}</span>
+        <EffectDisplay
+          class="c-metapanel--study-value"
+          :config="StudyInstance"
+          :label="''"
+        />
       </div>
-      <div
-        v-if="showGlobal && effectIsQuantity"
-        class="l-metapanel--study_eff"
-      >
+      <!--
+      <div class="l-metapanel--study_eff">
         <span class="c-metapanel--study-semantic">Global Effect:</span>
-        <span class="c-metapanel--study-value">{{ globalValueFormat }}</span>
+        <EffectDisplay
+          class="c-metapanel--study-value"
+          :config="StudyInstance"
+        />
       </div>
+      -->
     </div>
   </template>
 </template>

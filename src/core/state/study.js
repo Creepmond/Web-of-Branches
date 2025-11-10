@@ -22,6 +22,8 @@ class StudyState extends GameMechanicState {
       this.cost = data.cost;
 
       this.onPurchased = data.onPurchased ?? null;
+      this.formatEffect = data.formatEffect ?? null;
+
       this.isBranchNode = false; // Handled based on this.derivative
 
       // Handled on Vue
@@ -118,18 +120,15 @@ const Studies = {
    },
 
    refund(studyArray) {
-      console.log(studyArray)
       //! Needs handler for other Currencies
       //// const currencyToRefund = Study(id).effectInfo.target.toLowerCase();
       let currencyAmount = DC.D0;
 
       for (const id of studyArray) {
          const studyCost = Study( JSON.parse(id) ).cost;
-         console.log(format(studyCost.times(this.refundFactor)), format(this.refundFactor) );
          currencyAmount = currencyAmount.add(studyCost.times(this.refundFactor));
       }
 
-      // Uh... I'm pretty sure this nets extra currencies. Oops.
       GameNotify.success(`Respecced, gained: ${ format(currencyAmount) } Seeds`);
       Currency['seed'].add(currencyAmount);
       return currencyAmount;

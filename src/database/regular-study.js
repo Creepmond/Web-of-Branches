@@ -87,6 +87,7 @@ export const regularStudy = [
       specify: `Receive a ${format.mult(15)} boost to Seed production that drastically wanes over time`,
       onPurchased: () => { player.time.bought5x1 = player.time.played },
       effect: () => { return DC.D15.pow(10 / Timespan.boughtStudy5x1.add(10)); },
+      formatEffect: value => format.mult(value),
       cost: DC.D100,
    },
 ];

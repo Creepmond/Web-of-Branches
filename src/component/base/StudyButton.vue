@@ -146,8 +146,7 @@ export default {
       if ( !this.imperativeIsAvailable && !this.imperativeIsBought && !this.isExposed ) return;
       if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
 
-      EventHub.dispatch(GameEvent.DELTA_METAPANEL);
-      player.last.metapanelId = this.id;
+      EventHub.dispatch(GameEvent.DELTA_METAPANEL, 'Study', this.id);
     },
   },
   mounted() {

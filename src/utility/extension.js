@@ -21,7 +21,7 @@ Array.prototype.first = function() {
 };
 
 Array.prototype.last = function() {
-   return this.toReversed()[0];
+   return this[this.length - 1];
 };
 
 Array.range = function(array, staticNum = 0) {
@@ -57,6 +57,23 @@ Set.prototype.hasArray = function(value) {
 };
 
 //# END - Set
+
+
+
+
+
+//# Decimal
+
+Decimal.fromDecimal = function(decimal) {
+  return new Decimal(decimal.mantissa + 'e' + decimal.exponent);
+};
+
+Decimal.prototype.copyFrom = function(decimal) {
+  this.mantissa = decimal.mantissa;
+  this.exponent = decimal.exponent;
+};
+
+//# END - Decimal
 
 
 
