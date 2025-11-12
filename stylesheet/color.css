@@ -1,37 +1,6 @@
-:root {
-  --color-ui: #2f2d39;
-  --color-ui-acc: #4dc3fe;
-
-  --color-text: #e4e4e4;
-  --color-good: #5ac466;
-  --color-bad: #efbf8f;
-
-  --color-grey: #2e3440;
-  --color-rich-black: #202527;
-  
-  --color-study: #f8300d;
-}
-
-/** Monochromatic hell... */
-:root {
-  --color-text-weak:   hsl(from var(--color-text) h s calc(0.5 * l + 25));
-  --color-text-weaker: hsl(from var(--color-text-weak) h s calc(0.1 * l + 30));
-
-  /* ...Ew. I think I might want to use color-mix for these */
-  --color-grey-acc: hsl(from var(--color-grey) h s calc(l * 0.75));
-  --color-rich-black-acc: lch(from var(--color-rich-black) calc(l * 0.8) calc(c - 0.5) calc(h + 15));
-}
-
-/** General variables that use relative color syntax */
-:root {
-  --opaque-color-bg-contrast: hsl(from var(--color-bg-contrast) h s l / 0.25);
-
-  --color-text-good: hsl(from var(--color-good) h calc(s * 0.3) l);
-  --color-text-bad: hsl(from var(--color-bad)   h calc(s * 0.3) l);
-
-  --opaque-color-good: hsl(from var(--color-good) h s l / 0.5);
-  --opaque-color-bad: hsl(from var(--color-bad)   h s l / 0.5);
-}
+/* *******************************************************************************************************
+* ***************************************     Default Elements     ***************************************
+* *******************************************************************************************************/
 
 span {
   color: var(--color-text);
@@ -43,53 +12,50 @@ text {
 
 
 
-:root {
-  --color-bg:          hsl(from var(--color-ui) h calc(s / 2) calc(l / 4));
-  --color-bg-stripes:  hsl(from var(--color-ui-acc) h calc(s * 0.2) calc(l * 0.1));
-  --color-bg-contrast: hsl(from var(--color-bg) h s calc(100 - l));
-
-  --opaque-color-bg: hsl(from var(--color-bg) h s l / 0.5);
-}
-
-/*# Background */
+/* ####################
+* Start: Background *
+* *******************/
 
 #background {
   background:
-    repeating-linear-gradient(transparent 0 190px, var(--color-bg-stripes) 195px, transparent 200px),
-    repeating-linear-gradient(90deg, var(--color-bg) 0 190px, var(--color-bg-stripes) 195px, var(--color-bg) 200px);
+    repeating-linear-gradient(
+      0deg,
+      transparent             0 var(--meas-bg_pattern-2diff),
+      var(--color-bg_stripes) var(--meas-bg_pattern-diff),
+      transparent             var(--meas-grid-bg_pattern)
+    ),
+
+    repeating-linear-gradient(
+      90deg,
+      var(--color-bg_pattern) 0 var(--meas-bg_pattern-2diff),
+      var(--color-bg_stripes) var(--meas-bg_pattern-diff),
+      var(--color-bg_pattern) var(--meas-grid-bg_pattern)
+    );
 }
 
-#c-modal::backdrop {
-  background: 
-    linear-gradient(170deg, transparent 20%, #5d576b20);
-}
-
-/*# END - Background */
+/* ******************
+* Close: Background *
+######################*/
 
 
 
 
 
-:root {
-  --color-key: #f8f8ff;
-
-  --color-key-acc: hsl(from var(--color-key) h calc(s * 0.5) l);
-  --color-key-text: hsl(from var(--color-key) h s calc(100 - l));
-}
-
-/*# Semantic */
+/* ##################
+* Start: Semantic *
+* *****************/
 
 .o-button {
-  border-color: var(--b-opaque-color-ui-acc);
+  border-color: var(--hinted-color-ui-acc);
 }
 
 
 
 .f-hotkey {
   background-color: var(--color-key);
-  color: var(--color-key-text);
+  color:            var(--color-key-text);
 
-  border-color: var(--color-key-acc);
+  border-color:     var(--color-key-acc);
 }
 
 
@@ -97,114 +63,119 @@ text {
 .o-tooltip {
   background-color: var(--color-ui);
 
-  outline-color: var(--color-ui-acc);
+  outline-color:    var(--color-ui-acc);
 }
 
 .o-tooltip::before {
   border-color: var(--color-ui-acc);
 }
 
-/*# END - Semantic */
+/* ****************
+* Close: Semantic *
+####################*/
 
 
 
 
+/* #############
+* Start: API *
+* ************/
 
-:root {
-  --color-ui-contrast: hsl(from var(--color-ui) h s calc(100 - l));
-  --opaque-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / 0.3);
-
-  --color-focus-ui: hsl(from var(--color-ui) h s calc(0.8 * l + 10));
-
-  --opaque-color-ui: hsl(from var(--color-ui) h s l / 0.6);
-  --opaque-color-focus-ui: hsl(from var(--color-focus-ui) h s l / 0.6);
-
-  /* I'll need to make a wiki for this lol, b stands for "base" when there are "fainter" opaque colors */
-  --b-opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.3); 
-  --f1-opaque-color-ui-acc: hsl(from var(--color-ui-acc) h s l / 0.2);
-}
-
-
-
-/*# Header */
-
-/* See './src/component/base/DefaultSlider.vue'. Unfortunately, this is one of the elements that I cannot
-directly modify the background-color of, as its bound to the component itself. I based the value on
-var(--opaque-color-ui-contrast), however */
+/* Bad practice yes, but the styles are inline */
 .vue-slider-rail {
-  background-color: var(--opaque-color-ui-contrast);
+  background-color: var(--hinted-color-ui-contrast) !important;
 }
 
 .vue-slider-point {
-  background-color: var(--color-ui-contrast);
+  background-color: var(--color-ui-contrast) !important;
 }
 
 .vue-slider-bar {
-  background-color: var(--color-ui-acc);
+  background-color: var(--color-ui-acc) !important;
 }
 
-.c-header-subject {
-  background-color: var(--opaque-color-ui);
-}
+/* ***********
+* Close: API *
+###############/
 
 
+
+
+
+
+
+/* *******************************************************************************************************
+* **************************************     Fixed Interface     *****************************************
+* *******************************************************************************************************/
+
+/* ################
+* Start: Header *
+* ***************/
 
 .c-header-tab-button {
-  background-color: var(--opaque-color-ui);
-  color: var(--color-text);
+  background-color: var(--hinted-color-ui);
+  color:            var(--color-text);
 
   outline-color: transparent;
 }
 
 .c-header-tab-button:hover {
-  background-color: var(--opaque-color-focus-ui);
+  background-color: var(--hinted-color-ui-acc);
 }
 
 .c-header-tab-button--flipped {
-  outline-color: var(--b-opaque-color-ui-acc);
+  outline-color: var(--opaque-color-ui-acc);
 }
 
 .l-header-indicator {
-  border-image:
-    linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 40% 60%, transparent 100%) 1;
+  border-image: var(--gradient-symmetrical-ui_acc) 1;
 }
 
 
+
+.c-header-subject {
+  background-color: var(--hinted-color-ui);
+}
 
 .c-header--currency-value {
   border-bottom: var(--color-ui);
 }
 
 .c-header--option-calculated {
-  border-color: var(--b-opaque-color-ui-acc);
+  border-color: var(--hinted-color-ui-acc);
 }
 
 
 
 #c-header--physics-indicator {
-  border-image:
-    linear-gradient(90deg, transparent 0%, var(--b-opaque-color-ui-acc) 20% 80%, transparent 100%) 1;
+  border-image: var(--gradient-symmetrical-ui_acc) 1;
 }
 
 #c-header--physics-indicator::before {
   border-image: linear-gradient(
     90deg,
     transparent 0%,
-    var(--b-opaque-color-ui-acc) 30% 36%,
+    var(--opaque-color-ui-acc) 30% 36%,
     transparent 36% 64%,
-    var(--b-opaque-color-ui-acc) 64% 70%,
+    var(--opaque-color-ui-acc) 64% 70%,
     transparent 100%
   ) 1;
 }
 
-/*# END - Header */
+/* **************
+* Close: Header *
+##################*/
 
 
 
-/*# Metapanel */
+
+
+/* ###################
+* Start: Metapanel *
+* ******************/
 
 .o-metapanel {
-  background-color: var(--opaque-color-ui);
+  background-color: var(--hinted-color-ui);
 }
 
 .c-metapanel-cancel {
@@ -214,7 +185,7 @@ var(--opaque-color-ui-contrast), however */
 }
 
 .c-metapanel-cancel:hover {
-  background-color: var(--color-focus-ui);
+  background-color: var(--color-ui--focus);
 }
 
 
@@ -226,161 +197,199 @@ var(--opaque-color-ui-contrast), however */
 }
 
 .l-metapanel--study_name {
-  border-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-ui-acc) 20% 80%,
-    transparent 100%
-  ) 1;
+  border-image: var(--gradient-symmetrical-ui_acc) 1;
 }
 
-/*# END - Metapanel */
+/* *****************
+* Close: Metapanel *
+#####################*/
 
 
 
-/*# Function */
+
+
+/* ##################
+* Start: Function *
+* *****************/
 
 .o-function {
   background-color: var(--opaque-color-ui);
 
-  outline-color: var(--b-opaque-color-ui-acc);
+  outline-color: var(--opaque-color-ui-acc);
 }
 
 .o-function:has(.o-function-button:hover) {
-  outline-color: var(--f1-opaque-color-ui-acc);
+  outline-color: var(--hinted-color-ui-acc);
 }
 
 .l-function-indicator {
   background-color: var(--color-ui);
 
-  outline-color: var(--b-opaque-color-ui-acc);
+  outline-color: var(--opaque-color-ui-acc);
 }
 
 .o-function-button {
   background-color: var(--color-ui);
   
-  box-shadow: 4px 4px 4px var(--opaque-color-bg);
+  box-shadow: 4px 4px 4px var(--opaque-color-bg-prim);
   outline-color: transparent;
 }
 
 .o-function-button:hover {
-  background-color: var(--color-focus-ui);
+  background-color: var(--color-ui--focus);
 
   outline-color: var(--color-ui-acc);
 }
 
 .o-function-button--inactive > .o-tooltip,
 .o-function-button--inactive:hover {
-  outline-color: var(--color-bad);
+  outline-color: var(--color-warning);
 }
 
 .o-function-button--inactive > .o-tooltip::before {
-  border-top-color: var(--color-bad);
+  border-top-color: var(--color-warning);
 }
 
-/*# END - Function  */
+/* ****************
+* Close: Function *
+####################*/
 
 
 
 
 
+/* ######################
+* Start: Notification *
+* *********************/
 
+.o-notification {
+  background-color: var(--hinted-color-ui);
 
-
-
-:root {
-  --color-study-bg: hsl(from var(--color-study) calc(h - 5) calc(s * 0.65) calc(l * 0.5));
-  --color-study-acc: hsl(from var(--color-study) h calc(s - 5) calc(l - 15));
-
-  --color-study-focus: color-mix(in oklch, var(--color-study), var(--color-good) 5%);
-  --color-study-bg-focus: hsl(from var(--color-study-focus) calc(h - 5) calc(s * 0.65) calc(l * 0.6));
-  --color-study-acc-focus: hsl(from var(--color-study-focus) h calc(s - 5) calc(l - 5));
-
-  --color-study-grey: #3d3d3d;
-  --color-study-grey-acc: #262626;
-
-  --color-study-bg-available: #140c0d;
+  border-color: var(--hinted-color-ui-acc);
 }
 
+.o-notification:hover {
+  background-color: var(--opaque-color-ui);
+
+  border-color: var(--color-ui-acc);
+}
+
+.o-notification::after {
+  background-color: var(--color-ui);
+}
+
+.c-notification-flare::after {
+  background-image: linear-gradient(
+    90deg,
+    var(--hinted-color-bg-prim) 0%,
+    transparent 100%
+  );
+}
+
+/* ********************
+* Close: Notification *
+########################*/
 
 
-/*# Studies */
 
+
+
+
+
+/* *******************************************************************************************************
+* **********************************     Tree-related Elements     ***************************************
+* *******************************************************************************************************/
+
+/* #################
+* Start: Studies *
+* ****************/
+
+/* Default */
 .c-prim-study-id {
   text-shadow: 0 0 5px var(--color-text);
 }
 
 .o-prim-study {
-  text-shadow: 0 0 3px #000;
-  box-shadow: inset 0px 0px 25px -3px #000a;
+  text-shadow: 0 0 3px var(--color-bg-prim);
+  box-shadow: inset 0px 0px 25px -3px var(--color-bg-prim);
 }
 
 .o-prim-study::before {
-  background-image: radial-gradient(transparent 0 90%, #0006 99% 100%);
+  background-image: radial-gradient(transparent 0 90%, var(--hinted-color-bg-prim) 99% 100%);
 
-  box-shadow: 0 0 20px #000a;
-  outline: 2px solid var(--color-study);
+  box-shadow: 0 0 20px var(--color-bg-prim);
+  outline: 2px solid var(--color-study-prim);
 }
 
+
+
+/* Obfuscated */
 .o-prim-study--obfuscated {
-  background-color: var(--color-rich-black);
+  background-color: var(--color-study--obfuscated-prim);
 }
 .o-prim-study--obfuscated span {
-  color: var(--color-text-weaker);
+  color: var(--color-text-sec);
 }
 
 .o-prim-study--obfuscated::before {
-  background-color: var(--color-rich-black);
+  /* This isn't actually seen, but in case some pixels overlap, there aren't some strong color */
+  /* contrast with the primary study color */
+  background-color: var(--color-study--obfuscated-prim);
 
-  outline: var(--color-rich-black-acc);
+  outline-color: var(--color-study--obfuscated-prim);
 }
 
+
+
+/* Unavailable */
 .o-prim-study--unavailable {
-  background-color: var(--color-study-grey);
+  background-color: var(--color-study--unavailable-prim);
 }
 .o-prim-study--unavailable span {
-  color: var(--color-text-weak);
+  color: var(--color-text-sec);
 }
 
 .o-prim-study--unavailable .l-prim-study-header span {
-  text-shadow: 0 0 15px var(--color-study-grey-acc);
+  text-shadow: 0 0 15px var(--color-study--unavailable-sec);
 }
 
 .o-prim-study--unavailable::before {
-  background-color: var(--color-study-grey-acc);
+  background-color: var(--color-study--unavailable-sec);
 }
 
 .o-prim-study--unavailable:hover {
-  background-image:
-    linear-gradient(transparent, var(--opaque-color-bad));
+  background-image: linear-gradient(transparent, var(--opaque-color-warning));
 }
 .o-prim-study--unavailable:hover span {
-  color: var(--color-text-bad);
+  color: var(--color-text-warning);
 }
 
 .o-prim-study--unavailable:hover::before {
-  background-color: var(--color-bad);
+  background-color: var(--color-influ-warning);
 }
 
-.o-prim-study--available {
-  background-color: var(--color-study-bg-available);
-  background-image:
-    linear-gradient(var(--opaque-color-bg-contrast) -50%, transparent);
 
-  box-shadow: inset 0px 0px 25px -3px var(--color-study);
+
+/* Available */
+.o-prim-study--available {
+  background-color: var(--color-bg-prim);
+  background-image:
+    linear-gradient(var(--subtle-color-ui-contrast), transparent);
+
+  box-shadow: inset 0px 0px 25px -3px var(--color-study-prim);
 }
 .o-prim-study--available span {
-  color: var(--color-study);
+  color: var(--color-study-prim);
 }
 
 .o-prim-study--available .l-prim-study-header span {
-  text-shadow: 0 0 15px var(--color-study);
+  text-shadow: 0 0 15px var(--color-study-prim);
 }
 
 .o-prim-study--available:hover {
   background-image:
-    linear-gradient(var(--opaque-color-bg-contrast) -50%, transparent),
-    linear-gradient(transparent 10%, var(--color-study-acc) 120%);
+    linear-gradient(var(--subtle-color-ui-contrast) -50%, transparent),
+    linear-gradient(transparent 10%, var(--color-study-sec) 120%);
 
   box-shadow: inset 0px 0px 25px -3px var(--color-bg-contrast);
 }
@@ -388,8 +397,11 @@ var(--opaque-color-ui-contrast), however */
   color: var(--color-text);
 }
 
+
+
+/* Bought */
 .o-prim-study--bought {
-  background-color: var(--color-study-bg);
+  background-color: var(--color-study-ter);
 }
 .o-prim-study--bought span {
   color: var(--color-text);
@@ -400,39 +412,45 @@ var(--opaque-color-ui-contrast), however */
 }
 
 .o-prim-study--bought::before {
-  background-color: var(--color-study-acc);
+  background-color: var(--color-study-sec);
 }
 
 
 
+/* Respecced */
 .o-prim-study--respecced {
-  background-color: var(--color-study-bg-focus);
+  background-color: var(--color-study-ter--focus);
+
+  box-shadow: inset 0px 0px 25px -3px var(--color-study-prim--focus);
 }
 
 .o-prim-study--respecced::before {
-  background-color: var(--color-study-acc-focus);
+  background-color: var(--color-study-sec--focus);
 
-  outline-color: var(--color-study-focus);
+  outline-color: var(--color-study-prim--focus);
 }
 
-/*# END - Studies */
+/* ***************
+* Close: Studies *
+###################*/
 
 
 
 
 
-/*# Study Links */
+/* #####################
+* Start: Study Links *
+* ********************/
 
 .c-study-link {
-  stroke: var(--color-study-acc);
+  stroke: var(--color-study-prim);
 }
 
-.c-study-link_segment--obfuscated {
-  stroke: var(--color-grey);
-}
-
+.c-study-link_segment--obfuscated,
 .c-study-link_ray-dashing--obfuscated {
-  stroke: var(--color-grey-acc);
+  stroke: var(--color-study--obfuscated-prim);
 }
 
-/*# END - Study Links */
+/* *******************
+* Close: Study Links *
+#############@#########*/

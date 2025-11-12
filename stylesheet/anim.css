@@ -1,107 +1,6 @@
-:root {
-  --anim-over-in-and-out: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-
-
-@keyframes wipe-up {
-  0% {
-    transform: translateY(50%) scaleY(0);
-  }
-  100% {
-    transform: translateY(0) scaleY(1);
-  }
-}
-
-/*# Semantic */
-
-/** Vue <Transition> */
-.a-tooltip-enter-active {
-  animation: wipe-up 0.2s var(--anim-over-in-and-out);
-}
-
-.a-tooltip-leave-active {
-  animation: wipe-up 0.2s ease-out reverse;
-}
-/** END - Vue <Transition> */
-
-/*# END - Semantic */
-
-
-
-
-
-/* From Vue, I'll improve the animation later */
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  33% {
-    transform: scale(0.67, 0.33);
-  }
-  67% {
-    transform: scale(1.33, 0.67);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/*# Fixeds */
-
-.c-header-tab-button {
-  transition: background-color 0.2s, outline-color 0.3s;
-}
-
-.l-header-indicator-tabs {
-  transition: transform 0.3s ease-in-out;
-}
-
-
-
-
-
-.c-metapanel-cancel {
-  transition: background-color 0.2s;
-}
-
-
-
-
-
-.o-function {
-  transition: outline-color 0.2s;
-}
-
-.l-function-indicator {
-  transition: opacity 0.2s;
-}
-
-.o-function-button {
-  transition: background-color 0.2s, opacity 0.2s;
-}
-
-/** Vue <Transition> */
-.a-function-button-enter-active {
-  animation: bounce-in 0.3s ease-in-out;
-}
-
-.a-function-button-leave-active {
-  animation: bounce-in 0.3s ease-in-out reverse;
-}
-/** END - Vue <Transition> */
-
-
-
-.l-function-indicator:has(+ .o-function-button:hover) {
-  opacity: 0.75
-}
-
-/*# END - Fixeds */
-
-
-
-
+/* *******************************************************************************************************
+* **************************************     Common Animations     ***************************************
+* *******************************************************************************************************/
 
 @keyframes raise-sup {
   0% {
@@ -131,33 +30,180 @@
   }
 }
 
-/*# Studies */
+.c-prim-study-name .f-sup {
+  animation: raise-sup var(--duration-speed-slow) var(--anim-exaggerate) forwards;
+}
+.c-prim-study-name .f-sub {
+  animation: lay-sub var(--duration-speed-slow) var(--anim-exaggerate) forwards;
+}
+
+/* From Vue, I'll improve the animation later */
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  33% { transform: scale(0.67, 0.33); }
+  67% { transform: scale(1.33, 0.67); }
+  100% { transform: scale(1); }
+}
+
+
+
+
+
+
+
+/* *******************************************************************************************************
+* ***************************************     Default Elements     ***************************************
+* *******************************************************************************************************/
+
+/* ###################
+* Start: Semantics *
+* ******************/
+
+@keyframes wipe-up {
+  0% { transform: translateY(50%) scaleY(0); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+
+
+
+/* Start: Vue <Transition> */
+.a-tooltip-enter-active {
+  animation: wipe-up var(--duration-speed-fast) var(--anim-exaggerate);
+}
+
+.a-tooltip-leave-active {
+  animation: wipe-up var(--duration-speed-fast) ease-out reverse;
+}
+/* Close: Vue <Transition> */
+
+/* ************************
+* Close: Simple Constants *
+############################*/
+
+
+
+
+
+/* ################
+* Start: Header *
+* ***************/
+
+.c-header-tab-button {
+  transition:
+    background-color var(--duration-speed-fast),
+    outline-color var(--duration-speed-mod);
+}
+
+.l-header-indicator-tabs {
+  transition: transform var(--duration-speed-mod) ease-in-out;
+}
+
+/* **************
+* Close: Header *
+##################*/
+
+
+
+
+
+/* ###################
+* Start: Metapanel *
+* ******************/
+
+.c-metapanel-cancel {
+  transition: background-color var(--duration-speed-fast);
+}
+
+/* *****************
+* Close: Metapanel *
+#####################*/
+
+
+
+
+
+/* ###################
+* Start: Notifications *
+* ******************/
+
+.o-function {
+  transition: outline-color var(--duration-speed-fast);
+}
+
+.l-function-indicator {
+  transition: opacity var(--duration-speed-fast);
+}
+
+.o-function-button {
+  transition:
+    background-color var(--duration-speed-fast),
+    opacity var(--duration-speed-fast);
+}
+
+/** Vue <Transition> */
+.a-function-button-enter-active {
+  animation: bounce-in var(--duration-speed-mod) ease-in-out;
+}
+
+.a-function-button-leave-active {
+  animation: bounce-in var(--duration-speed-mod) ease-in-out reverse;
+}
+/** END - Vue <Transition> */
+
+/**> Transition to */
+.l-function-indicator:has(+ .o-function-button:hover) {
+  opacity: 0.75 
+}
+
+
+
+.o-notification {
+  transition:
+    background-color var(--duration-speed-fast),
+    transform var(--duration-speed-slow);
+}
+
+.c-notification-flare {
+  transition: transform var(--duration-speed-mod) var(--anim-exaggerate);
+}
+
+/* **************
+* Close: Notification *
+##################*/
+
+
+
+
+
+
+
+
+
+
+/* *******************************************************************************************************
+* ************************************     Tree-related Elements     *************************************
+* *******************************************************************************************************/
 
 .o-prim-study {
-  transition: box-shadow 0.2s;
+  transition: box-shadow var(--duration-speed-fast);
 }
 .o-prim-study span {
-  transition: color 0.2s;
+  transition: color var(--duration-speed-fast);
 }
 
 .o-prim-study::before {
-  transition: background-color 0.2s;
+  transition: background-color var(--duration-speed-fast);
 }
 
 .o-prim-study--bought::before {
-  transition: inset 0.3s var(--anim-over-in-and-out), outline-width 0.2s
-}
-
-.c-prim-study-name .f-sup {
-  animation: raise-sup 1s var(--anim-over-in-and-out) forwards;
-}
-.c-prim-study-name .f-sub {
-  animation: lay-sub 1s var(--anim-over-in-and-out) forwards;
+  transition:
+    inset var(--duration-speed-mod) var(--anim-exaggerate),
+    outline-width var(--duration-speed-fast);
 }
 
 
 
-
+/**> Transition to */
 .o-prim-study--obfuscated::before {
   inset: 2px;
 }
@@ -188,23 +234,22 @@
 
 
 
-
+/* This is the negative of stroke-dasharray's sum (60px + 20px) */
 @keyframes loop-dash-array {
-  100% {
-    /* This is the negative of stroke-dasharray's sum (60px + 20px) */
-    stroke-dashoffset: -80px;
-  }
+  100% { stroke-dashoffset: -80px; }
 }
 
 /*# Study Links */
 
 .c-study-link_segment,
 .c-study-link_ray-dashing {
-  transition: stroke 0.2s ease-in-out;
+  transition: stroke var(--duration-speed-fast) ease-in-out;
 }
 
 .c-study-link_ray-dashing--animated {
-  animation: loop-dash-array 1s linear infinite;
+  animation: 
+    loop-dash-array var(--duration-speed-slow) cubic-bezier(0.33, 0, 1, 1),
+    loop-dash-array var(--duration-speed-slow) var(--duration-speed-slow) linear infinite;
 }
 
 /*# END - Study Links */

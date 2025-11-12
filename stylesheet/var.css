@@ -1,0 +1,285 @@
+/* *******************************************************************************************************
+* ***************************************     Global Variables     ***************************************
+* *******************************************************************************************************/
+
+/* ##########################
+* Start: Simple Constants *
+* *************************/
+
+:root {
+  --meas-border: 1px;
+  --meas-border-bg_pattern: 5px;
+  --meas-grid-bg_pattern: 200px;
+
+  --size-text-mod: 20px;
+
+  /* This combination allows for: */
+  /* 10 15 30 40 60 70 85 90 */
+  --alpha-vivid:  90%;
+  --alpha-opaque: 60%;
+  --alpha-hinted: 30%;
+  --alpha-subtle: 15%;
+
+  --ratio-block: 0.90;
+  --ratio-chunk: 0.60;
+  --ratio-fair:  0.30;
+  --ratio-bit:   0.15;
+}
+
+/* ************************
+* Close: Simple Constants *
+############################*/
+
+
+
+
+
+/* ####################
+* Start: Animations *
+* *******************/
+
+:root {
+  /*? Changing '-mod' means to change '@/component/article/Notification.vue's animSpeedMod constant */
+  --duration-speed-fast: 0.2s;
+  --duration-speed-mod: 0.4s; 
+  --duration-speed-slow: 1s;
+
+  --anim-exaggerate: cubic-bezier(0.5, -0.5, 0.5, 1.5);
+  --anim-expo-in: cubic-bezier(1, 0, 1, 1);
+  --anim-expo-out: cubic-bezier(0, 1, 1, 1);
+}
+
+/* ******************
+* Close: Animations *
+######################*/
+
+
+
+
+
+/* #######################
+* Start: Basic Theming *
+* **********************/
+
+:root {
+  /* Interface */
+  --color-text:    #effbf7; /* This and below should have sufficiently contrasting colors */
+  --color-bg-prim: #0e0311;
+  --color-bg-sec:  #4b455f;
+  --color-bg-acc:  #4dc3fe; /* For UI, at least. Studies themselves are accentful by nature */
+
+  /* Influence */
+  --color-influ-success:  #5ac466;
+  --color-influ-warning:  #efbf8f;
+  --color-influ-distress: #d75b5b;
+  --color-influ-monochrome: #2e3440;
+
+  /* Studies */
+  --color-study_root:   #f8300d;
+  --color-study_vague:  #a572d5;
+  --color-study_split:  #a7cce7;
+  --color-study_memoir: #c1f589;
+  --color-study_allay:  #ffdf64;
+
+  --color-study--obfuscated-prim: #202527; /* State '--unavailable' is depedendent on this  */
+}
+
+/* *********************
+* Close: Basic Theming *
+#########################*/
+
+
+
+
+
+
+
+/* *******************************************************************************************************
+* *********************************     Variable Dependencies     ****************************************
+* *******************************************************************************************************/
+
+/* #################
+* Start: Studies *
+* ****************/
+
+.o-prim-study_root ~ .l-study-link,
+.o-prim-study_root {
+  --color-study-prim: var(--color-study_root);
+}
+
+.o-prim-study_vague ~ .l-study-link,
+.o-prim-study_vague {
+  --color-study-prim: var(--color-study_vague);
+}
+
+.o-prim-study_plit ~ .l-study-link,
+.o-prim-study_split {
+  --color-study-prim: var(--color-study_split);
+}
+
+.o-prim-study_memoir ~ .l-study-link,
+.o-prim-study_memoir {
+  --color-study-prim: var(--color-study_memoir)
+}
+
+.o-prim-study_allay ~ .l-study-link,
+.o-prim-study_allay {
+  --color-study-prim: var(--color-study_allay);
+}
+
+/* ***************
+* Close: Studies *
+###################*/
+
+
+
+
+
+
+
+/* *******************************************************************************************************
+* ************************************     Compound Variables     ****************************************
+* *******************************************************************************************************/
+
+/*
+  When working with relative color variables (compounds), you'll encounter the uses of color syntax.
+  More particularly, not just when changing the alpha opacity, but rather when modifying the saturation or
+  luminosity...
+*/
+
+/* ###############################
+* Start: Dimensional Constants *
+* ******************************/
+
+:root {
+  --meas-bg_pattern-2diff: calc(var(--meas-grid-bg_pattern) - 2 * var(--meas-border-bg_pattern));
+  --meas-bg_pattern-diff:  calc(var(--meas-grid-bg_pattern) - var(--meas-border-bg_pattern));
+
+  --size-text-low:  calc(var(--size-text-mod) * 0.75);
+  --size-text-big:  calc(var(--size-text-mod) * 1.15);
+  --size-text-xlow: calc(var(--size-text-low) * 0.95);
+  --size-text-xbig: calc(var(--size-text-big) * 1.15);
+}
+
+/* *****************************
+* Close: Dimensional Constants *
+#################################*/
+
+
+
+
+
+/* ######################
+* Start: Color Mixing *
+* *********************/
+
+:root {
+  --color-bg_pattern: hsl(from var(--color-bg-prim) h calc(s * var(--ratio-chunk)) l);
+  --color-bg_stripes:
+    color-mix(in oklab, var(--color-bg-prim) var(--alpha-vivid), var(--color-bg-acc));
+
+  --color-bg-contrast: hsl(from var(--color-bg-prim) h s calc(100 - l));
+}
+
+/* ********************
+* Close: Color Mixing *
+########################*/
+
+
+
+
+
+/* ########################################
+* Start: Fixed Interface - Color Mixing *
+* ***************************************/
+
+/** Interface colors */
+:root {
+  --color-bg-contrast: hsl(from var(--color-bg-prim) h s calc(100 - l));
+
+  --hinted-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-hinted));
+  --opaque-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-opaque));
+  --subtle-color-bg-prim: hsl(from var(--color-bg-prim) h s l / var(--alpha-subtle));
+
+  --color-ui:          var(--color-bg-sec);
+  --color-ui-acc:      var(--color-bg-acc);
+  --color-ui-contrast: var(--color-bg-contrast);
+
+  --hinted-color-ui:          hsl(from var(--color-ui) h s l / var(--alpha-hinted));
+  --hinted-color-ui-acc:      hsl(from var(--color-ui-acc) h s l / var(--alpha-hinted));
+  --hinted-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / var(--alpha-hinted));
+
+  --opaque-color-ui:          hsl(from var(--color-ui) h s l / var(--alpha-opaque));
+  --opaque-color-ui-acc:      hsl(from var(--color-ui-acc) h s l / var(--alpha-opaque));
+  --opaque-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / var(--alpha-opaque));
+
+  --subtle-color-ui:          hsl(from var(--color-ui) h s l / var(--alpha-subtle));
+  --subtle-color-ui-acc:      hsl(from var(--color-ui-acc) h s l / var(--alpha-subtle));
+  --subtle-color-ui-contrast: hsl(from var(--color-ui-contrast) h s l / var(--alpha-subtle));
+
+  --gradient-symmetrical-ui_acc:
+    linear-gradient(90deg, transparent 0%, var(--color-ui-acc) 20% 80%, transparent 100%);
+}
+
+/** Colors that indicate emotion */
+:root {
+  --hinted-color-success:  hsl(from var(--color-influ-success) h s l / var(--alpha-hinted));
+  --hinted-color-warning:  hsl(from var(--color-influ-warning) h s l / var(--alpha-hinted));
+  --hinted-color-distress: hsl(from var(--color-influ-distress) h s l / var(--alpha-hinted));
+
+  --opaque-color-success:  hsl(from var(--color-influ-success) h s l / var(--alpha-opaque));
+  --opaque-color-warning:  hsl(from var(--color-influ-warning) h s l / var(--alpha-opaque));
+  --opaque-color-distress: hsl(from var(--color-influ-distress) h s l / var(--alpha-opaque));
+
+  --subtle-color-success:  hsl(from var(--color-influ-success) h s l / var(--alpha-subtle));
+  --subtle-color-warning:  hsl(from var(--color-influ-warning) h s l / var(--alpha-subtle));
+  --subtle-color-distress: hsl(from var(--color-influ-distress) h s l / var(--alpha-subtle));
+  
+  --color-text-sec:
+    color-mix(in oklab, var(--color-text) var(--alpha-hinted), var(--color-influ-monochrome));
+  --color-text-warning:
+    color-mix(in oklab, var(--color-text), var(--color-influ-warning) var(--alpha-subtle));
+}
+
+/** Colors that indicate interaction */
+:root {
+  --color-dynamic: var(--color-bg-contrast);
+
+  --color-ui--focus: color-mix(in oklab, var(--color-ui) var(--alpha-vivid), var(--color-dynamic));
+}
+
+/* **************************************
+* Close: Fixed Interface - Color Mixing *
+##########################################*/
+
+
+
+
+
+/* #####################################
+* Start: Tree-related - Color Mixing *
+* ************************************/
+
+:root {
+  --color-study--unavailable-prim: hsl(from var(--color-study--obfuscated-prim) h s calc(0.8 * l + 10));
+  --color-study--unavailable-sec:  hsl(from var(--color-study--unavailable-prim) h s calc(0.8 * l + 10));
+
+  --color-study--obfuscated-sec: hsl(from var(--color-study--obfuscated-prim) h s calc(0.8 * l + 10));
+}
+
+.o-prim-study {
+  --color-study-sec: hsl(from var(--color-study-prim) h s calc(1.2 * (l - 12) - 10));
+  --color-study-ter:
+    color-mix(in oklab, var(--color-study-sec), var(--color-bg-prim) var(--alpha-subtle));
+
+  --color-study-prim--focus:
+    color-mix(in oklab, var(--color-study-prim), var(--color-influ-success) var(--alpha-opaque));
+  --color-study-sec--focus:
+    color-mix(in oklab, var(--color-study-sec), var(--color-influ-success) var(--alpha-opaque));
+  --color-study-ter--focus:
+    color-mix(in oklab, var(--color-study-ter), var(--color-influ-success) var(--alpha-subtle));
+}
+
+/* ***********************************
+* Close: Tree-related - Color Mixing *
+#######################################*/
