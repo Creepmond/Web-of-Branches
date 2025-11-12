@@ -4,8 +4,6 @@ import FunctionRespec from "./FunctionRespec.vue";
 
 
 
-import player from "@/core/player.js";
-
 import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 import { Studies }             from "@/core/state/study.js";
 

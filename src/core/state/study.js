@@ -1,9 +1,11 @@
-import player from "@/core/player.js";
+import GameData from "@/database/index.js";
+import player   from "@/core/player.js";
 
 import Currency                from "@/core/mechanic/currency.js";
 import Effects                 from "@/core/mechanic/effects.js";
 import GameMechanicState       from "@/core/mechanic/game-mechanic.js";
-import GameNotify              from "@/core/notification.js";
+
+import GameNotify              from "./notification.js";
 import EventHub, { GameEvent } from "./eventhub.js";
 
 import DC             from "@/utility/constants.js";
@@ -59,10 +61,10 @@ class StudyState extends GameMechanicState {
    }
 }
 
-const gameDataOfAllStudies = GameData.regularStudy;
+const gameDataOfAllStudies = GameData.rootStudy;
 
 /**
- * See src/core/database/regular-study.js for the standard formatting.
+ * See src/core/database/root-study.js for the standard formatting.
  * Study Coordinates (ID) Legend:
  * @param level - integer, is the y-level of the tree, descending.
  * @param offset - rational, is the x-offset of the tree. Integers are to the width of a Study.

@@ -1,3 +1,5 @@
+import player from "@/core/player.js";
+
 import Currency from "@/core/mechanic/currency.js";
 import Timespan from "@/core/state/timespan";
 
@@ -7,19 +9,17 @@ import format from "@/utility/format.js"
 // The derivative is an Array containing the IDs (also an Array) of the Studies it unlocks. I.e., its
 // children Studies
 
-export const regularStudy = [
+const rootStudy = [
    {
       name: "The Root",
       id: [0, 0],
       derivative: [ [1, 0] ],
       description: "Plant the first Seed",
       specify: "Reap the Seed after 8s",
-      // I think I could make the format visible using player.time.played... actually, how am I calling
-      // Currency here anyway? Isn't this a loopway dependency? Ts makes me confused
       onPurchased() {
-         setTimeout( () => { Currency.seed.add(this.effectValue) }, 80 )
+         setTimeout( () => { Currency.seed.add(this.effectValue) }, 8000 )
       },
-      effect: DC.D299,
+      effect: DC.D1,
       cost: DC.D1,
    },
 
@@ -91,3 +91,5 @@ export const regularStudy = [
       cost: DC.D100,
    },
 ];
+
+export default rootStudy;

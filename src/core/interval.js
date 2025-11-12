@@ -4,7 +4,7 @@ import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 import Seed                    from "@/core/state/seed.js";
 import Study                   from "@/core/state/study.js";
 
-import { Time } from "./state/time.js";
+import Time from "./state/time.js";
 
 /*
 export function setCooldown(handler, duration) {

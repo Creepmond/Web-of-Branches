@@ -29,6 +29,7 @@ export default {
       if (!this.canRespec) return;
 
       Studies.respec(this.respeccedStudy);
+      this.respeccedStudy = [];
     },
   },
   mounted() {

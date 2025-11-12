@@ -1,6 +1,7 @@
-import { regularStudy } from "./regular-study.js";
+import rootStudy from "./root-study.js";
 
-//! Need to make this exportable
-window.GameData = {
-   regularStudy,
+const GameData = {
+   rootStudy,
 }
+
+export default GameData;
