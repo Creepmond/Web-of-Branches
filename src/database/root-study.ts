@@ -3,13 +3,22 @@ import player from "@/core/player.js";
 import Currency from "@/core/mechanic/currency.js";
 import Timespan from "@/core/state/timespan";
 
-import DC from "@/utility/constants.js";
+import DC     from "@/utility/constants.js";
 import format from "@/utility/format.js"
 
-// The derivative is an Array containing the IDs (also an Array) of the Studies it unlocks. I.e., its
-// children Studies
+interface Study {
+   name: string,
+   id: [number, number],
+   derivative: Array<[number, number]>,
+   description: string,
+   specify: string
+   onPurchased?: () => void,
+   effect: (() => Constant) | Constant,
+   formatEffect?: (v: Constant) => string,
+   cost: Constant,
+};
 
-const rootStudy = [
+const rootStudy: Study[] = [
    {
       name: "The Root",
       id: [0, 0],
@@ -17,9 +26,9 @@ const rootStudy = [
       description: "Plant the first Seed",
       specify: "Reap the Seed after 8s",
       onPurchased() {
-         setTimeout( () => { Currency.seed.add(this.effectValue) }, 8000 )
+         setTimeout( () => { Currency.seed.add(this.effectValue) }, 80 )
       },
-      effect: DC.D1,
+      effect: DC.D700,
       cost: DC.D1,
    },
 
@@ -48,6 +57,7 @@ const rootStudy = [
       id: [3, -0.5],
       derivative: [ [4, -1] ],
       description: "Seeds multiplied by a million",
+      specify: "",
       effect: DC.E6,
       cost: DC.D700,
    },
@@ -55,7 +65,6 @@ const rootStudy = [
       name: `2<span class="f-sup">nd</span> Branch`,
       id: [3, 0.5],
       derivative: [ [4, 1] ],
-      isBranchNode: true,
       description: "Boost Seed production",
       get specify() { return `Improve Seed production by ${format.mult(2)}` },
       effect: DC.D2,
@@ -66,7 +75,9 @@ const rootStudy = [
       name: "I love trees",
       id: [4, -1],
       derivative: [],
+      specify: "",
       description: "Mr. Beast gives YOU a million",
+      effect: DC.E6,
       cost: DC.E100,
    },
    {
@@ -86,6 +97,7 @@ const rootStudy = [
       description: "Compost your seeds",
       specify: `Receive a ${format.mult(15)} boost to Seed production that drastically wanes over time`,
       onPurchased: () => { player.time.bought5x1 = player.time.played },
+      // Ignore error
       effect: () => { return DC.D15.pow(10 / Timespan.boughtStudy5x1.add(10)); },
       formatEffect: value => format.mult(value),
       cost: DC.D100,
