@@ -6,7 +6,7 @@ import Timespan from "@/core/state/timespan";
 import DC     from "@/utility/constants.js";
 import format from "@/utility/format.js"
 
-interface Study {
+export interface StudyData {
    name: string,
    id: [number, number],
    derivative: Array<[number, number]>,
@@ -18,7 +18,7 @@ interface Study {
    cost: Constant,
 };
 
-const rootStudy: Study[] = [
+const rootStudy: StudyData[] = [
    {
       name: "The Root",
       id: [0, 0],

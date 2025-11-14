@@ -1,6 +1,8 @@
 import DC from "@/utility/constants.js";
 
-const player = {
+// The player object is a bit too complicated to worry about types
+
+const player: any = {
    seed: DC.D1,
    // Unfortunately, working with Sets in Vue is not supported, and with having to deal with update(),
    // hence why studyBoughtBits is an array while studyExposedBits is a Set()

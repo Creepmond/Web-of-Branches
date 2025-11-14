@@ -171,7 +171,10 @@ export default {
         <span class="c-metapanel--study-semantic">Specified:</span>
         <span class="c-metapanel--study-value" v-html="StudyInstance.specify" />
       </div>
-      <div class="l-metapanel--study_val">
+      <div 
+        v-if="StudyInstance.formatEffect !== null"
+        class="l-metapanel--study_val"
+      >
         <span class="c-metapanel--study-semantic">Current Value:</span>
         <EffectDisplay
           class="c-metapanel--study-value"

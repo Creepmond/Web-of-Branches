@@ -2,7 +2,9 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "downlevelIteration": true,
+    "target": "esnext"
   },
   "exclude": ["node_modules", "dist"]
 }

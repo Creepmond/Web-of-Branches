@@ -24,7 +24,7 @@ export function setCooldown(handler, duration) {
  * Updateloop handler for Vue components that update very often. It's dependent on player tickrate
  * @param {function} handler - Usually just "setUpdateloop(this.update)"
  */
-export function setUpdateloop(handler) {
+export function setUpdateloop(handler: () => void): ReturnType<typeof setTimeout> {
    return setTimeout(handler, player.option.tickrate);
 };
 
@@ -32,14 +32,14 @@ export function setUpdateloop(handler) {
  * Clears the setUpdateloop based on the frameId (intervalId by technicality)
  * @param {Number} frameId
  */
-export function clearUpdateloop(frameId) {
+export function clearUpdateloop(frameId: number | null): void {
    if (typeof frameId === 'number') clearTimeout(frameId);
 }
 
-export function setGameloop(handler) {
+export function setGameloop(handler: () => void): void {
    setTimeout(tick, player.option.tickrate, handler);
    
-   function tick(handler) {
+   function tick(handler: () => void): void {
       handler();
       setTimeout(tick, player.option.tickrate, handler);
    };

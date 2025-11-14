@@ -1,4 +1,4 @@
-import rootStudy from "./root-study.ts";
+import rootStudy from "./root-study.js";
 
 const GameData = {
    rootStudy,
