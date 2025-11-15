@@ -1,18 +1,29 @@
 <script>
 import MetapanelStudy from "./MetapanelStudy.vue";
+import MetapanelNews  from "./MetapanelNews.vue";
 
 
+
+import player from "@/core/player.js";
 
 import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 
 export default {
   name: "Metapanel",
-  // Metapanel doesn't only appear on Study Hovers. Or at least I don't entirely plan to
-  components: { MetapanelStudy, },
+  components: {
+    MetapanelStudy,
+    MetapanelNews,
+  },
   data() { return {
     name: '',
     id: null,
+
+    isNewsEnabled: true,
   }},
+  watch: {
+    name(value) { player.last.metapanelName = value; },
+    id(value) { player.last.metapanelId = rmRef(value); },
+  },
   methods: {
     cancel() {
       this.id = null;
@@ -28,7 +39,7 @@ export default {
 </script>
 
 <template>
-  <div class="o-fixed-ui o-metapanel o-metapanel--study">
+  <div :class="`o-fixed-ui o-metapanel o-metapanel--${name}`">
     <template v-if="id">
       <div class="c-metapanel-relative">
         <div class="l-metapanel-cancel">
@@ -37,9 +48,11 @@ export default {
             class="c-metapanel-cancel"
           />
         </div>
-        <MetapanelStudy 
+        <component
+          :is="'Metapanel' + name"
           :key="id"
           v-bind:id
+          v-bind:isNewsEnabled
         />
       </div>
     </template>

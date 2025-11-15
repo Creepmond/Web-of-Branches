@@ -85,7 +85,7 @@ const rootStudy: StudyData[] = [
       id: [4, 1],
       derivative: [ [5, 1] ],
       description: "Return from a branched node",
-      get specify() { return `Long press, or Click a Branch with the <span class="f-hotkey">ctrl</span> or <span class="f-hotkey">cmd&#8984;</span> key to toggle respeccing. Returns ${format.percent(0.1)} ` },
+      get specify() { return `Long press, or Click a Branch with the <span class="f-hotkey">ctrl</span> or <span class="f-hotkey">cmd&#8984;</span> key to toggle respeccing. Returns ${format.percent(0.1)} of the cost` },
       effect: DC.D0_1,
       cost: DC.D90,
    },

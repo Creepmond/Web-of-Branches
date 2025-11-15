@@ -2,65 +2,16 @@
 import EffectDisplay from "@/component/default/EffectDisplay.vue";
 
 
-
-import player from "@/core/player.js";
-
-import Seed  from "@/core/state/seed.js";
 import Study from "@/core/state/study.js";
-
-import DC                                 from "@/utility/constants.js";
-import format                             from "@/utility/format.js";
-import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
 export default {
   name: "MetapanelStudy",
   props: {
     id: [Array, Number],
+    // This value is never used, but I need it to avoid Vue warns about being passed an uncalled prop
+    isNewsEnabled: Boolean,
   },
   components: { EffectDisplay, },
-  data() { return {
-    /*
-    showGlobal: false,
-
-    scopedValueFormat: '',
-    globalValueFormat: '',
-
-    studyIsBought: false,
-    studyScopedValue: DC.D0,
-
-    commonFrameId: null,
-    scopedEffectFrameId: null,
-    globalEffectFrameId: null,
-    */
-  }},
-  /*
-  watch: {
-    showGlobal: {
-      handler(show) {
-        show
-          ? this.updateGlobalValue()
-          : clearUpdateloop(this.globalEffectFrameId);
-      },
-      immediate: true,
-    },
-    studyIsBought: {
-      handler(bought) {
-        if (!bought) return;
-
-        const state = this.StudyInstance.effectInfo.state;
-        this.studyScopedValue = this.StudyInstance.effect;
-
-        this.formatScoped()
-
-        if (state === 'static') {
-          this.formatScoped();
-        } else
-          this.updateScopedValue();
-      },
-      immediate: true,
-    },
-  },
-  */
   computed: {
     StudyInstance() {
       return this.id ? Study(this.id) : null;
@@ -68,79 +19,7 @@ export default {
     currentEffect() {
       return this.StudyInstance.effectValue
     }
-    /*
-    effectIsQuantity() {
-      switch (this.StudyInstance.effectInfo.type) {
-        case 'passiveRate': return true;
-        case 'multiplier': return true;
-        case 'exponent': return true;
-        default: return false;
-      };
-    },
-    */
-  },
-  methods: {
-    /*
-    updateCommon() {
-      this.studyIsBought = this.StudyInstance.isBought;
-      this.showGlobal = player.option.showGlobalStat;
-
-      this.commonFrameId = setUpdateloop(this.updateCommon);
-    },
-    updateGlobalValue() {
-      this.formatGlobal();
-
-      this.globalEffectFrameId = setUpdateloop(this.updateGlobalValue);
-    },
-    updateScopedValue() {
-      this.studyScopedValue = this.StudyInstance.effect;
-      this.formatScoped();
-
-      this.scopedEffectFrameId = setUpdateloop(this.updateScopedValue);
-    },
-    formatScoped() {
-      const type = this.StudyInstance.effectInfo.type;
-
-      if (type === 'passiveRate') {
-        this.scopedValueFormat = `${format.passRate(this.studyScopedValue, 2, 2)}`;
-      } else if (type === 'multiplier') {
-        this.scopedValueFormat = `${format.mult(this.studyScopedValue, 2, 2)} Seed`;
-      } else if (type === 'exponent') {
-        this.scopedValueFormat = `${format.pow(this.studyScopedValue, 2, 2)} Seed`;
-      } else if (type === 'unlock') {
-        this.scopedValueFormat = this.isBought
-          ? `Unlocked ${this.StudyInstance.effectInfo.target}`
-          : `Unlock ${this.StudyInstance.effectInfo.target}`;
-      };
-    },
-    formatGlobal() {
-      const type = this.StudyInstance.effectInfo.type;
-
-      if (type === 'passiveRate') {
-        this.globalValueFormat = `${format.passRate(Seed.passiveRate)}`;
-      } else if (type === 'multiplier') {
-        this.globalValueFormat = `${format.mult(Seed.multipliers, 2, 2)} Seed`;
-      } else if (type === 'exponent') {
-        this.globalValueFormat = `${format.pow(Seed.exponents, 2, 2)} Seed`;
-      };
-    },
-    */
-  },
-  mounted() {
-    /*
-    this.studyScopedValue = this.StudyInstance.effect;
-
-    this.formatScoped();
-    this.updateCommon();
-    */
-  },
-  beforeUnmount() {
-    /*
-    clearUpdateloop(this.commonFrameId);
-    clearUpdateloop(this.scopedEffectFrameId);
-    clearUpdateloop(this.globalEffectFrameId);
-    */
-  },
+  }
 }; 
 </script>
 
@@ -182,15 +61,6 @@ export default {
           :label="''"
         />
       </div>
-      <!--
-      <div class="l-metapanel--study_eff">
-        <span class="c-metapanel--study-semantic">Global Effect:</span>
-        <EffectDisplay
-          class="c-metapanel--study-value"
-          :config="StudyInstance"
-        />
-      </div>
-      -->
     </div>
   </template>
 </template>

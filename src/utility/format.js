@@ -20,7 +20,8 @@ const format = function(value, places = 2, placesUnder1000 = 0) {
    return Notation.mixedScientific.format(value, places, placesUnder1000, 3);
 };
 
-format.percent = function(value, places, placesUnder1000) {
+// Float by default
+format.percent = function(value, places, placesUnder1000 = 1) {
    isDecimal(value) ? value.div(100) : value / 100;
    return `${format(value, places, placesUnder1000)}%`
 };

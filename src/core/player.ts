@@ -19,9 +19,9 @@ const player: any = {
    },
    last: {
       timePlayed: null,
-      /*
       metapanelName: '',
       metapanelId: null,
+      /*
       respeccedStudy: [],
       */
       headerTab: 'Resources',
@@ -31,7 +31,7 @@ const player: any = {
       parallax: 0.4,
       tickrate: 33,
       zoomLevel: 1,
-      showGlobalStat: true,
+      showNews: true,
    },
    physics: {
       isEnabled: false,
