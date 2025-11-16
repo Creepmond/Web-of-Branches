@@ -35,3 +35,15 @@ Add handler for duplicate IDs (Game State)
 Add handler for confirming derivative and imperative accuracy (Study State)
 Reorganize some Files to utility
 Create a lotta stuff you gotta cry
+
+
+
+
+
+default = news
+default + cancel = blank
+default + newstate = metapanel
+default + newstate + newstate = metapanel
+default + n(newstate) = metapanel
+default + n(newstate) + cancel = blank
+default + n(newstate) + cancel + open = news

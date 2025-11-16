@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import MetapanelStudy from "./MetapanelStudy.vue";
 import MetapanelNews  from "./MetapanelNews.vue";
 
@@ -15,22 +15,33 @@ export default {
     MetapanelNews,
   },
   data() { return {
-    name: '',
-    id: null,
+    // Default Metapanel state is MetapanelNews with ID as 1
+    name: 'News',
+    id: 1,
 
     isNewsEnabled: true,
   }},
   watch: {
-    name(value) { player.last.metapanelName = value; },
-    id(value) { player.last.metapanelId = rmRef(value); },
+    name(value: string) { player.last.metapanelName = value; },
+    id(value: number[] | number) { player.last.metapanelId = JSON.stringify(value); },
+  },
+  computed: {
+    stateClass() {
+      return this.id ? `o-metapanel--${this.name.toLowerCase()}` : 'o-metapanel--closed';
+    },
   },
   methods: {
-    cancel() {
-      this.id = null;
+    toggle() {
+      if (this.id) {
+        this.id = null;
+      } else {
+        this.name = 'News';
+        this.id = 1 //! This isn't necessary
+      };
     },
   },
   mounted() {
-    EventHub.on(GameEvent.DELTA_METAPANEL, (name, id) => {
+    EventHub.on(GameEvent.DELTA_METAPANEL, (name: string, id: number[] | number) => {
       this.name = name;
       this.id = id;
     });
@@ -39,23 +50,26 @@ export default {
 </script>
 
 <template>
-  <div :class="`o-fixed-ui o-metapanel o-metapanel--${name}`">
-    <template v-if="id">
-      <div class="c-metapanel-relative">
-        <div class="l-metapanel-cancel">
-          <button
-            @click="cancel"
-            class="c-metapanel-cancel"
-          />
-        </div>
+  <div
+    class="o-fixed-ui o-metapanel"
+    :class="stateClass"
+  >
+    <div class="l-metapanel-relative">
+      <div class="l-metapanel-toggle">
+        <button
+          @click="toggle"
+          class="c-metapanel-toggle"
+        />
+      </div>
+      <template v-if="id">
         <component
           :is="'Metapanel' + name"
           :key="id"
           v-bind:id
           v-bind:isNewsEnabled
         />
-      </div>
-    </template>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -68,7 +82,7 @@ export default {
   inset: 16px 8px auto auto;
 }
 
-.c-metapanel-relative {
+.l-metapanel-relative {
   max-width: 500px;
 
   padding: 12px 16px 20px;
@@ -76,7 +90,7 @@ export default {
   position: relative;
 }
 
-.l-metapanel-cancel {
+.l-metapanel-toggle {
   width: 0;
   height: 0;
 
@@ -84,7 +98,7 @@ export default {
   inset: auto 10px 0 auto;
 }
 
-.c-metapanel-cancel {
+.c-metapanel-toggle {
   pointer-events: auto;
 
   width: 32px;
@@ -95,5 +109,15 @@ export default {
   border-width: 1px;
   border-style: solid;
   border-radius: 50%;
+}
+
+.o-metapanel--closed {
+  background-color: transparent;
+}
+
+.o-metapanel--closed .l-metapanel-toggle {
+  opacity: 0.5;
+
+  inset: 10px 10px auto auto;
 }
 </style>

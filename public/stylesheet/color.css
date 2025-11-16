@@ -178,13 +178,13 @@ text {
   background-color: var(--hinted-color-ui);
 }
 
-.c-metapanel-cancel {
+.c-metapanel-toggle {
   background-color: var(--color-ui);
 
   border-color: var(--color-ui-acc);
 }
 
-.c-metapanel-cancel:hover {
+.c-metapanel-toggle:hover {
   background-color: var(--color-ui--focus);
 }
 
