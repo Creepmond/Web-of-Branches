@@ -83,7 +83,8 @@ export default {
 }
 
 .l-metapanel-relative {
-  max-width: 500px;
+  /* MetapanelNews' max-width, 24em from 24px */
+  max-width: 576px;
 
   padding: 12px 16px 20px;
 
