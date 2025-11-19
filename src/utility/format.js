@@ -1,5 +1,6 @@
-import Notation      from "./notation.js";
-import { isDecimal } from "./typecheck.js";
+import { randomRange_int } from "./math.js";
+import Notation            from "./notation.js";
+import { isDecimal }       from "./typecheck.js";
 
 //# Decimal
 
@@ -101,7 +102,7 @@ String.prototype.caesarOne = function(shift) {
    } else {
       const index = unicodePool().indexOf(code);
       if (index === -1) return this;
-      if (!shift) shift = Math.randomRange_int(1, unicodePool().length);
+      if (!shift) shift = randomRange_int(1, unicodePool().length);
 
       return String.fromCharCode( unicodePool().at(index - shift));
    }
