@@ -8,19 +8,22 @@ export default {
     isNewsEnabled: Boolean,
   },
   data() { return {
-    ticker: '',
+    text: '',
+    width: 0,
+    position: 0,
   }},
   computed: {
     scrollDuration() {
-
+      return 4
     },
   },
   methods: {
     updateTicker() {
-      this.ticker = News.random();
-      const tickerData = this.$refs.ticker.getBoundingClientRect();
-      const tickerWidth = tickerData.width; // In pixels (px) unit
-      
+      console.log(this.scrollDuration)
+      this.text = News.random.flip;
+      this.width = this.$refs.ticker.getBoundingClientRect().width; // In pixels (px) unit
+
+      setTimeout(this.updateTicker, this.scrollDuration * 1000 );
     },
   },
   mounted() {
@@ -34,37 +37,53 @@ export default {
     <span
       class="c-metapanel--news"
       ref="ticker"
-      :style="`animation: scroll-x linear ${scrollDuration};`"
-      :v-html="ticker"
+      :style="`transform: translateX(${position}em);`"
+      v-html="text"
     />
   </div>
 </template>
 
 <style>
-.l-metapanel--news {
+/* Selector madness */
+div.l-metapanel--news {
+  pointer-events: auto;
+
   white-space: nowrap;
   background-color: var(--hinted-color-ui);
+
+  font-size: 24px;
+
+  width: clamp(12em, 36vw, 48em);
+  height: 1em;
 
   margin-bottom: 8px; /* Space for the toggle */
   padding: 4px 0; /* Horizontal padding isn't really needed because width is fixed and text is dynamic */
   border: 1px solid var(--color-ui-acc);
   border-radius: 4px;
 
+  position: relative;
+
   overflow: hidden;
 }
 
-/* Selector madness */
 .l-metapanel--news .c-metapanel--news {
-  font-size: 24px;
+  font-size: inherit;
 
-  width: clamp(12em, 48vw, 24em);
+  width: fit-content;
 
-  display: block;
+  display: flex;
+  align-self: center;
+
+  position: absolute;
+  inset: 0;
+  left: 100%;
 
   transition: transform 0.15s linear;
 }
 
-.c-metapanel--news:hover {
+.l-metapanel--news:hover > .c-metapanel--news {
   animation-play-state: paused;
+
+  border-color: #000;
 }
 </style>
