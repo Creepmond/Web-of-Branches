@@ -10,7 +10,7 @@ const news: NewsData[] = [
       id: 1,
       type: "always",
       // Due to how I structured Vue"s Metapanel, this is News Ticker is always the first to appear
-      get flip() { return `You've opened this game ${0} times now.`; },
+      get flip() { return `You've opened this game ${1} time now.`; },
    },
    {
       id: 2,
@@ -30,7 +30,11 @@ const news: NewsData[] = [
       // mentioned is outside of the statistics. I couldn't figure out how to convey that. But it's also
       // because I'm too lazy to improve it
    },
-   
+   {
+      id: 4,
+      type: "always",
+      flip: "Hovering on me pauses slows the text!",
+   },
 ];
 
 export default news;

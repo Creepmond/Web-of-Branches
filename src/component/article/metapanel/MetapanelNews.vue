@@ -8,36 +8,65 @@ export default {
     isNewsEnabled: Boolean,
   },
   data() { return {
+    fontSize: 24, // Change .l-metapanel--news' font size if changing this
     text: '',
-    width: 0,
+    widthWithFactor: 0,
     position: 0,
+    seenThisSession: 0,
+
+    frameId: null,
   }},
-  computed: {
-    scrollDuration() {
-      return 4
+  watch: {
+    text: {
+      handler() {
+        const textWidth = this.$refs.ticker.getBoundingClientRect().width;
+        const textWrapperWidth = this.$refs.wrapper.getBoundingClientRect().width;
+        
+        this.widthWithFactor = ( textWidth + textWrapperWidth ) / this.fontSize;
+      },
+      flush: 'post',
     },
   },
   methods: {
     updateTicker() {
-      console.log(this.scrollDuration)
-      this.text = News.random.flip;
-      this.width = this.$refs.ticker.getBoundingClientRect().width; // In pixels (px) unit
+      if (this.widthWithFactor <= this.position) {
+        this.text = News.random.flip;
+        this.position = -this.wordsPerMinute; // Offset
+        this.seenThisSession++;
+      }
 
-      setTimeout(this.updateTicker, this.scrollDuration * 1000 );
+      this.position += this.wordsPerMinute;
+
+      this.frameId = setTimeout(this.updateTicker, 1000);
     },
   },
   mounted() {
+    const WORDS_PER_MINUTE = 60
+
+    // Assuming each word is 4.7 letters long
+    this.wordsPerMinute = ( WORDS_PER_MINUTE * 4.7 ) / 60;
+
+    // Offset
+    this.position -= this.wordsPerMinute;
     this.updateTicker();
+  },
+  unmounted() {
+    clearTimeout(this.frameId);
+    this.frameId = null;
   },
 };
 </script>
 
 <template>
-  <div class="l-metapanel--news">
+  <div
+    class="l-metapanel--news"
+    ref="wrapper"
+  >
     <span
       class="c-metapanel--news"
       ref="ticker"
-      :style="`transform: translateX(${position}em);`"
+      :style="`transform: translateX(-${position}em);`"
+      :key="seenThisSession"
       v-html="text"
     />
   </div>
@@ -51,9 +80,8 @@ div.l-metapanel--news {
   white-space: nowrap;
   background-color: var(--hinted-color-ui);
 
-  font-size: 24px;
+  font-size: 24px; /* Change this.fontSize font size if changing this */
 
-  width: clamp(12em, 36vw, 48em);
   height: 1em;
 
   margin-bottom: 8px; /* Space for the toggle */
@@ -78,7 +106,7 @@ div.l-metapanel--news {
   inset: 0;
   left: 100%;
 
-  transition: transform 0.15s linear;
+  transition: transform 1s linear;
 }
 
 .l-metapanel--news:hover > .c-metapanel--news {
