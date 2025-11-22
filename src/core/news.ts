@@ -1,10 +1,10 @@
-import news from "@/database/news.js";
+import GameData from "@/database/index.js";
 
 import { randomRange_int } from "@/utility/math.js";
 
 const News = {
 	available: (function() {
-		return news.filter(ticker => ticker.type === 'always');
+		return GameData.news.filter(ticker => ticker.type === 'always');
 	})(),
 
    get random() {

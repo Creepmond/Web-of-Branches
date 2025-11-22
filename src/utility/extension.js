@@ -1,3 +1,5 @@
+import { randomRange_int } from "./math.js";
+
 // Only when working with Arrays (for quick access), otherwise, call JSON.stringify and JSON.parse
 // in full
 window.rmRef = function (obj) {
@@ -13,7 +15,7 @@ window.addRef = function (obj) {
 //# Array
 
 Array.prototype.random = function() {
-   return this[Math.randomRange_int(0, this.length - 1)];
+   return this[randomRange_int(0, this.length - 1)];
 };
 
 Array.prototype.first = function() {

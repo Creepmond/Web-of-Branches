@@ -3,23 +3,25 @@ import player from "@/core/player.js";
 
 import { setUpdateloop, clearUpdateloop } from "@/core/interval.js";
 
-import format from "@/utility/format.js";
+import format, { pluralize } from "@/utility/format.js";
 
 export default {
   name: "HeaderResources",
   data() { return {
-    seed: 0,
+    seedValue: 0,
 
     frameId: null,
   }},
   computed: {
-    seedAmount() {
-      return format(this.seed);
+    seed() {
+      const value = format(this.seedValue);
+      const name = pluralize("Seed", this.seedValue);
+      return { value, name };
     },
   },
   methods: {
     update() {
-      this.seed = player.seed;
+      this.seedValue = player.seed;
       this.frameId = setUpdateloop(this.update);
     },
   },
@@ -34,8 +36,8 @@ export default {
 
 <template>
   <div class="c-header-content--resource">
-    <span class="c-header--currency-type">Seeds:</span>
-    <span class="c-header--currency-value">{{ seedAmount }}</span>
+    <span class="c-header--currency-type">{{ seed.name }}:</span>
+    <span class="c-header--currency-value">{{ seed.value }}</span>
   </div>
   <div class="c-header-content--resource">
     <span class="c-header--currency-type">Spectres:</span>

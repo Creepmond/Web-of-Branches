@@ -1,5 +1,5 @@
 <script>
-import format from "@/utility/format.js";
+import format, { pluralize } from "@/utility/format.js";
 
 // Reads for <span class="f-sup">, <span class="f-sub">, and </span>, if a Study ever uses it.
 const rawTextRegex = /<\/?span( class)?(="f-su[pb]")?>/g;
@@ -31,7 +31,9 @@ export default {
   },
   computed: {
     studyCost() {
-      return format(this.cost);
+      const value = format(this.cost);
+      const name = pluralize("Seed", this.cost);
+      return { value, name };
     },
   },
   methods: {
@@ -95,7 +97,7 @@ export default {
       v-if="!isObfuscated"
       class="c-prim-study-info"
     >
-      Cost: {{ studyCost }} Seed
+      Cost: {{ studyCost.value }} {{ studyCost.name }}
     </span>
   </div>
 </template>

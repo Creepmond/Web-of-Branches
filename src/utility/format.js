@@ -1,8 +1,10 @@
-import { randomRange_int } from "./math.js";
-import Notation            from "./notation.js";
-import { isDecimal }       from "./typecheck.js";
+import { randomRange_int }           from "./math.js";
+import Notation                      from "./notation.js";
+import { isDecimal, isNumber }       from "./typecheck.js";
 
-//# Decimal
+/* *******************************************************************************************************
+* *******************************************     Decimal     ********************************************
+* *******************************************************************************************************/
 
 // The default format is in Integers
 const format = function(value, places = 2, placesUnder1000 = 0) {
@@ -48,13 +50,62 @@ format.coord = function(value, value2) {
 
 export default format;
 
-//# END - Decimal
 
 
 
 
 
-//# Strings
+
+/* *******************************************************************************************************
+* ********************************************     Strings     *******************************************
+* *******************************************************************************************************/
+
+/* ###################
+* Start: Pluralize *
+* ******************/
+
+/**
+ * 
+ * @param {Constant} value 
+ * @returns {boolean}
+ */
+function isSingular(value) {
+   if (isDecimal(value)) return value.eq('1');
+   if (isNumber(value)) return value === 1;
+   throw new Error(`${value}: is neither Decimal nor Number.`)
+}
+
+const pluralChecker = new Map([
+   [/$/g, 's'],
+]);
+
+/**
+ * @param {string} name
+ * @param {Constant} target
+ * @return {string}
+ */
+export function pluralize(name, target, newName = null) {
+   if (isSingular(target)) return name;
+   
+   if (newName !== null) return newName;
+   for (const checker of pluralChecker.entries()) {
+      const newName = name.replace(checker[0], checker[1])
+      if (name !== newName) return newName;
+   }
+   return name;
+};
+
+/* *****************
+* Close: Pluralize *
+#####################*/
+
+
+
+
+
+/* ##############################
+* Start: Character Randomizer *
+* *****************************/
 
 const acceptedUnicode = [
    {min: 35, max: 122, except: [
@@ -91,8 +142,6 @@ const unicodePool = function() {
    return acceptedPool;
 };
 
-
-
 String.prototype.caesarOne = function(shift) {
    const code = this.charCodeAt(0);
 
@@ -115,4 +164,6 @@ String.prototype.obfuscateAll = function() {
       .join('')
 }
 
-//# END - Strings
+/* ***************************
+* Close: Chracter Randomizer *
+###############################*/
