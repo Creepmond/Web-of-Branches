@@ -5,8 +5,9 @@ import Currency                from "@/core/mechanic/currency.js";
 import Effects                 from "@/core/mechanic/effects.js";
 import GameMechanicState       from "@/core/mechanic/game-mechanic.js";
 
-import GameNotify              from "./notification.js";
 import EventHub, { GameEvent } from "./eventhub.js";
+
+import GameNotify              from "@/core/notification.js";
 
 import DC             from "@/utility/constants.js";
 import format         from "@/utility/format.js";
@@ -18,7 +19,7 @@ class StudyState extends GameMechanicState {
 
       this.name = data.name;
       this.derivative = data.derivative;
-      this.imperative = undefined; // Handled based on this.derivative
+      this.imperative = null; // Handled based on this.derivative
       this.description = data.description;
       this.specify = data.specify || "";
       this.cost = data.cost;
@@ -141,9 +142,15 @@ Studies.allId.forEach(index => {
    const studyDerivatives = Study(index).derivative;
 
    studyDerivatives.forEach(child => {
-      if (studyDerivatives.length >= 2) Study(child).isBranchNode = true;
-      Study(child).imperative = index;
-   })
+      const childStudy = Study(child);
+
+      if (childStudy?.imperative === undefined) {
+         console.warn(`Study ${format.coord(index)} calls an unidentifiable Study ${format.coord(child)}`);
+      } else if (childStudy.imperative === null) {
+         if (studyDerivatives.length >= 2) childStudy.isBranchNode = true;
+         childStudy.imperative = index;
+      }
+   });
 });
 
 //* Sets up for Storage. I wonder if there's a better method for this. Perhaps via Vue, but the thing

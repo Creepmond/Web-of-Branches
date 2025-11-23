@@ -32,7 +32,7 @@ const Seed = {
    },
 
    get boundarySlowdown() {
-      const slowdown = player.seed.sub(999).pow(0.02);
+      const slowdown = player.seed.sub(999).abs().pow(0.05);
 
       if (player.hidden.hasEverReachedBoundary) {
          return slowdown;

@@ -52,6 +52,6 @@ setGameloop(() => {
    Time.tick(diff);
    
    if (!Study([1,0]).isBought) return;
-   
+
    Seed.tick(diff);
 });

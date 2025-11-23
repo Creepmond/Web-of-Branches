@@ -22,28 +22,16 @@ Import Utilities
 
 # TODO:
 [Good] Create SVG Connectors for Studies
-[Ok-ish] Add handler for grandderivatives (Study-twice derivative) obfuscation, and great-grandderivative (Study-thrice derivative) and other descendants as hidden. Goddarnit.
+[Good] Add handler for grandderivatives (Study-twice derivative) obfuscation, and great-grandderivative(Study-thrice derivative) and other descendants as hidden. Goddarnit.
 Figure out how to make the design mobile-friendly
 Do a lot of stuff. Cry.
 
 Add
 
 [Good] Create intervals (gameloop)
-Create effect caculations
+[OK-ish] Create effect caculations
 Create Storage System
 Add handler for duplicate IDs (Game State)
-Add handler for confirming derivative and imperative accuracy (Study State)
+[Good] Add handler for confirming derivative and imperative accuracy (Study State)
 Reorganize some Files to utility
 Create a lotta stuff you gotta cry
-
-
-
-
-
-default = news
-default + cancel = blank
-default + newstate = metapanel
-default + newstate + newstate = metapanel
-default + n(newstate) = metapanel
-default + n(newstate) + cancel = blank
-default + n(newstate) + cancel + open = news

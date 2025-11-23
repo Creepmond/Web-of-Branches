@@ -45,7 +45,7 @@ format.pow = function(value, places, placesUnder1000 = 2) {
 };
 
 format.coord = function(value, value2) {
-   return `[${value}, ${value2}]`;
+   return value2 ? `[${value}, ${value2}]` : `[${value[0]}, ${value[1]}]`;
 };
 
 export default format;

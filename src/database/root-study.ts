@@ -28,7 +28,7 @@ const rootStudy: StudyData[] = [
       onPurchased() {
          setTimeout( () => { Currency.seed.add(this.effectValue) }, 80 )
       },
-      effect: DC.D700,
+      effect: DC.E4,
       cost: DC.D1,
    },
 
@@ -53,11 +53,11 @@ const rootStudy: StudyData[] = [
    },
 
    {
-      name: `1<span class="f-sup">st</span> Branch`,
+      name: `Off course`,
       id: [3, -0.5],
-      derivative: [ [4, -1] ],
-      description: "Seeds multiplied by a million",
-      specify: "",
+      derivative: [ [4, -1], [4, 0] ],
+      description: "This upgrade does nothing",
+      specify: "This upgrade does nothing",
       effect: DC.E6,
       cost: DC.D700,
    },
@@ -72,13 +72,13 @@ const rootStudy: StudyData[] = [
    },
 
    {
-      name: "I love trees",
+      name: `Off course`,
       id: [4, -1],
-      derivative: [],
-      specify: "",
-      description: "Mr. Beast gives YOU a million",
+      derivative: [ [5, -1] ],
+      description: "This upgrade does nothing",
+      specify: "This upgrade does nothing",
       effect: DC.E6,
-      cost: DC.E100,
+      cost: DC.D700,
    },
    {
       name: "Leaf Behind",
@@ -90,6 +90,15 @@ const rootStudy: StudyData[] = [
       cost: DC.D90,
    },
    
+   {
+      name: `Stem Reaper`,
+      id: [5, -1],
+      derivative: [ [5, -1] ],
+      description: "This upgrade does nothing",
+      specify: "This upgrade does nothing",
+      effect: DC.E6,
+      cost: DC.D700,
+   },
    {
       name: "Thyme is essence",
       id: [5, 1],
