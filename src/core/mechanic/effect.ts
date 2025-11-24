@@ -3,18 +3,27 @@ import { isFunction, isNumber, isDecimal, isConstant } from "@/utility/typecheck
 // Directly copy-pasted from Antimatter Dimensions this time lol
 // See 'https://github.com/IvarK/AntimatterDimensionsSourceCode/blob/master/src/core/game-mechanics/effect.js';
 
+type DefinedEffect = (() => Constant) | Constant;
+
+interface Property {
+   configurable: boolean;
+   writable?: boolean;
+   value?: Constant;
+   get?: (() => Constant) | (() => boolean);
+}
+
 export default class EffectState {
-   constructor(effect, cap, condition) {
+   constructor(effect: DefinedEffect, cap?: DefinedEffect, condition?: () => boolean) {
       if (effect === undefined || this.isCustomEffect) return;
 
       if (!isFunction(effect) && !isConstant(effect))
          throw new Error("Unknown effect value type.");
 
-      const createProperty = () => ({
+      const createProperty = (): Property => ({
          configurable: false
       });
 
-      const addGetter = (property, v) => {
+      const addGetter = (property: Property, v: DefinedEffect) => {
          if (isConstant(v)) {
             property.writable = false;
             property.value = v;
@@ -109,24 +118,18 @@ export default class EffectState {
       Object.defineProperty(this, "effectValue", effectValueProperty);
    }
 
-   /**
-   * @returns {number|Decimal}
-   */
-   get effectValue() {
+   get effectValue(): Constant {
       throw new Error("Effect is undefined.");
    }
 
    /**
    * @returns {number|Decimal}
    */
-   get uncappedEffectValue() {
+   get uncappedEffectValue(): Constant {
       throw new Error("Effect is undefined.");
    }
 
-   /**
-   * @returns {number|Decimal|undefined}
-   */
-   get cap() {
+   get cap(): Constant | undefined {
       throw new Error("Cap is undefined.");
    }
 
@@ -142,15 +145,11 @@ export default class EffectState {
       return this.isEffectActive && this.isEffectConditionSatisfied;
    }
 
-   /**
-   * @param {number|Decimal} defaultValue
-   * @returns {number|Decimal}
-   */
-   effectOrDefault(defaultValue) {
+   effectOrDefault(defaultValue: Constant): Constant {
       return this.canBeApplied ? this.effectValue : defaultValue;
    }
 
-   applyEffect(applyFn) {
+   applyEffect(applyFn: (v: any) => any): void {
       if (this.canBeApplied) applyFn(this.effectValue);
    }
 

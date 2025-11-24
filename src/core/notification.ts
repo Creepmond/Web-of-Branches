@@ -5,15 +5,15 @@ const GameNotify = {
       EventHub.dispatch(GameEvent.BEFORE_NOTIFY, text, duration, colorInfluence);
    },
    
-   success(text: string, dur: number) {
+   success(text: string, dur?: number) {
       this._notify(text, dur, 'influ-success')
    },
 
-   warning(text: string, dur: number) {
+   warning(text: string, dur?: number) {
       this._notify(text, dur, 'influ-warning')
    },
 
-   distress(text: string, dur: number) {
+   distress(text: string, dur?: number) {
       this._notify(text, dur, 'influ-distress')
    },
 };

@@ -13,13 +13,30 @@ import DC             from "@/utility/constants.js";
 import format         from "@/utility/format.js";
 import { isFunction } from "@/utility/typecheck.js";
 
+type StudyID = [number, number];
+
 class StudyState extends GameMechanicState {
-   constructor(data) {
+   readonly name: string;
+   readonly derivative: Array<StudyID>;
+   imperative: StudyID | null; // Handled based on this.derivative
+   readonly description: string;
+   readonly specify: string;
+   readonly cost: Constant;
+
+   onPurchased: (() => void) | null;
+   formatEffect: (() => string) | null;
+
+   isBranchNode: boolean;
+
+   isAvailable: boolean;
+   imperativeIsBought: boolean;
+
+   constructor(data: any) {
       super(data);
 
       this.name = data.name;
       this.derivative = data.derivative;
-      this.imperative = null; // Handled based on this.derivative
+      this.imperative = null; 
       this.description = data.description;
       this.specify = data.specify || "";
       this.cost = data.cost;
@@ -41,7 +58,7 @@ class StudyState extends GameMechanicState {
    }
 
    get isBought() {
-      return player.studyBoughtBits.includes( rmRef(this.id) );
+      return player.studyBoughtBits.includes(JSON.stringify(this.id));
    }
 
    get isEffectActive() {
@@ -52,7 +69,7 @@ class StudyState extends GameMechanicState {
       this.currency.purchase(this.cost);
 
       // Reassignment (for Vue; see '@/component/Tree.vue')
-      player.studyBoughtBits = player.studyBoughtBits.concat( rmRef(this.id) );
+      player.studyBoughtBits = player.studyBoughtBits.concat(JSON.stringify(this.id));
       player.studyExposedBits.add(this.id);
 
       if (isFunction(this.onPurchased)) this.onPurchased();
@@ -74,14 +91,14 @@ const gameDataOfAllStudies = GameData.rootStudy;
 const Study = StudyState.createAccessor(gameDataOfAllStudies);
 
 const Studies = {
-   get allId() {
+   allId: (function() {
       const all_id = [];
       gameDataOfAllStudies.forEach(study => {
          all_id.push(study.id);
       });
       
       return all_id
-   },
+   })(),
 
    get canRespec() {
       const readableExposed = [...player.studyExposedBits].map(study => JSON.stringify(study));
@@ -94,7 +111,7 @@ const Studies = {
       );
    },
 
-   respec(study) {
+   respec(study: StudyID) {
       const initBought = player.studyBoughtBits;
       const noLongerBought = new Set();
 
@@ -122,7 +139,7 @@ const Studies = {
       player.last.respeccedStudy = [];
    },
 
-   refund(studyArray) {
+   refund(studyArray: Array<StudyID>) {
       //! Needs handler for other Currencies
       //// const currencyToRefund = Study(id).effectInfo.target.toLowerCase();
       let currencyAmount = DC.D0;

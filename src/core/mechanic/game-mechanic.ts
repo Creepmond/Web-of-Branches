@@ -6,8 +6,14 @@ import { mapGameData } from "@/utility/mapping.js";
 // Blatant copy from AD
 // See 'https://github.com/IvarK/AntimatterDimensionsSourceCode/blob/master/src/core/game-mechanics/game-mechanics.js';
 
+type ID = number | number[];
+
 export default class GameMechanicState extends EffectState {
-   constructor(config) {
+   readonly _config: any;
+   readonly id: ID;
+   effects: any;
+
+   constructor(config: any) {
       if (!config) throw new Error("Must specify config for GameMechanicState");
       super(config.effect, config.cap, config.effectCondition);
       
@@ -22,9 +28,9 @@ export default class GameMechanicState extends EffectState {
          let effect;
          
          if (isConstant(nested) || isFunction(nested)) {
-            effect = new Effect(nested);
+            effect = new EffectState(nested);
          } else {
-            effect = new Effect(nested.effect, nested.cap, nested.effectCondition);
+            effect = new EffectState(nested.effect, nested.cap, nested.effectCondition);
          }
 
          Object.defineProperty(effect, "isEffectActive", {
@@ -36,7 +42,7 @@ export default class GameMechanicState extends EffectState {
       }
    }
 
-   static createAccessor(gameData) {
+   static createAccessor(gameData: any) {
       const index = mapGameData(gameData, config => new this(config));
       const accessor = id => index.get(JSON.stringify(id));
       //// .index = index;
