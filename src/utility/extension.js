@@ -26,6 +26,11 @@ Array.prototype.last = function() {
    return this[this.length - 1];
 };
 
+Array.prototype.includesArray = function(sub) {
+   const subString = JSON.stringify(sub);
+   return this.some(v => JSON.stringify(v) === subString);
+}
+
 Array.range = function(array, staticNum = 0) {
    return Math.max(...array) - Math.min(...array) + staticNum;
 };

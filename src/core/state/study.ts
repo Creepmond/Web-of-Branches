@@ -26,6 +26,7 @@ class StudyState extends GameMechanicState {
    onPurchased: (() => void) | null;
    formatEffect: (() => string) | null;
 
+   readonly isPermanent: boolean;
    isBranchNode: boolean;
 
    isAvailable: boolean;
@@ -35,7 +36,7 @@ class StudyState extends GameMechanicState {
       super(data);
 
       this.name = data.name;
-      this.derivative = data.derivative;
+      this.derivative = data.derivative
       this.imperative = null; 
       this.description = data.description;
       this.specify = data.specify || "";
@@ -44,12 +45,16 @@ class StudyState extends GameMechanicState {
       this.onPurchased = data.onPurchased ?? null;
       this.formatEffect = data.formatEffect ?? null;
 
+      this.isPermanent = data.isPermanent ?? false;
       this.isBranchNode = false; // Handled based on this.derivative
 
       // Handled on Vue
       //// this.isExposed = false;
       this.isAvailable = false;
       this.imperativeIsBought = false;
+
+      if (this.derivative.includesArray(this.id))
+         throw `Study ${format.coord(this.id)} has a derivative of itself, causing an infinite call stack`
    }
 
    // This is assuming we have different StudyStates. For now, this suffices well
@@ -61,8 +66,12 @@ class StudyState extends GameMechanicState {
       return player.studyBoughtBits.includes(JSON.stringify(this.id));
    }
 
+   get isExposed() {
+      return player.studyExposedBits.hasArray(JSON.stringify(this.id));
+   }
+
    get isEffectActive() {
-      return this.isBought;
+      return this.isBought || (this.isPermanent && this.isExposed);
    }
 
    purchase() {
@@ -115,21 +124,33 @@ const Studies = {
       const initBought = player.studyBoughtBits;
       const noLongerBought = new Set();
 
-      // This is intenetionally inside an Array, similar to how Study().derivatives are formatted
-      // (e.g., [ [3, -0.5], [3, 0.5] ]; or [ [4, 1] ]; or simply just [  ]; if it doesn't have any
-      // derivatives
-      let targetDerivatives = [ Object.values(study) ];
+      // The targetDerivative is in fact just one thing — at least for initially — but is treated as an
+      // Array to avoid complications
+      const targetDerivative: Array<StudyID> = [study];
+      const unresolvedBranch: Array<StudyID> = [];
 
+      let callstack = 0;
       do {
-        //// if (targetDerivative.length > 1) throw "dude make a special handling for this"
-        if (!Study(targetDerivatives[0]).isBought) break;
+         //* Conditions
+         const unfocusedBranch = targetDerivative.toSpliced(0, 1);
+         if (unfocusedBranch.length > 0) unresolvedBranch.push(...unfocusedBranch);
+         //// if (!Study(targetDerivative[0]).isBought) break;
 
-        noLongerBought.addArray(targetDerivatives[0]);
+         //* Effect
+         noLongerBought.addArray(targetDerivative[0]);
 
-        // Reassign targetDerivative into *its* derivatives
-      } while ((targetDerivatives = Study(targetDerivatives[0]).derivative) && targetDerivatives[0]);
+         //* Reassignment
+         const newTarget = Study(targetDerivative[0])?.derivative
+         ? Study(targetDerivative[0]).derivative
+         : Study(unresolvedBranch[0]).derivative;
+         
+         targetDerivative.length = 0;
+         targetDerivative.push(...newTarget);
 
-      const diffBought = new Set(initBought).difference ( noLongerBought );
+         callstack++;
+      } while (callstack < 20 && (targetDerivative.length > 0 || unresolvedBranch.length > 0));
+
+      const diffBought = new Set(initBought).difference( noLongerBought );
       const refundedAmount = this.refund( noLongerBought );
 
       EventHub.dispatch(GameEvent.STUDY_RESPEC_COMMIT, refundedAmount, [...diffBought], initBought);

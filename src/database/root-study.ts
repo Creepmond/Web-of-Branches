@@ -12,6 +12,7 @@ export interface StudyData {
    derivative: Array<[number, number]>,
    description: string,
    specify: string
+   isPermanent?: true,
    onPurchased?: () => void,
    effect: (() => Constant) | Constant,
    formatEffect?: (v: Constant) => string,
@@ -20,10 +21,10 @@ export interface StudyData {
 
 const rootStudy: StudyData[] = [
    {
-      name: "The Root",
+      name: "The Root but you can't remember",
       id: [0, 0],
       derivative: [ [1, 0] ],
-      description: "Plant the first Seed",
+      description: "Plant the first Seed. But this is important because",
       specify: "Reap the Seed after 8s",
       onPurchased() {
          setTimeout( () => { Currency.seed.add(this.effectValue) }, 80 )
@@ -81,11 +82,21 @@ const rootStudy: StudyData[] = [
       cost: DC.D700,
    },
    {
+      name: `Nightingales and Nightmares`,
+      id: [4, 0],
+      derivative: [],
+      description: "Receive a fluctuating multiplier to all resources",
+      specify: "This upgrade does nothing",
+      effect: DC.E6,
+      cost: DC.D700,
+   },
+   {
       name: "Leaf Behind",
       id: [4, 1],
       derivative: [ [5, 1] ],
       description: "Return from a branched node",
       get specify() { return `Long press, or Click a Branch with the <span class="f-hotkey">ctrl</span> or <span class="f-hotkey">cmd&#8984;</span> key to toggle respeccing. Returns ${format.percent(0.1)} of the cost` },
+      isPermanent: true,
       effect: DC.D0_1,
       cost: DC.D90,
    },
@@ -93,7 +104,7 @@ const rootStudy: StudyData[] = [
    {
       name: `Stem Reaper`,
       id: [5, -1],
-      derivative: [ [5, -1] ],
+      derivative: [ ],
       description: "This upgrade does nothing",
       specify: "This upgrade does nothing",
       effect: DC.E6,
@@ -105,6 +116,7 @@ const rootStudy: StudyData[] = [
       derivative: [],
       description: "Compost your seeds",
       specify: `Receive a ${format.mult(15)} boost to Seed production that drastically wanes over time`,
+      isPermanent: true,
       onPurchased: () => { player.time.bought5x1 = player.time.played },
       // Ignore error
       effect: () => { return DC.D15.pow(10 / Timespan.boughtStudy5x1.add(10)); },

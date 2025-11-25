@@ -1,4 +1,6 @@
 <script>
+import { toRaw } from 'vue';
+
 import Tooltip from "@/component/default/Tooltip.vue";
 
 
@@ -28,7 +30,7 @@ export default {
     respec() {
       if (!this.canRespec) return;
 
-      Studies.respec(this.respeccedStudy);
+      Studies.respec(toRaw(this.respeccedStudy));
       this.respeccedStudy = [];
     },
   },

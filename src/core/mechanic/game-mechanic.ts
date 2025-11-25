@@ -6,7 +6,7 @@ import { mapGameData } from "@/utility/mapping.js";
 // Blatant copy from AD
 // See 'https://github.com/IvarK/AntimatterDimensionsSourceCode/blob/master/src/core/game-mechanics/game-mechanics.js';
 
-type ID = number | number[];
+type ID = any;
 
 export default class GameMechanicState extends EffectState {
    readonly _config: any;
