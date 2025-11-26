@@ -1,14 +1,41 @@
 import DC from "@/utility/constants.js";
 
-// The player object is a bit too complicated to worry about types
-
-const player: any = {
-   seed: DC.D1,
+interface PlayerData {
+   seed: Decimal
    // Unfortunately, working with Sets in Vue is not supported, and with having to deal with update(),
    // hence why studyBoughtBits is an array while studyExposedBits is a Set()
+   studyBoughtBits: Array<any>
+   studyExposedBits: Set<any>
+   time: {
+      played: Decimal
+      bought5x1: Decimal 
+   }
+   hidden: {
+      deviceScreenType: string
+      hasEverReachedBoundary: boolean
+   }
+   last: {
+      metapanelName: string
+      metapanelId: any
+      headerTab: string
+      screenCoord: { X: number, Y: number }
+   }
+   option: {
+      parallax: number
+      tickrate: number
+      zoomLevel: number
+      showNews: boolean
+   }
+   physics: {
+      isEnabled: boolean
+      screenSlipperiness: number
+   }
+}
+
+const player: PlayerData = {
+   seed: DC.D1,
    studyBoughtBits: [], 
    studyExposedBits: new Set(),
-   // I don't think I need this
    time: {
       played: DC.D0,
       bought5x1: DC.BIMAX,
@@ -18,12 +45,10 @@ const player: any = {
       hasEverReachedBoundary: false,
    },
    last: {
-      timePlayed: null,
+      //// timePlayed: null,
       metapanelName: '',
       metapanelId: null,
-      /*
-      respeccedStudy: [],
-      */
+      //// respeccedStudy: [],
       headerTab: 'Resources',
       screenCoord: { X: -140, Y: -80 },
    },

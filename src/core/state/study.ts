@@ -16,21 +16,21 @@ import { isFunction } from "@/utility/typecheck.js";
 type StudyID = [number, number];
 
 class StudyState extends GameMechanicState {
-   readonly name: string;
-   readonly derivative: Array<StudyID>;
-   imperative: StudyID | null; // Handled based on this.derivative
-   readonly description: string;
-   readonly specify: string;
-   readonly cost: Constant;
+   readonly name: string
+   readonly derivative: StudyID[]
+   imperative: StudyID | null // Handled based on this.derivative
+   readonly description: string
+   readonly specify: string
+   readonly cost: Constant
 
-   onPurchased: (() => void) | null;
-   formatEffect: (() => string) | null;
+   onPurchased: (() => void) | null
+   formatEffect: (() => string) | null
+   
+   readonly isRespeccable: boolean
+   readonly isPermanent: boolean
 
-   readonly isPermanent: boolean;
-   isBranchNode: boolean;
-
-   isAvailable: boolean;
-   imperativeIsBought: boolean;
+   isAvailable: boolean
+   imperativeIsBought: boolean
 
    constructor(data: any) {
       super(data);
@@ -45,8 +45,8 @@ class StudyState extends GameMechanicState {
       this.onPurchased = data.onPurchased ?? null;
       this.formatEffect = data.formatEffect ?? null;
 
-      this.isPermanent = data.isPermanent ?? false;
-      this.isBranchNode = false; // Handled based on this.derivative
+      this.isRespeccable = data.isRespeccable ?? true;
+      this.isPermanent = !!data.isPermanent;
 
       // Handled on Vue
       //// this.isExposed = false;
@@ -58,7 +58,7 @@ class StudyState extends GameMechanicState {
    }
 
    // This is assuming we have different StudyStates. For now, this suffices well
-   get currency() {
+   protected get currency() {
       return Currency.seed;
    }
 
@@ -99,7 +99,18 @@ const gameDataOfAllStudies = GameData.rootStudy;
  */
 const Study = StudyState.createAccessor(gameDataOfAllStudies);
 
-const Studies = {
+interface StudiesData {
+   respeccedStudy: StudyID | null
+   allId: StudyID[]
+   canRespec: boolean
+   refundFactor: Decimal
+   respec: () => void
+   refund: (v: string[]) => void
+}
+
+const Studies: StudiesData = {
+   respeccedStudy: null,
+
    allId: (function() {
       const all_id = [];
       gameDataOfAllStudies.forEach(study => {
@@ -120,16 +131,25 @@ const Studies = {
       );
    },
 
-   respec(study: StudyID) {
+   //! This still doesn't account for unbought Studies, so it progressively gets slower with more defined
+   //  Studies (not just bought)
+
+   respec() {
+      const study = this.respeccedStudy;
+
+      if (study === null) {
+         console.warn('Player requested a "Respec" without a respecced Study');
+         return;
+      }
+
       const initBought = player.studyBoughtBits;
       const noLongerBought = new Set();
 
       // The targetDerivative is in fact just one thing — at least for initially — but is treated as an
       // Array to avoid complications
-      const targetDerivative: Array<StudyID> = [study];
-      const unresolvedBranch: Array<StudyID> = [];
+      const targetDerivative: StudyID[] = [study];
+      const unresolvedBranch: StudyID[] = [];
 
-      let callstack = 0;
       do {
          //* Conditions
          const unfocusedBranch = targetDerivative.toSpliced(0, 1);
@@ -140,15 +160,18 @@ const Studies = {
          noLongerBought.addArray(targetDerivative[0]);
 
          //* Reassignment
-         const newTarget = Study(targetDerivative[0])?.derivative
-         ? Study(targetDerivative[0]).derivative
-         : Study(unresolvedBranch[0]).derivative;
+         let newTarget: StudyID[] = Study(targetDerivative[0])?.derivative ?? null;
+
+         if (newTarget === null) {
+            newTarget = [unresolvedBranch[0]];
+            unresolvedBranch.splice(0, 1);
+         }
+
+         console.log(newTarget)
          
          targetDerivative.length = 0;
          targetDerivative.push(...newTarget);
-
-         callstack++;
-      } while (callstack < 20 && (targetDerivative.length > 0 || unresolvedBranch.length > 0));
+      } while (targetDerivative.length > 0 || unresolvedBranch.length > 0);
 
       const diffBought = new Set(initBought).difference( noLongerBought );
       const refundedAmount = this.refund( noLongerBought );
@@ -157,10 +180,9 @@ const Studies = {
       // I don't entirely remember if Sets (or any other non-primitive in general) are also based on
       // reference, so I'll directly be calling player here rather than initBought
       player.studyBoughtBits = [...diffBought];
-      player.last.respeccedStudy = [];
    },
 
-   refund(studyArray: Array<StudyID>) {
+   refund(studyArray: string[]) {
       //! Needs handler for other Currencies
       //// const currencyToRefund = Study(id).effectInfo.target.toLowerCase();
       let currencyAmount = DC.D0;
@@ -185,7 +207,6 @@ Studies.allId.forEach(index => {
       if (childStudy?.imperative === undefined) {
          console.warn(`Study ${format.coord(index)} calls an unidentifiable Study ${format.coord(child)}`);
       } else if (childStudy.imperative === null) {
-         if (studyDerivatives.length >= 2) childStudy.isBranchNode = true;
          childStudy.imperative = index;
       }
    });

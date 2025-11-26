@@ -7,7 +7,6 @@ import StudyLink       from "./StudyLink.vue";
 import player from "@/core/player.js";
 
 import EventHub, { GameEvent } from "@/core/state/eventhub.js";
-import Currency                from "@/core/mechanic/currency.js";
 import Study, { Studies }      from "@/core/state/study.js";
 
 import { setUpdateloop } from "@/core/interval.js";
@@ -45,22 +44,8 @@ export default {
     StudyInstance() {
       return Study(this.id);
     },
-    isBranchNode() {
-      return this.StudyInstance.isBranchNode
-    },
     respecClass() {
-      // This might seem stupid (and because it is), but I have to expose the reactive property
-      // "isRespecced" so that it tracks this whenever "isRespecced" changes. Though I realize
-      // it's not as optimized, this is technically more readable(?) (in a way)
-      const isRespecced = this.isRespecced;
-
-      if (!this.isBranchNode || !Studies.canRespec) return;
-
-      const state = 'o-prim-study--';
-
-      return isRespecced && this.isBought
-        ? state + 'respecced'
-        : state + 'node';
+      if (this.isRespecced && this.isBought) return 'o-prim-study--respecced';
     },
     availabilityClass() {
       const state = 'o-prim-study--';
@@ -87,19 +72,14 @@ export default {
       },
       immediate: true,
     },
-    isBought() {
-      this.update();
+    isBought(value) {
+      if (!value) this.update();
     },
     isAvailable(value) {
       this.StudyInstance.isAvailable = value;
 
       EventHub.dispatch(GameEvent.STUDY_AVAILABLE);
       this.$emit('available', this.id);
-    },
-    isRespecced(valueIsTrue) {
-      valueIsTrue
-        ? player.last.respeccedStudy = this.id
-        : player.last.respeccedStudy = [];
     },
   },
   methods: {
@@ -137,10 +117,14 @@ export default {
       this.isAvailable = false;
     },
     tryRespec() {
-      if (!this.isBought || !this.isBranchNode || !Studies.canRespec) return;
+      if (
+        this.isBought === false ||
+        this.StudyInstance.isRespeccable === false ||
+        Studies.canRespec === false
+      ) return;
 
-      EventHub.dispatch(GameEvent.STUDY_RESPEC_TOGGLE, this.id)
-      this.isRespecced = !this.isRespecced;
+      Studies.respeccedStudy = this.id;
+      EventHub.dispatch(GameEvent.STUDY_RESPEC_TOGGLE, this.id);
     },
     changeLastHoveredStudy() {
       if ( !this.imperativeIsAvailable && !this.imperativeIsBought && !this.isExposed ) return;
@@ -151,6 +135,10 @@ export default {
   },
   mounted() {
     this.isExposed = player.studyExposedBits.has(this.id);
+
+    EventHub.on(GameEvent.STUDY_RESPEC_TOGGLE, () => {
+      this.isRespecced = Studies.respeccedStudy === this.id;
+    });
   },
 };
 </script>

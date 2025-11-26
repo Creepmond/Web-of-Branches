@@ -12,7 +12,8 @@ export interface StudyData {
    derivative: Array<[number, number]>,
    description: string,
    specify: string
-   isPermanent?: true,
+   isPermanent?: true, // Uses the nullish coalescing operator (??) to determine as "false", if omitted
+   isRespeccable?: false, // Uses double negation (!!) to determine as "false", if omitted
    onPurchased?: () => void,
    effect: (() => Constant) | Constant,
    formatEffect?: (v: Constant) => string,
@@ -26,6 +27,7 @@ const rootStudy: StudyData[] = [
       derivative: [ [1, 0] ],
       description: "Plant the first Seed. But this is important because",
       specify: "Reap the Seed after 8s",
+      isRespeccable: false,
       onPurchased() {
          setTimeout( () => { Currency.seed.add(this.effectValue) }, 80 )
       },
@@ -39,6 +41,7 @@ const rootStudy: StudyData[] = [
       derivative: [ [2, 0] ],
       description: "Slowly produce Seeds",
       get specify() { return `Increase Seeds rate by ${format.passRate(1, 0, 0)}` },
+      isRespeccable: false,
       effect: DC.D1,
       cost: DC.D1,
    },
