@@ -66,6 +66,10 @@ export default {
         this.studyBoughtObject[delta] = false;
       });
     });
+
+    EventHub.on(GameEvent.AFTER_ZOOM_SCREEN, zoomLevel => {
+      console.log(zoomLevel)
+    });
   },
 };
 </script>

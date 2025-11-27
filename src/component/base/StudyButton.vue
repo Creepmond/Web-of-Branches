@@ -126,6 +126,9 @@ export default {
       Studies.respeccedStudy = this.id;
       EventHub.dispatch(GameEvent.STUDY_RESPEC_TOGGLE, this.id);
     },
+    resetRespecced() {
+      this.isRespecced = Studies.respeccedStudy === this.id;
+    },
     changeLastHoveredStudy() {
       if ( !this.imperativeIsAvailable && !this.imperativeIsBought && !this.isExposed ) return;
       if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
@@ -136,9 +139,8 @@ export default {
   mounted() {
     this.isExposed = player.studyExposedBits.has(this.id);
 
-    EventHub.on(GameEvent.STUDY_RESPEC_TOGGLE, () => {
-      this.isRespecced = Studies.respeccedStudy === this.id;
-    });
+    EventHub.on(GameEvent.STUDY_RESPEC_TOGGLE, this.resetRespecced);
+    EventHub.on(GameEvent.STUDY_RESPEC_COMMIT, this.resetRespecced);
   },
 };
 </script>

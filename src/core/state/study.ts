@@ -166,8 +166,6 @@ const Studies: StudiesData = {
             newTarget = [unresolvedBranch[0]];
             unresolvedBranch.splice(0, 1);
          }
-
-         console.log(newTarget)
          
          targetDerivative.length = 0;
          targetDerivative.push(...newTarget);
@@ -176,6 +174,7 @@ const Studies: StudiesData = {
       const diffBought = new Set(initBought).difference( noLongerBought );
       const refundedAmount = this.refund( noLongerBought );
 
+      this.respeccedStudy = null;
       EventHub.dispatch(GameEvent.STUDY_RESPEC_COMMIT, refundedAmount, [...diffBought], initBought);
       // I don't entirely remember if Sets (or any other non-primitive in general) are also based on
       // reference, so I'll directly be calling player here rather than initBought

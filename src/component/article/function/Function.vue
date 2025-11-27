@@ -25,7 +25,7 @@ export default {
     EventHub.on(GameEvent.STUDY_PURCHASE, () => {
       this.respecIsVisible = Studies.canRespec;
     });
-  }
+  },
 };
 </script>
 

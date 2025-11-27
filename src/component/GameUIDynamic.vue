@@ -7,7 +7,7 @@ import Tree from "./Tree.vue";
 
 import player from "@/core/player.js";
 
-import EventHub, { GameEvent} from "@/core/state/eventhub";
+import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 
 import { setUpdateloop } from "@/core/interval.js"
 
@@ -134,6 +134,8 @@ export default {
 
       this.screenCoord.X += this.zoomTarget.X * ( (1 / init) - (1 / diff) );
       this.screenCoord.Y += this.zoomTarget.Y * ( (1 / init) - (1 / diff) );
+
+      EventHub.dispatch(GameEvent.AFTER_ZOOM_SCREEN, this.zoomLevel);
     },
 
 
