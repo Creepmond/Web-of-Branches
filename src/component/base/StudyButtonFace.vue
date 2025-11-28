@@ -88,14 +88,14 @@ export default {
       v-html="name"
     />
   </div>
-  <div class="l-prim-study">
+  <div class="l-prim-study l-prim-study-info">
     <span
-      class="c-prim-study-info"
+      class="c-prim-study-info-desc"
       v-html="desc"
     />
     <span
       v-if="!isObfuscated"
-      class="c-prim-study-info"
+      class="c-prim-study-info-cost"
     >
       Cost: {{ studyCost.value }} {{ studyCost.name }}
     </span>
@@ -103,6 +103,11 @@ export default {
 </template>
 
 <style>
+/* The preceding selector is a conditional on the Tree component */
+.l-tree--study_name_only .l-prim-study-info {
+  display: none;
+}
+
 .l-prim-study {
   width: fit-content;
   margin: 0 auto;
@@ -112,7 +117,7 @@ export default {
   font-size: 30px;
 }
 
-.c-prim-study-info {
+.c-prim-study-info > span {
   display: block;
 }
 </style>

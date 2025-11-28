@@ -15,6 +15,9 @@ export const GameEvent = {
    STUDY_AVAILABLE: "STUDY_AVAILALE",
    STUDY_RESPEC_TOGGLE: "STUDY_RESPEC_TOGGLE",
    STUDY_RESPEC_COMMIT: "STUDY_RESPEC_COMMIT",
+
+   // Progress
+   SEED_EXCEED_E4: "SEED_EXCEED_E4",
 } as const;
 
 type GameEventData = typeof GameEvent[keyof typeof GameEvent];

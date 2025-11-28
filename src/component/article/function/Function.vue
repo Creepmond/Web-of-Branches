@@ -1,8 +1,11 @@
 <script>
-import FunctionOrigin from "./FunctionOrigin.vue";
-import FunctionRespec from "./FunctionRespec.vue";
+import FunctionOrigin   from "./FunctionOrigin.vue";
+import FunctionRespec   from "./FunctionRespec.vue";
+import FunctionHoverbuy from "./FunctionHoverbuy.vue";
 
 
+
+import player from "@/core/player.js";
 
 import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 import { Studies }             from "@/core/state/study.js";
@@ -12,10 +15,12 @@ export default {
   components: {
     FunctionOrigin,
     FunctionRespec,
+    FunctionHoverbuy,
   },
   data() { return {
     originIsVisible: false,
     respecIsVisible: false,
+    hoverbuyIsVisible: false,
   }},
   mounted() {
     EventHub.on(GameEvent.AFTER_MOVE_SCREEN, (coord) => {
@@ -25,6 +30,10 @@ export default {
     EventHub.on(GameEvent.STUDY_PURCHASE, () => {
       this.respecIsVisible = Studies.canRespec;
     });
+
+    EventHub.on(GameEvent.SEED_EXCEED_E4, () => {
+      this.hoverbuyIsVisible = player.seed > 1e4
+    })
   },
 };
 </script>
@@ -32,7 +41,7 @@ export default {
 <template>
   <div class="o-fixed-ui o-function">
     <div class="l-function-indicator">
-      <span ckass="c-function-indicator">
+      <span class="c-function-indicator">
         Functions
       </span>
     </div>
@@ -42,6 +51,9 @@ export default {
     </Transition>
     <Transition name="a-function-button">
       <FunctionRespec v-if="respecIsVisible" />
+    </Transition>
+    <Transition name="a-function-button">
+      <FunctionHoverbuy v-if="hoverbuyIsVisible" />
     </Transition>
   </div>
 </template>

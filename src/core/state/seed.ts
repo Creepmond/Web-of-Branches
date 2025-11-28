@@ -1,7 +1,9 @@
 import player from "@/core/player.js";
 
 import Currency from "@/core/mechanic/currency.js";
-import Study    from "./study.js";
+
+import EventHub, { GameEvent } from "./eventhub.js";
+import Study                   from "./study.js";
 
 import Effects from "@/core/mechanic/effects.js";
 import DC      from "@/utility/constants.js";
@@ -36,8 +38,9 @@ const Seed = {
 
       if (player.hidden.hasEverReachedBoundary) {
          return slowdown;
-      } else if ( player.seed.gt('1000') ) {
+      } else if ( player.seed.gt('1e4') ) {
          player.hidden.hasEverReachedBoundary = true;
+         EventHub.dispatch(GameEvent.SEED_EXCEED_E4);
          return slowdown;
       } else {
          return DC.D1;
@@ -51,11 +54,11 @@ const Seed = {
          .div(this.boundarySlowdown)
    },
 
-   gainRateAccountDiff(diff) {
+   gainRateAccountDiff(diff: number) {
       return this.gainPerSec.times(diff / 1000);
    },
 
-   tick(diff) {
+   tick(diff: number) {
       Currency.seed.add(this.gainRateAccountDiff(diff));
    },
 };

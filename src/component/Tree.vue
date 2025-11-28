@@ -12,6 +12,8 @@ export default {
   data() { return {
     studyBoughtObject: {},
     imperativeAvailableObject: {},
+
+    isStudyNameOnly: false,
   }},
   computed: {
     // This is incomplete, I'm thinking of making the only studies visible are the ones per new section
@@ -68,14 +70,17 @@ export default {
     });
 
     EventHub.on(GameEvent.AFTER_ZOOM_SCREEN, zoomLevel => {
-      console.log(zoomLevel)
+      this.isStudyNameOnly = zoomLevel < 0.4;
     });
   },
 };
 </script>
 
 <template>
-  <div class="l-tree">
+  <div
+    class="l-tree"
+    :class="{ 'l-tree--study_name_only': isStudyNameOnly }"
+  >
     <StudyButton
       v-for="study of visibleStudies"
       :id="study"
