@@ -30,6 +30,9 @@ interface PlayerData {
       isEnabled: boolean
       screenSlipperiness: number
    }
+   function: {
+      hoverbuy: boolean,
+   },
 }
 
 const player: PlayerData = {
@@ -61,6 +64,9 @@ const player: PlayerData = {
    physics: {
       isEnabled: false,
       screenSlipperiness: 0.98,
+   },
+   function: {
+      hoverbuy: false,
    },
 };
 

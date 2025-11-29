@@ -241,6 +241,11 @@ text {
   outline-color: var(--color-ui-acc);
 }
 
+.o-function-button--toggled:hover,
+.o-function-button--toggled {
+  outline-color: var(--color-influ-success);
+}
+
 .o-function-button--inactive > .o-tooltip,
 .o-function-button--inactive:hover {
   outline-color: var(--color-warning);

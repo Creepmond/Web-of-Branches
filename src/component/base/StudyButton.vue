@@ -91,7 +91,7 @@ export default {
       setUpdateloop(this.update);
     },
     setPointerdown(e) {
-      this.changeLastHoveredStudy(); // For mobile
+      this.hover(); // For mobile
 
       clickTargetCoord = { X: e.clientX, Y: e.clientY };
       holdDuration = Date.now();
@@ -108,6 +108,9 @@ export default {
         };
       };
 
+      this.purchase();
+    },
+    purchase() {
       if (!this.isAvailable || !this.imperativeIsBought) return;
 
       this.StudyInstance.purchase();
@@ -129,11 +132,13 @@ export default {
     resetRespecced() {
       this.isRespecced = Studies.respeccedStudy === this.id;
     },
-    changeLastHoveredStudy() {
+    hover() {
       if ( !this.imperativeIsAvailable && !this.imperativeIsBought && !this.isExposed ) return;
       if ( rmRef(player.last.hoveredStudy) === rmRef(this.id) ) return;
 
       EventHub.dispatch(GameEvent.DELTA_METAPANEL, 'Study', this.id);
+
+      if (player.function.hoverbuy) this.purchase();
     },
   },
   mounted() {
@@ -157,7 +162,7 @@ export default {
       @pointerup.exact="tryPurchase"
       @click.ctrl.exact="tryRespec"
       @click.meta.exact="tryRespec"
-      @mouseenter="changeLastHoveredStudy"
+      @mouseenter="hover"
     >
       <StudyButtonFace
         :isObfuscated="!imperativeIsAvailable && !imperativeIsBought"

@@ -38,9 +38,9 @@ const Seed = {
 
       if (player.hidden.hasEverReachedBoundary) {
          return slowdown;
-      } else if ( player.seed.gt('1e4') ) {
+      } else if ( player.seed.gt('1e3') ) {
          player.hidden.hasEverReachedBoundary = true;
-         EventHub.dispatch(GameEvent.SEED_EXCEED_E4);
+         EventHub.dispatch(GameEvent.SEED_EXCEED_E3);
          return slowdown;
       } else {
          return DC.D1;

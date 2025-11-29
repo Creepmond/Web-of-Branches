@@ -1,30 +1,32 @@
 <script>
-import { toRaw } from 'vue';
+import Tooltip from "@/component/default/Tooltip.vue";
 
 
 
-import EventHub, { GameEvent } from "@/core/state/eventhub.js";
-import { Studies }      from "@/core/state/study.js";
+import player from "@/core/player.js";
 
 export default {
   name: "FunctionOrigin",
-  methods: {
-    toggle() {
-      
-    },
+  components: { Tooltip, },
+  data() { return {
+    isToggled: false,
+  }},
+  watch: {
+    isToggled(value) {
+      player.function.hoverbuy = value;
+    }
   },
   mounted() {
-    EventHub.on(GameEvent.STUDY_RESPEC_TOGGLE, (respecced) => {
-      this.respeccedStudy = respecced;
-    })
-  }
+    this.isToggled = player.function.hoverbuy;
+  },
 };
 </script>
 
 <template>
   <Tooltip
     class="o-function-button"
-    @click="toggle"
+    :class="{ 'o-function-button--toggled': isToggled }"
+    @click="isToggled = !isToggled"
   >
     <span class="o-function-type__dev">
       hoverbuy

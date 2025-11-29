@@ -31,8 +31,8 @@ export default {
       this.respecIsVisible = Studies.canRespec;
     });
 
-    EventHub.on(GameEvent.SEED_EXCEED_E4, () => {
-      this.hoverbuyIsVisible = player.seed > 1e4
+    EventHub.on(GameEvent.SEED_EXCEED_E3, () => {
+      this.hoverbuyIsVisible = player.seed > 1e3
     })
   },
 };

@@ -1,23 +1,26 @@
 export const GameEvent = {
    UPDATE: "UPDATE",
 
-   // Fixed UI
+   //* Fixed UI
    DELTA_METAPANEL: "DELTA_METAPANEL",
    DELTA_HEADER: "DELTA_HEADER",
    BEFORE_NOTIFY: "BEFORE_NOTIFY",
 
-   // Dynamic UI
+   //* Dynamic UI
    AFTER_MOVE_SCREEN: "MOVE_SCREEN",
    AFTER_ZOOM_SCREEN: "AFTER_ZOOM_SCREEN",
 
-   // Game
+   //* Game
    STUDY_PURCHASE: "STUDY_PURCHASE",
    STUDY_AVAILABLE: "STUDY_AVAILALE",
    STUDY_RESPEC_TOGGLE: "STUDY_RESPEC_TOGGLE",
    STUDY_RESPEC_COMMIT: "STUDY_RESPEC_COMMIT",
 
-   // Progress
-   SEED_EXCEED_E4: "SEED_EXCEED_E4",
+   //* Progress
+   //! This is used to toggle hoverbuy... but it shouldn't actually be based on quantity. Rather, it's meant
+   //  to be based on substantial progress. Say after prestige or something. But there's no such thing so I
+   //  use this as the alternative
+   SEED_EXCEED_E3: "SEED_EXCEED_E3", 
 } as const;
 
 type GameEventData = typeof GameEvent[keyof typeof GameEvent];
