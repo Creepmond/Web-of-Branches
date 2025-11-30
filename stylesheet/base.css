@@ -1,4 +1,6 @@
-/*# General */
+/* #################
+* Start: General *
+* ****************/
 
 * {
   user-select: none;
@@ -8,6 +10,10 @@
   border: 0;
   margin: 0;
   outline: 0;
+}
+
+*::after {
+  pointer-events: none;
 }
 
 html {
@@ -36,12 +42,16 @@ button span {
   font-size: 20px;
 }
 
-/*# END - General */
+/* ***************
+* Close: General *
+###################*/
 
 
 
 
-/*# Semantic */
+/* ##################
+* Start: Semantic *
+* *****************/
 
 #dynamic-content {
   cursor: move;
@@ -53,8 +63,6 @@ button span {
   justify-content: center;
   align-items: center;
 }
-
-
 
 .o-button {
   background-color: transparent;
@@ -69,7 +77,33 @@ button span {
   cursor: pointer;
 }
 
+/* ****************
+* Close: Semantic *
+####################*/
 
+
+
+
+
+/* #############
+* Start: API *
+* ************/
+
+.vue-slider {
+  cursor: pointer;
+}
+
+/* ***********
+* Close: API *
+###############*/
+
+
+
+
+
+/* #################
+* Start: Formats *
+* ****************/
 
 .f-hotkey {
   font-family: Monospace;
@@ -99,10 +133,6 @@ span > .f-sub {
   transform: scale(0.65) translate(-0.3em, 0.35em);
 }
 
-
-
-.vue-slider {
-  cursor: pointer;
-}
-
-/*# END - Semantic */
+/* ***************
+* Close: Formats *
+###################*/

@@ -178,13 +178,13 @@ text {
   background-color: var(--hinted-color-ui);
 }
 
-.c-metapanel-cancel {
+.c-metapanel-toggle {
   background-color: var(--color-ui);
 
   border-color: var(--color-ui-acc);
 }
 
-.c-metapanel-cancel:hover {
+.c-metapanel-toggle:hover {
   background-color: var(--color-ui--focus);
 }
 
@@ -239,6 +239,11 @@ text {
   background-color: var(--color-ui--focus);
 
   outline-color: var(--color-ui-acc);
+}
+
+.o-function-button--toggled:hover,
+.o-function-button--toggled {
+  outline-color: var(--color-influ-success);
 }
 
 .o-function-button--inactive > .o-tooltip,
@@ -383,7 +388,7 @@ text {
 }
 
 .o-prim-study--available .l-prim-study-header span {
-  text-shadow: 0 0 15px var(--color-study-prim);
+  text-shadow: 0 0 5px var(--color-study-prim);
 }
 
 .o-prim-study--available:hover {
