@@ -165,6 +165,7 @@ export default {
       @mouseenter="hover"
     >
       <StudyButtonFace
+        v-bind:isExposed
         :isObfuscated="!imperativeIsAvailable && !imperativeIsBought"
         :rawName="StudyInstance.name"
         :rawDesc="StudyInstance.description"

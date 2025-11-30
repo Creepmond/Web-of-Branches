@@ -1,3 +1,5 @@
+import Decimal from "break_infinity.js";
+
 const DC = Object.freeze({
 	DM1:                  new Decimal("-1"),
 	D0:                   new Decimal("0"),
@@ -83,4 +85,4 @@ const DC = Object.freeze({
 
 export default DC;
 
-export const originStudy = rmRef([0, 0]);
+export const originStudy = JSON.stringify([0, 0]);

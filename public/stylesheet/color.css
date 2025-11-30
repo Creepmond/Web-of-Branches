@@ -388,7 +388,7 @@ text {
 }
 
 .o-prim-study--available .l-prim-study-header span {
-  text-shadow: 0 0 15px var(--color-study-prim);
+  text-shadow: 0 0 5px var(--color-study-prim);
 }
 
 .o-prim-study--available:hover {

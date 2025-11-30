@@ -1,10 +1,11 @@
 import player from "@/core/player.js";
 
 import Currency from "@/core/mechanic/currency.js";
-import Timespan from "@/core/state/timespan";
+
+import Timespan from "@/core/state/timespan.js";
 
 import DC     from "@/utility/constants.js";
-import format from "@/utility/format.js"
+import format from "@/utility/format.js";
 
 export interface StudyData {
    name: string,
@@ -29,7 +30,7 @@ const rootStudy: StudyData[] = [
       specify: "Reap the Seed after 8s",
       isRespeccable: false,
       onPurchased() {
-         setTimeout( () => { Currency.seed.add(this.effectValue) }, 80 )
+         setTimeout( () => { Currency.seed.add(this.effect) }, 8000 )
       },
       effect: DC.E4,
       cost: DC.D1,
@@ -85,10 +86,10 @@ const rootStudy: StudyData[] = [
       cost: DC.D700,
    },
    {
-      name: `Nightingales and Nightmares`,
+      name: `Nightingale, Nightmantle and Nightmare`,
       id: [4, 0],
       derivative: [],
-      description: "Receive a fluctuating multiplier to all resources",
+      description: "Receive a fluctuating multiplier to all resources that does a lot of",
       specify: "This upgrade does nothing",
       effect: DC.E6,
       cost: DC.D700,

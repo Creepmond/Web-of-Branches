@@ -44,7 +44,7 @@ export default class GameMechanicState extends EffectState {
 
    static createAccessor(gameData: any) {
       const index = mapGameData(gameData, config => new this(config));
-      const accessor = id => index.get(JSON.stringify(id));
+      const accessor = (id: any) => index.get(JSON.stringify(id));
       //// .index = index;
       return accessor;
    }

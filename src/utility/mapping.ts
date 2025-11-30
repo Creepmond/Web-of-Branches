@@ -1,3 +1,5 @@
+// This is slightly incorrect in the assumption that the return type is an Object. It's actually a Map
+
 export function mapGameData(gameData: any[], mapFn: (v: object) => object): object {
    const config = new Map();
    for (const data of gameData) {

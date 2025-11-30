@@ -1,9 +1,11 @@
+import Decimal from "break_infinity.js";
+
 declare global {
    interface Window {
-      Decimal: any,
+      
    }
    
    type Constant = number | Decimal
-};
+}
 
 export {};

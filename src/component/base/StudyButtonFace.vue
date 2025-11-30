@@ -11,6 +11,7 @@ export default {
   name: "StudyButtonFace",
   props: {
     isObfuscated: Boolean,
+    isExposed: Boolean,
     rawName: String,
     rawDesc: String,
     cost: Decimal,
@@ -94,7 +95,7 @@ export default {
       v-html="desc"
     />
     <span
-      v-if="!isObfuscated"
+      v-if="!isObfuscated || isExposed"
       class="c-prim-study-info-cost"
     >
       Cost: {{ studyCost.value }} {{ studyCost.name }}
@@ -117,7 +118,7 @@ export default {
   font-size: 30px;
 }
 
-.c-prim-study-info > span {
+.l-prim-study-info > span {
   display: block;
 }
 </style>
