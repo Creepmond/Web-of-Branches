@@ -1,3 +1,8 @@
+import Decimal from "break_infinity.js";
+
+
+
+import setupMergeGlobal              from "./mapping.js";
 import { randomRange_int }           from "./math.js";
 import Notation                      from "./notation.js";
 import { isDecimal, isNumber }       from "./typecheck.js";
@@ -6,48 +11,51 @@ import { isDecimal, isNumber }       from "./typecheck.js";
 * *******************************************     Decimal     ********************************************
 * *******************************************************************************************************/
 
-// The default format is in Integers
-const format = function(value, places = 2, placesUnder1000 = 0) {
-   if (!isDecimal(value)) value = new Decimal(value);
+// The default format is the integers
+const format = {
+   int(value, places = 2, placesUnder1000 = 0) {
+      if (!isDecimal(value)) value = new Decimal(value);
 
-   // Problem with this, this still causes formatting errors when it reaches the point where the
-   // notation shifts (e.g., from 1000 to 1 K), in the sense that it doesn't really format to the
-   // latter immediately. I think doing a RegEx may apply better in this case
-   if ( value.lte(-0.5) || value.gte(0.5) ) {
-      // Here, 0.4 is used rather than 0.5 (for flooring), because it appears like base-format rounds
-      // values exactly at 0.5
-      const dynamicFloorValue = 10 ** (placesUnder1000 * -1) * 0.4;
-      value = value.sub(dynamicFloorValue);
-   }
+      // Problem with this, this still causes formatting errors when it reaches the point where the
+      // notation shifts (e.g., from 1000 to 1 K), in the sense that it doesn't really format to the
+      // latter immediately. I think doing a RegEx may apply better in this case
+      if (value.lte(-0.5) || value.gte(0.5)) {
+         // Here, 0.4 is used rather than 0.5 (for flooring), because it appears like base-format rounds
+         // values exactly at 0.5
+         const dynamicFloorValue = 10 ** (placesUnder1000 * -1) * 0.4;
+         value = value.sub(dynamicFloorValue);
+      }
 
-   return Notation.mixedScientific.format(value, places, placesUnder1000, 3);
+      return Notation.mixedScientific.format(value, places, placesUnder1000, 3);
+   },
+
+   // Float by default
+   percent(value, places, placesUnder1000 = 1) {
+      isDecimal(value) ? value.div(100) : value / 100;
+      return `${this.int(value, places, placesUnder1000)}%`;
+   },
+
+   // Float by default
+   passRate(value, places, placesUnder1000 = 2) {
+      return `+${this.int(value, places, placesUnder1000)} /s`;
+   },
+
+   // Float by default
+   mult(value, places, placesUnder1000 = 2) {
+      return `×${this.int(value, places, placesUnder1000)}`;
+   },
+
+   // Float by default
+   pow(value, places, placesUnder1000 = 2) {
+      return `^${this.int(value, places, placesUnder1000)}`;
+   },
+
+   coord(value, value2) {
+      return value2 ? `[${value}, ${value2}]` : `[${value[0]}, ${value[1]}]`;
+   },
 };
 
-// Float by default
-format.percent = function(value, places, placesUnder1000 = 1) {
-   isDecimal(value) ? value.div(100) : value / 100;
-   return `${format(value, places, placesUnder1000)}%`
-};
-
-// Float by default
-format.passRate = function(value, places, placesUnder1000 = 2) {
-   return `+${format(value, places, placesUnder1000)} /s`
-};
-
-// Float by default
-format.mult = function(value, places, placesUnder1000 = 2) {
-   return `×${format(value, places, placesUnder1000)}`;
-};
-
-// Float by default
-format.pow = function(value, places, placesUnder1000 = 2) {
-   return `^${format(value, places, placesUnder1000)}`;
-};
-
-format.coord = function(value, value2) {
-   return value2 ? `[${value}, ${value2}]` : `[${value[0]}, ${value[1]}]`;
-};
-
+setupMergeGlobal(format, "format");
 export default format;
 
 

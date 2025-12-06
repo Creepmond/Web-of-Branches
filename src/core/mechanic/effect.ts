@@ -1,3 +1,7 @@
+import Decimal from "break_infinity.js";
+
+
+
 import { isFunction, isNumber, isDecimal, isConstant } from "@/utility/typecheck.js";
 
 // Directly copy-pasted from Antimatter Dimensions this time lol

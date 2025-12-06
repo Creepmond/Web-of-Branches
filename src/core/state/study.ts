@@ -1,3 +1,7 @@
+import Decimal from "break_infinity.js";
+
+
+
 import GameData from "@/database/index.js";
 import player   from "@/core/player.js";
 
@@ -112,7 +116,7 @@ const Studies: StudiesData = {
    respeccedStudy: null,
 
    allId: (function() {
-      const all_id = [];
+      const all_id: StudyID[] = [];
       gameDataOfAllStudies.forEach(study => {
          all_id.push(study.id);
       });
@@ -143,7 +147,7 @@ const Studies: StudiesData = {
       }
 
       const initBought = player.studyBoughtBits;
-      const noLongerBought = new Set();
+      const noLongerBought: Set<string> = new Set();
 
       // The targetDerivative is in fact just one thing — at least for initially — but is treated as an
       // Array to avoid complications
@@ -181,7 +185,7 @@ const Studies: StudiesData = {
       player.studyBoughtBits = [...diffBought];
    },
 
-   refund(studyArray: string[]) {
+   refund(studyArray: Set<string>) {
       //! Needs handler for other Currencies
       //// const currencyToRefund = Study(id).effectInfo.target.toLowerCase();
       let currencyAmount = DC.D0;
@@ -191,16 +195,16 @@ const Studies: StudiesData = {
          currencyAmount = currencyAmount.add(studyCost.times(this.refundFactor));
       }
 
-      GameNotify.success(`Respecced, gained: ${ format(currencyAmount) } Seeds`);
+      GameNotify.success(`Respecced, gained: ${ format.int(currencyAmount) } Seeds`);
       Currency['seed'].add(currencyAmount);
       return currencyAmount;
    },
 };
 
-Studies.allId.forEach(index => {
+for (const index of Studies.allId) {
    const studyDerivatives = Study(index).derivative;
 
-   studyDerivatives.forEach(child => {
+   for (const child of studyDerivatives) {
       const childStudy = Study(child);
 
       if (childStudy?.imperative === undefined) {
@@ -208,8 +212,8 @@ Studies.allId.forEach(index => {
       } else if (childStudy.imperative === null) {
          childStudy.imperative = index;
       }
-   });
-});
+   };
+};
 
 //* Sets up for Storage. I wonder if there's a better method for this. Perhaps via Vue, but the thing
 //  is quite fat in file size already

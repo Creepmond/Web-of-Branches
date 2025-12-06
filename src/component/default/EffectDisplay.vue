@@ -1,4 +1,8 @@
 <script>
+import Decimal from "break_infinity.js"
+
+
+
 import { setUpdateloop, clearUpdateloop }  from "@/core/interval.js";
 import { isDecimal, isFunction, isNumber } from "@/utility/typecheck.js";
 

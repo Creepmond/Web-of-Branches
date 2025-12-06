@@ -96,7 +96,7 @@ export default {
   inset: auto -4px 4px -4px;
 }
 
-.l-function-indicator:has(+ .o-function-button:hover) {
+.l-function-indicator:has(~ .o-function-button:hover) {
   opacity: 0.75
 }
 

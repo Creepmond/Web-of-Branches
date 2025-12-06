@@ -1,5 +1,9 @@
 import * as ADNotations from "@antimatter-dimensions/notations";
 
+
+
+import setupMergeGlobal from "./mapping.js";
+
 ADNotations.Settings.exponentCommas = { min: 1e3, max: 1e15 };
 
 const Notation = {
@@ -13,4 +17,5 @@ const Notation = {
    letters: new ADNotations.LettersNotation(),
 };
 
+setupMergeGlobal(Notation, "Notation");
 export default Notation;

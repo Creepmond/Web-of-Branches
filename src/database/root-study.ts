@@ -4,8 +4,9 @@ import Currency from "@/core/mechanic/currency.js";
 
 import Timespan from "@/core/state/timespan.js";
 
-import DC     from "@/utility/constants.js";
-import format from "@/utility/format.js";
+import DC             from "@/utility/constants.js";
+import format         from "@/utility/format.js";
+import { isConstant } from "@/utility/typecheck";
 
 export interface StudyData {
    name: string,
@@ -23,14 +24,15 @@ export interface StudyData {
 
 const rootStudy: StudyData[] = [
    {
-      name: "The Root but you can't remember",
+      name: "The Root",
       id: [0, 0],
       derivative: [ [1, 0] ],
-      description: "Plant the first Seed. But this is important because",
+      description: "Plant the first Seed",
       specify: "Reap the Seed after 8s",
       isRespeccable: false,
       onPurchased() {
-         setTimeout( () => { Currency.seed.add(this.effect) }, 8000 )
+         // "this.effectValue" is from effect.js
+         setTimeout( () => { Currency.seed.add(this.effectValue) }, 80 )
       },
       effect: DC.E4,
       cost: DC.D1,

@@ -1,3 +1,7 @@
+import Decimal from "break_infinity.js";
+
+
+
 import { randomRange_int } from "./math.js";
 
 // Only when working with Arrays (for quick access), otherwise, call JSON.stringify and JSON.parse

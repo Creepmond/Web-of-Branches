@@ -1,6 +1,12 @@
 import Decimal from "break_infinity.js";
 
+
+
+import setupMergeGlobal from "./mapping.js";
+
 const DC = Object.freeze({
+   name: "DC",
+
 	DM1:                  new Decimal("-1"),
 	D0:                   new Decimal("0"),
 
@@ -83,6 +89,5 @@ const DC = Object.freeze({
 	BIMAX:                new Decimal("1e9000000000000000"),
 });
 
+setupMergeGlobal(DC, "DC")
 export default DC;
-
-export const originStudy = JSON.stringify([0, 0]);

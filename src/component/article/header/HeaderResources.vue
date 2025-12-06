@@ -14,7 +14,7 @@ export default {
   }},
   computed: {
     seed() {
-      const value = format(this.seedValue);
+      const value = format.int(this.seedValue);
       const name = pluralize("Seed", this.seedValue);
       return { value, name };
     },

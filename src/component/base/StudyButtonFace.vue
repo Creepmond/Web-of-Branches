@@ -1,4 +1,8 @@
 <script>
+import Decimal from "break_infinity.js";
+
+
+
 import format, { pluralize } from "@/utility/format.js";
 
 // Reads for <span class="f-sup">, <span class="f-sub">, and </span>, if a Study ever uses it.
@@ -32,7 +36,7 @@ export default {
   },
   computed: {
     studyCost() {
-      const value = format(this.cost);
+      const value = format.int(this.cost);
       const name = pluralize("Seed", this.cost);
       return { value, name };
     },
