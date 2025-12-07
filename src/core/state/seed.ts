@@ -1,12 +1,13 @@
 import player from "@/core/player.js";
 
 import Currency from "@/core/mechanic/currency.js";
+import Effects   from "@/core/mechanic/effects.js";
 
 import EventHub, { GameEvent } from "./eventhub.js";
 import Study                   from "./study.js";
 
-import Effects from "@/core/mechanic/effects.js";
-import DC      from "@/utility/constants.js";
+import DC               from "@/utility/constants.js";
+import setupMergeGlobal from "@/utility/mapping.js";
 
 // Hm, this looks like it probably can be a general Class——I'll leave as is for now, but when
 // Currencies like Shards or Strings get added it'll probably useful. It's only really because
@@ -63,4 +64,5 @@ const Seed = {
    },
 };
 
+setupMergeGlobal(Seed, 'Seed');
 export default Seed;

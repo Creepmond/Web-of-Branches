@@ -1,48 +1,41 @@
+import { isObject } from "@/utility/typecheck.js";
+
 type ModuleData<T = unknown> = Record<string, T> & {
   default?: T;
   [Symbol.toStringTag]?: "Module";
 };
 
 function mergeGlobal(modules: ModuleData | Record<string, ModuleData>): void {
-   console.log(modules);
-   /*
-   const defaultModule = modules.default ?? null;
-   if (!defaultModule) throw `An index file should have an export default, instead got: ${modules}`;
+   function mergeDefault() {
+      const defaultModule: ModuleData = modules;
+      const name: string = defaultModule?.name === undefined ? defaultModule : defaultModule.name;
+      (window as any)[name] = defaultModule;
+   };
 
-   */
-
-   //// console.log(defaultModule, modules);
-   /*
-   if (defaults !== null) {
-      for (const exported in defaults) {
-         window[exported] = defaults[exported];
-      }
-   }
-
-      */
-   for (const exported in modules) {
-      // Skip default, already dealt with
-      /*
-      if (exported === 'default') continue;
-      window[exported] = modules[exported];
-
-      */
-   }
+   for (const exportedFile of Object.values(modules)) {
+      if (!isObject(exportedFile)) throw '"exportedFile" should not expect a non-object variable';
+      if ((exportedFile as any)?.[Symbol.toStringTag] !== 'Module') {
+         mergeDefault();
+         return;
+      };
+      for (const exportedSymbol of Object.values(exportedFile)) {
+         const name = exportedSymbol?.name === undefined ? exportedSymbol : exportedSymbol.name;
+         (window as any)[name] = exportedSymbol;
+      };
+   };
 };
 
 import utility from "@/utility";
 mergeGlobal(utility);
 
-/*
-import * as database from "@/database";
+import database from "@/database";
 mergeGlobal(database);
 
-import * as mechanic from "@/core/mechanic";
+import mechanic from "@/core/mechanic";
 mergeGlobal(mechanic);
 
-import * as state from "@/core/state";
+import state from "@/core/state";
 mergeGlobal(state);
 
-import * as core from "@/core";
+import core from "@/core";
 mergeGlobal(core);
-*/

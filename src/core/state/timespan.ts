@@ -2,6 +2,8 @@
 //  I don't think what AD was doing was good practice, anyway
 import player from "@/core/player.js";
 
+import setupMergeGlobal from "@/utility/mapping.js";
+
 const Timespan = {
    // I have a bad feeling with what I'm doing lol... this seems very terrible
    get boughtStudy5x1() {
@@ -9,4 +11,5 @@ const Timespan = {
    }
 };
 
+setupMergeGlobal(Timespan, 'Timespan');
 export default Timespan;

@@ -1,4 +1,8 @@
+import setupMergeGlobal from "@/utility/mapping.js";
+
 export const GameEvent = {
+   name: "GameEvent",
+
    UPDATE: "UPDATE",
 
    //* Fixed UI
@@ -28,8 +32,8 @@ type GameEventData = typeof GameEvent[keyof typeof GameEvent];
 
 
 type EventHandler<T extends unknown[] = unknown[]> = {
-  func: (...args: T) => void;
-  target?: any; // Usually the Vue component where it is placed, or any other identification
+   func: (...args: T) => void;
+   target?: any; // Usually the Vue component where it is placed, or any other identification
 };
 
 type EventHandlerMap = Partial<Record<GameEventData, EventHandler[]>>;
@@ -65,7 +69,7 @@ const EventHub: EventHubData = {
     * @param {any} target - Usually the Vue component where it is placed, or any other identification
     */
    offAll(target: any) {
-      for (const handlers of Object.keys(this._handlers)) {
+      for (const handlers of Object.values(this._handlers)) {
          this._handlers[handlers] = this._handlers[handlers]
          .filter(handler => handler.target !== target);
       }
@@ -85,4 +89,5 @@ const EventHub: EventHubData = {
    },
 };
 
+setupMergeGlobal(EventHub, "EventHub");
 export default EventHub;

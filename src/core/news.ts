@@ -1,5 +1,6 @@
 import GameData from "@/database/index.js";
 
+import setupMergeGlobal    from "@/utility/mapping.js";
 import { randomRange_int } from "@/utility/math.js";
 
 const News = {
@@ -13,4 +14,5 @@ const News = {
 	},
 };
 
+setupMergeGlobal(News, 'News');
 export default News;

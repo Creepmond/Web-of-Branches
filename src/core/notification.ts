@@ -1,5 +1,7 @@
 import EventHub, { GameEvent } from "@/core/state/eventhub.js";
 
+import setupMergeGlobal    from "@/utility/mapping.js";
+
 const GameNotify = {
    _notify(text: string, duration = 5000, colorInfluence: string) {
       EventHub.dispatch(GameEvent.BEFORE_NOTIFY, text, duration, colorInfluence);
@@ -18,4 +20,5 @@ const GameNotify = {
    },
 };
 
+setupMergeGlobal(GameNotify, 'GameNotify');
 export default GameNotify;

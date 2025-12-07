@@ -2,7 +2,8 @@ import Decimal from "break_infinity.js";
 
 
 
-import DC from "@/utility/constants.js";
+import DC               from "@/utility/constants.js";
+import setupMergeGlobal from "@/utility/mapping.js";
 
 interface PlayerData {
    seed: Decimal
@@ -74,5 +75,6 @@ const player: PlayerData = {
    },
 };
 
+setupMergeGlobal(player, 'player');
 export default player;
 //// window.player = player;

@@ -15,6 +15,7 @@ import GameNotify              from "@/core/notification.js";
 
 import DC             from "@/utility/constants.js";
 import format         from "@/utility/format.js";
+import setupMergeGlobal from "@/utility/mapping.js";
 import { isFunction } from "@/utility/typecheck.js";
 
 type StudyID = [number, number];
@@ -222,5 +223,6 @@ exposedStudies.forEach(shownStudy => {
    Study(shownStudy).isExposed = true;
 })
 
+setupMergeGlobal(Studies, 'Studies');
 export default Study;
 export { Studies };

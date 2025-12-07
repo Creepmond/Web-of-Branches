@@ -6,6 +6,10 @@ export function isString(value: unknown): value is string {
    return typeof value === "string";
 }
 
+export function isObject(value: unknown): value is object {
+   return typeof value === "object";
+}
+
 export function isFunction(value: unknown): value is Function {
    return typeof value === "function";
 }
